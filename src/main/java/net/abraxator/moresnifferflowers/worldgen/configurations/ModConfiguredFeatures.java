@@ -54,15 +54,15 @@ public class ModConfiguredFeatures {
                                         .add(ModBlocks.CORRUPTED_LOG.get().defaultBlockState(), 10)
                                         .add(ModBlocks.STRIPPED_CORRUPTED_LOG.get().defaultBlockState(), 4)
                         ),
-                        new CorruptedTrunkPlacer(4, 2, 2),
+                        new CorruptedTrunkPlacer(4, 1, 1),
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
                                         .add(ModBlocks.CORRUPTED_LEAVES.get().defaultBlockState(), 10)
                                         .add(ModBlocks.CORRUPTED_LEAVES_BUSH.get().defaultBlockState(), 2)
                                         .add(ModBlocks.CORRUPTED_SLUDGE.get().defaultBlockState(), 1)
                         ),
-                        new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 2),
-                        //new RandomSpreadFoliagePlacer(ConstantInt.of(3), ConstantInt.of(0), UniformInt.of(2, 3), 35),
+                        //new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 2),
+                        new RandomSpreadFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), UniformInt.of(2, 3), 20),
                         new TwoLayersFeatureSize(2, 0, 2)
                 )
                         .ignoreVines()

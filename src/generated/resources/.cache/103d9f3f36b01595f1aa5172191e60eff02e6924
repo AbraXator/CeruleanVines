@@ -1,4 +1,4 @@
-// 1.21	2024-10-20T20:11:43.8852186	Registries
+// 1.21	2024-10-21T18:36:40.5832584	Registries
 882bd85a7a641611c1ea698aef472b99ea8eba59 data/moresnifferflowers/banner_pattern/ambush.json
 77d03d75537e90eb7a411e54a09fc2129c3fca5e data/moresnifferflowers/trim_material/amber.json
 f0a8018649f4e20bcf1a5d1000284a68c2aed7ac data/moresnifferflowers/trim_material/beetroot.json
@@ -12,7 +12,7 @@ c9e0cb09572e3e60a817c4cf79ce6df009d6e8d1 data/moresnifferflowers/trim_pattern/ca
 895bc85e8f2ceab2d684e208a16f4ecb95accb11 data/moresnifferflowers/trim_pattern/grain.json
 0fedef90b6e78dbcdf50de55820d866caf9573ed data/moresnifferflowers/trim_pattern/nether_wart.json
 7e2493a1a4af318375e79c46a14fd513640cf219 data/moresnifferflowers/trim_pattern/tater.json
-0d9eff4e86701be63416c14c86d1f2be83a1d4fa data/moresnifferflowers/worldgen/configured_feature/corrupted_tree.json
+a4cdfc84faf29c3e025ecd6dcb0f0766d8fd2e4a data/moresnifferflowers/worldgen/configured_feature/corrupted_tree.json
 6f3416ed1145e07629d9a8934ce9c52564080ea0 data/moresnifferflowers/worldgen/configured_feature/corrupted_vivicus_tree.json
 efd2f0fc80589d38a3e7ad33682ae78a9de238e9 data/moresnifferflowers/worldgen/configured_feature/cured_vivicus_tree.json
 991a68e6463d01ab494fffc58e0f3673cb6fbcba data/moresnifferflowers/worldgen/placed_feature/corrupted_tree.json

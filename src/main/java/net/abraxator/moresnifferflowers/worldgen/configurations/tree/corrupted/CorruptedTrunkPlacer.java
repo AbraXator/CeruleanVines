@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
+import java.lang.annotation.Retention;
 import java.util.*;
 import java.util.function.BiConsumer;
 
@@ -38,7 +40,6 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
     @Override
     public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource pRandom, int pFreeTreeHeight, BlockPos pPos, TreeConfiguration pConfig) {
         List<FoliagePlacer.FoliageAttachment> ret = new ArrayList<>();
-        List<Branch> branches = new ArrayList<>();
         int lastLogHeight = pFreeTreeHeight - ((int) Mth.randomBetween(pRandom, 2, 3));
         BlockPos.MutableBlockPos mainTrunk = pPos.mutable();
         Direction growthDir = null;
@@ -50,9 +51,8 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
             
             this.placeLog(pLevel, pBlockSetter, pRandom, mainTrunk, pConfig);
             for (int b = 0; b < pRandom.nextInt(2); b++) {
-                addBranch(mainTrunk, Direction.Plane.HORIZONTAL.getRandomDirection(pRandom), branches, pRandom, i);
+                addBranch(mainTrunk.immutable(), ret, pBlockSetter, pLevel, pConfig, pRandom, pFreeTreeHeight);
             }
-            placeBranch(branches, ret, pBlockSetter, pRandom, i, pFreeTreeHeight);
             
             if (growthDir != null) {
                 pPos = pPos.relative(growthDir).relative(growthDir.getClockWise());
@@ -108,46 +108,57 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
         return ret;
     }
 
-    private void addBranch(BlockPos blockPos, Direction direction, List<Branch> branches, RandomSource random, int height) {
-        if (height >= 3) {
-            direction = direction.getOpposite();
-            Direction finalDir = Branch.computeBranchDir(direction, random, 0.5D);
-            branches.add(new Branch(blockPos.relative(finalDir), finalDir, 0,false));
+    private void addBranch(BlockPos blockPos, List<FoliagePlacer.FoliageAttachment> ret, BiConsumer<BlockPos, BlockState> pBlockSetter, LevelSimulatedReader level, TreeConfiguration config, RandomSource random, int pFreeTreeHeight) {
+        Direction direction = computeBranchDir(random);
+        BlockPos.MutableBlockPos pos = blockPos.relative(direction).mutable();
+        int branchHeight = Math.min(random.nextIntBetweenInclusive(3, 6), pFreeTreeHeight);
+        
+        for (int i = 0; i < branchHeight; i++) {
+            this.placeLog(level, pBlockSetter, random, pos, config);
+            //pBlockSetter.accept(branch.pos, Blocks.ORANGE_WOOL.defaultBlockState());
+            if(random.nextDouble() >= 0.66D) {
+                this.placeLog(level, pBlockSetter, random, pos.move(direction), config);
+                //pBlockSetter.accept(branch.pos.relative(branch.direction), Blocks.ORANGE_WOOL.defaultBlockState());
+            }
+            
+            pos.move(Direction.UP);
+            
+            if(i == branchHeight - 1) {
+                ret.add(new FoliagePlacer.FoliageAttachment(pos.immutable(), 0, false));
+            }
         }
     }
 
-    private void placeBranch(List<Branch> branches, List<FoliagePlacer.FoliageAttachment> ret, BiConsumer<BlockPos, BlockState> pBlockSetter, RandomSource random, int height, int pFreeTreeHeight) {
+    /*private void placeBranch(List<Branch> branches, List<FoliagePlacer.FoliageAttachment> ret, BiConsumer<BlockPos, BlockState> pBlockSetter, LevelSimulatedReader level, TreeConfiguration config, RandomSource random, int height, int pFreeTreeHeight) {
         for (int i = 0; i < branches.size(); i++) {
             Branch branch = branches.get(i);
             
             if(branch.last) {
-                ret.add(new FoliagePlacer.FoliageAttachment(branch.pos, 0, false));
             } else {
-                pBlockSetter.accept(branch.pos, Blocks.ORANGE_WOOL.defaultBlockState());
+                this.placeLog(level, pBlockSetter, random, branch.pos, config);
+                //pBlockSetter.accept(branch.pos, Blocks.ORANGE_WOOL.defaultBlockState());
                 if(random.nextBoolean()) {
-                    pBlockSetter.accept(branch.pos.relative(branch.direction), Blocks.ORANGE_WOOL.defaultBlockState());
+                    this.placeLog(level, pBlockSetter, random, branch.pos.relative(branch.direction), config);
+                    //pBlockSetter.accept(branch.pos.relative(branch.direction), Blocks.ORANGE_WOOL.defaultBlockState());
                 }
 
                 Direction direction = Branch.computeBranchDir(branch.direction, random, 0.3D);
                 BlockPos blockPos = branch.pos.relative(direction).above();
                 boolean last = branch.lenght > 3 && height >= pFreeTreeHeight - random.nextInt(1);
                 
-                branches.set(i, new Branch(blockPos, direction, 1, last));
+                branches.set(i, new Branch(blockPos, direction, 1, height == pFreeTreeHeight - 1));
             }
         }
+    }*/
+
+    private static Direction computeBranchDir(RandomSource random) {
+        Direction direction = Direction.Plane.HORIZONTAL.getRandomDirection(random);
+        Direction clockAdjusted = random.nextBoolean() ? direction.getClockWise() : direction.getCounterClockWise();
+        return random.nextBoolean() ? direction : clockAdjusted;
     }
     
-    
-
     @Override
     protected boolean validTreePos(LevelSimulatedReader pLevel, BlockPos pPos) {
         return true;
-    }
-    
-    private record Branch(BlockPos pos, Direction direction, int lenght, boolean last) {
-        private static Direction computeBranchDir(Direction direction, RandomSource random, double chance) {
-            Direction clockAdjusted = random.nextBoolean() ? direction.getClockWise() : direction.getCounterClockWise();
-            return random.nextDouble() <= chance ? direction : clockAdjusted;
-        }
     }
 }

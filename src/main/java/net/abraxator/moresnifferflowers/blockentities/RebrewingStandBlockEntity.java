@@ -32,6 +32,7 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import oshi.util.tuples.Pair;
 
+import java.security.PublicKey;
 import java.util.*;
 import java.util.function.Predicate;
 
