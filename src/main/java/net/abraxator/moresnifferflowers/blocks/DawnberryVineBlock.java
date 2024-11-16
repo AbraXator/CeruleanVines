@@ -1,6 +1,8 @@
 package net.abraxator.moresnifferflowers.blocks;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.core.BlockPos;
@@ -8,11 +10,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
@@ -36,12 +40,18 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBlock, ModCropBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_4;
     public static final BooleanProperty IS_SHEARED = BooleanProperty.create("is_sheared");
-    public static final MapCodec<DawnberryVineBlock> CODEC = simpleCodec(DawnberryVineBlock::new);
-    private final MultifaceSpreader spreader = new MultifaceSpreader(this);
+    public static final MapCodec<DawnberryVineBlock> CODEC = RecordCodecBuilder.mapCodec(p_304392_ -> 
+            p_304392_.group(propertiesCodec(), Codec.BOOL.fieldOf("evil").forGetter(DawnberryVineBlock::isEvil))
+                    .apply(p_304392_, DawnberryVineBlock::new));
 
-    public DawnberryVineBlock(Properties pProperties) {
+    private final MultifaceSpreader spreader = new MultifaceSpreader(this);
+    private final boolean evil;
+
+    public DawnberryVineBlock(Properties pProperties, boolean evil) {
         super(pProperties);
         this.registerDefaultState(this.defaultBlockState().setValue(AGE, 0).setValue(IS_SHEARED, Boolean.FALSE));
+
+        this.evil = evil;
     }
 
     @Override
@@ -105,8 +115,8 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
 
     private InteractionResult dropMaxAgeLoot(BlockState blockState, Level level, BlockPos pos, Player player) {
         RandomSource randomSource = level.getRandom();
-        final ItemStack DAWNBERRY = new ItemStack(ModItems.DAWNBERRY.get(), randomSource.nextIntBetweenInclusive(1, 2));
-        final ItemStack SEEDS = new ItemStack(ModItems.DAWNBERRY_VINE_SEEDS.get(), randomSource.nextIntBetweenInclusive(0, 1));
+        final ItemStack DAWNBERRY = new ItemStack(evil ? ModItems.GLOOMBERRY.get() : ModItems.DAWNBERRY.get(), randomSource.nextIntBetweenInclusive(1, 2));
+        final ItemStack SEEDS = new ItemStack(evil ? ModItems.GLOOMBERRY_VINE_SEEDS.get() : ModItems.DAWNBERRY_VINE_SEEDS.get(), randomSource.nextIntBetweenInclusive(0, 1));
 
         popResource(level, pos, DAWNBERRY);
         popResource(level, pos, SEEDS);
@@ -165,5 +175,9 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
     @Override
     public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return Shapes.empty();
+    }
+
+    public boolean isEvil() {
+        return evil;
     }
 }
