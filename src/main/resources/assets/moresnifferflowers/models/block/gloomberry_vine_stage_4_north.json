@@ -1,0 +1,8 @@
+{
+    "parent": "moresnifferflowers:block/dawnberry_vine_stage_3_north",
+	"textures": {
+		"0": "moresnifferflowers:block/gloomberry_vine_stage_4",
+		"1": "moresnifferflowers:block/gloomberry_vine_stage_3",
+		"particle": "moresnifferflowers:block/gloomberry_vine_stage_3"
+	}
+}

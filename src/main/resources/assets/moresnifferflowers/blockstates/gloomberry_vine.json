@@ -1,0 +1,784 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0"
+      },
+      "when": {
+        "north": "true",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "true",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "true",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "up": "true",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "true",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_0",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 0
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1"
+      },
+      "when": {
+        "north": "true",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "true",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "true",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "up": "true",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "true",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_1",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2"
+      },
+      "when": {
+        "north": "true",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "true",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "true",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "up": "true",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "true",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_2",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3"
+      },
+      "when": {
+        "north": "true",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "true",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "true",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "true",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "up": "true",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "x": 270
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "true",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_3",
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_north"
+      },
+      "when": {
+        "north": "true",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_north"
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_east",
+        "uvlock": true
+      },
+      "when": {
+        "east": "true",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_east",
+        "uvlock": true
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_south",
+        "uvlock": true
+      },
+      "when": {
+        "south": "true",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_south",
+        "uvlock": true
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_west",
+        "uvlock": true
+      },
+      "when": {
+        "west": "true",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_west",
+        "uvlock": true
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_up",
+        "uvlock": true
+      },
+      "when": {
+        "up": "true",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_up",
+        "uvlock": true
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_down",
+        "uvlock": true
+      },
+      "when": {
+        "down": "true",
+        "age": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "moresnifferflowers:block/gloomberry_vine_stage_4_down",
+        "uvlock": true
+      },
+      "when": {
+        "down": "false",
+        "east": "false",
+        "north": "false",
+        "south": "false",
+        "up": "false",
+        "west": "false",
+        "age": 4
+      }
+    }
+  ]
+}
