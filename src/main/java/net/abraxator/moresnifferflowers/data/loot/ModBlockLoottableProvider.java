@@ -24,6 +24,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.neoforged.fml.common.Mod;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,6 +46,8 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.DAWNBERRY_VINE.get())
                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                         .hasProperty(DawnberryVineBlock.AGE, 4)))));
+        dropSelf(ModBlocks.GLOOMBERRY_VINE.get());
+
         add(ModBlocks.AMBER_BLOCK.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .when(hasSilkTouch())
@@ -131,7 +134,8 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                         .hasProperty(ModStateProperties.AGE_3, 3))
                                 .invert())));
-        
+        dropSelf(ModBlocks.DYESCRAPIA_PLANT.get());
+
         dropSelf(ModBlocks.CORRUPTED_LOG.get());
         dropSelf(ModBlocks.CORRUPTED_WOOD.get());
         dropSelf(ModBlocks.STRIPPED_CORRUPTED_LOG.get());
@@ -153,6 +157,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                                 .when(LootItemRandomChanceCondition.randomChance(0.175F))
                 )
         ));
+        dropSelf(ModBlocks.DECAYED_LOG.get());
 
         dropSelf(ModBlocks.VIVICUS_LOG.get());
         dropSelf(ModBlocks.VIVICUS_WOOD.get());

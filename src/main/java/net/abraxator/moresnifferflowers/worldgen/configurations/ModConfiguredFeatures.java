@@ -116,7 +116,7 @@ public class ModConfiguredFeatures {
     private static TreeConfiguration.TreeConfigurationBuilder vivicusTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(ModBlocks.VIVICUS_LOG.get()),
-                new CorruptedTrunkPlacer(32, 24, 24),
+                new VivicusTrunkPlacer(20, 2, 2),
                 //new VivicusTrunkPlacer(6, 3, 3, UniformInt.of(3, 5), 1F, UniformInt.of(0, 1), blockHolderGetter.getOrThrow(ModTags.ModBlockTags.VIVICUS_TREE_REPLACABLE)),
                 BlockStateProvider.simple(ModBlocks.VIVICUS_LEAVES.get().defaultBlockState()),
                 new FancyFoliagePlacer(ConstantInt.of(3), ConstantInt.of(4), 4),
