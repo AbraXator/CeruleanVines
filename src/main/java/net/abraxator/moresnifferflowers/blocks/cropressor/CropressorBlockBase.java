@@ -31,14 +31,14 @@ import org.jetbrains.annotations.Nullable;
 public class CropressorBlockBase extends HorizontalDirectionalBlock {
     public final Part PART;
     protected BlockPos ENTITY_POS;
-    protected static final VoxelShape OUT_EAST = Block.box(2, 0, 2, 16, 10, 14);
-    protected static final VoxelShape OUT_SOUTH = Block.box(2, 0, 2, 14, 10, 16);
-    protected static final VoxelShape OUT_WEST = Block.box(0, 0, 2, 14, 10, 14);
-    protected static final VoxelShape OUT_NORTH = Block.box(2, 0, 0, 14, 10, 14);
-    protected static final VoxelShape CENTER_EAST = Block.box(1, 0, 2, 16, 10, 14);
-    protected static final VoxelShape CENTER_SOUTH = Block.box(2, 0, 1, 14, 10, 16);
-    protected static final VoxelShape CENTER_WEST = Block.box(0, 0, 2, 15, 10, 14);
-    protected static final VoxelShape CENTER_NORTH = Block.box(2, 0, 0, 14, 10, 15);
+    protected static final VoxelShape OUT_EAST = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape OUT_SOUTH = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape OUT_WEST = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape OUT_NORTH = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape CENTER_EAST = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape CENTER_SOUTH = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape CENTER_WEST = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape CENTER_NORTH = Block.box(0, 0, 0, 16, 11, 16);
     public static final MapCodec<CropressorBlockBase> CODEC = simpleCodec(properties1 -> new CropressorBlockBase(properties1, Part.CENTER));
     
     public CropressorBlockBase(Properties pProperties, Part part) {

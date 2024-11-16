@@ -1,31 +1,99 @@
 {
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "moresnifferflowers:item/cropressed_nether_wart",
+		"particle": "moresnifferflowers:item/cropressed_nether_wart"
+	},
+	"elements": [
+		{
+			"from": [6, 0, 6],
+			"to": [10, 6, 10],
+			"faces": {
+				"north": {"uv": [9, 12.5, 11, 15.5], "texture": "#0"},
+				"east": {"uv": [12.5, 9.5, 14.5, 12.5], "texture": "#0"},
+				"south": {"uv": [11, 12.5, 13, 15.5], "texture": "#0"},
+				"west": {"uv": [13, 0, 15, 3], "texture": "#0"},
+				"up": {"uv": [4.5, 15, 2.5, 13], "texture": "#0"},
+				"down": {"uv": [6.5, 13, 4.5, 15], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 6, 5],
+			"to": [11, 12, 11],
+			"faces": {
+				"north": {"uv": [3.5, 7, 6.5, 10], "texture": "#0"},
+				"east": {"uv": [7, 3.5, 10, 6.5], "texture": "#0"},
+				"south": {"uv": [6.5, 7, 9.5, 10], "texture": "#0"},
+				"west": {"uv": [9.5, 6.5, 12.5, 9.5], "texture": "#0"},
+				"up": {"uv": [12.5, 12.5, 9.5, 9.5], "texture": "#0"},
+				"down": {"uv": [6.5, 10, 3.5, 13], "texture": "#0"}
+			}
+		},
+		{
+			"name": "cube_outline",
+			"from": [10.3, 6.3, 10.3],
+			"to": [5.7, -0.3, 5.7],
+			"faces": {
+				"north": {"uv": [6.5, 10, 9, 13.5], "texture": "#0"},
+				"east": {"uv": [0, 10.5, 2.5, 14], "texture": "#0"},
+				"south": {"uv": [10.5, 0, 13, 3.5], "texture": "#0"},
+				"west": {"uv": [12.5, 3.5, 15, 7], "texture": "#0"},
+				"up": {"uv": [12.5, 6, 10, 3.5], "texture": "#0"},
+				"down": {"uv": [15, 7, 12.5, 9.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "cube_outline",
+			"from": [11.3, 12.3, 11.3],
+			"to": [4.7, 5.7, 4.7],
+			"faces": {
+				"north": {"uv": [0, 0, 3.5, 3.5], "texture": "#0"},
+				"east": {"uv": [0, 3.5, 3.5, 7], "texture": "#0"},
+				"south": {"uv": [3.5, 0, 7, 3.5], "texture": "#0"},
+				"west": {"uv": [3.5, 3.5, 7, 7], "texture": "#0"},
+				"up": {"uv": [3.5, 10.5, 0, 7], "texture": "#0"},
+				"down": {"uv": [10.5, 0, 7, 3.5], "texture": "#0"}
+			}
+		}
+	],
 	"gui_light": "front",
 	"display": {
-        "ground": {
-            "rotation": [ 0, 0, 0 ],
-            "translation": [ 0, 3, 2],
-            "scale":[ 0.6, 0.6, 0.6 ]
-        },
-        "thirdperson_righthand": {
-            "rotation": [ 75, 45, 0 ],
-            "translation": [ 2, -2, 0],
-            "scale": [ 0.6, 0.6, 0.6 ]
-        },
-        "firstperson_righthand": {
-            "rotation": [ 0, 45, 0 ],
-            "translation": [ 3, 0, 0 ],
-            "scale": [ 0.8, 0.8, 0.8 ]
-        },
-        "firstperson_lefthand": {
-            "rotation": [ 0, 225, 0 ],
-            "translation": [ 0, 0, -3 ],
-            "scale": [ 0.8, 0.80, 0.80 ]
-        }
-      },
-	"loader": "neoforge:obj",
-	"flip-v": true,
-	"model": "moresnifferflowers:models/item/obj/cropressed_nether_wart.obj",
-	"textures": {
-		"texture0": "moresnifferflowers:item/obj/cropressed_nether_wart"
+		"thirdperson_righthand": {
+			"translation": [0, 3, 1],
+			"scale": [0.55, 0.55, 0.55]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 3, 1],
+			"scale": [0.55, 0.55, 0.55]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 25],
+			"translation": [1.13, 3.2, 1.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -90, 25],
+			"translation": [1.13, 3.2, 1.13],
+			"scale": [0.68, 0.68, 0.68]
+		},
+		"ground": {
+			"rotation": [-1.99, -0.78, 43.75],
+			"translation": [0, 2, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [47.55, 39.68, -33.99],
+			"translation": [1, 1.25, 0]
+		},
+		"head": {
+			"rotation": [-123.25, 0, 0],
+			"translation": [0, -6.25, -9.5],
+			"scale": [0.79297, 0.5957, 0.67773]
+		},
+		"fixed": {
+			"rotation": [168.35, 9.93, 140.01],
+			"translation": [-0.25, 0, -2.25]
+		}
 	}
 }

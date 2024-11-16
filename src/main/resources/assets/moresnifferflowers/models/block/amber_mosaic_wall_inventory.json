@@ -1,6 +1,5 @@
 {
   "parent": "minecraft:block/wall_inventory",
-  "render_type": "translucent",
   "textures": {
     "wall": "moresnifferflowers:block/amber_mosaic"
   }

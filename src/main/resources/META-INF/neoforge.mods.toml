@@ -22,6 +22,6 @@ description='''Sniffer Flowers, but there's More of them and they actually do so
 [[dependencies.moresnifferflowers]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21]"
+    versionRange="[1.21, 1.21.1]"
     ordering="NONE"
     side="BOTH"

@@ -44,8 +44,8 @@ public class CropressorBlockEntityRenderer implements BlockEntityRenderer<Cropre
             };
 
             pPoseStack.pushPose();
-            pPoseStack.translate(factor.x, 0.225, factor.z);
-            pPoseStack.scale(0.25F, 0.25F, 0.25F);
+            pPoseStack.translate(factor.x, 0.35, factor.z);
+            pPoseStack.scale(0.4F, 0.4F, 0.4F);
             itemRenderer.renderStatic(pBlockEntity.result, ItemDisplayContext.FIXED, pPackedLight, pPackedOverlay, pPoseStack, pBufferSource, pBlockEntity.getLevel(), ((int) pBlockEntity.getBlockPos().asLong()));
             pPoseStack.popPose();
         }
