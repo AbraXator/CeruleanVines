@@ -4,6 +4,7 @@ import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import net.abraxator.moresnifferflowers.worldgen.configurations.tree.boblingtree.BoblingTreeTrunkPlacer;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted.CorruptedTrunkPlacer;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.vivicus.VivicusTrunkPlacer;
 import net.abraxator.moresnifferflowers.worldgen.feature.ModFeatures;
@@ -32,6 +33,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePla
 import net.minecraft.world.level.levelgen.feature.foliageplacers.RandomSpreadFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.RandomizedIntStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.AttachedToLeavesDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecorator;
@@ -43,6 +45,7 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("corrupted_tree"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> CURED_VIVICUS_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("cured_vivicus_tree"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> CORRUPTED_VIVICUS_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("corrupted_vivicus_tree"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BOBLING_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("bobling_tree"));
     
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<Block> blockHolderGetter = context.lookup(Registries.BLOCK);
@@ -97,12 +100,23 @@ public class ModConfiguredFeatures {
                                 )
                         ))
                         .build());
+        FeatureUtils.register(
+                context, BOBLING_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                        SimpleStateProvider.simple(Blocks.STONE.defaultBlockState()),
+                        new BoblingTreeTrunkPlacer(4, 2, 1),
+                        SimpleStateProvider.simple(Blocks.AIR.defaultBlockState()),
+                        //new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 2),
+                        new RandomSpreadFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), UniformInt.of(2, 3), 20),
+                        new TwoLayersFeatureSize(2, 0, 2)
+                )
+                        .ignoreVines()
+                        .build());
     }
     
     private static TreeConfiguration.TreeConfigurationBuilder vivicusTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(ModBlocks.VIVICUS_LOG.get()),
-                new VivicusTrunkPlacer(5, 1, 1),
+                new CorruptedTrunkPlacer(32, 24, 24),
                 //new VivicusTrunkPlacer(6, 3, 3, UniformInt.of(3, 5), 1F, UniformInt.of(0, 1), blockHolderGetter.getOrThrow(ModTags.ModBlockTags.VIVICUS_TREE_REPLACABLE)),
                 BlockStateProvider.simple(ModBlocks.VIVICUS_LEAVES.get().defaultBlockState()),
                 new FancyFoliagePlacer(ConstantInt.of(3), ConstantInt.of(4), 4),

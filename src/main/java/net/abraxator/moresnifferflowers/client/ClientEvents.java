@@ -142,7 +142,8 @@ public class ClientEvents {
             var colorable = ((ColorableVivicusBlock) pState.getBlock());
             if(pTintIndex == 0) {
                 var dyedValue = Dye.colorForDye(colorable, pState.getValue(colorable.getColorProperty()));
-
+                var color = colorable.getDyeFromBlock(pState).color();
+                
                 if(pState.is(ModBlocks.VIVICUS_LEAVES) || pState.is(ModBlocks.VIVICUS_LEAVES_SPROUT) || pState.is(ModBlocks.VIVICUS_SAPLING)) {
                     int startRed = (dyedValue >> 16) & 0xFF;
                     int startGreen = (dyedValue >> 8) & 0xFF;
@@ -150,14 +151,14 @@ public class ClientEvents {
                     float[] colorHSB =  Color.RGBtoHSB(startRed, startGreen, startBlue, null);
 
                     assert pPos != null;
-                    float hue = colorHSB[0] + ((1+Mth.sin((float)pPos.getX() + (float)pPos.getY() + (float)pPos.getZ())) / 15);
+                    float hue = (float) (colorHSB[0] + 1 + Mth.sin((float)pPos.getX() + (float)pPos.getY() + (float)pPos.getZ()) / 15);
 
                     if (colorHSB[1] < 0.3 && colorHSB[2] < 0.8){
-                        colorHSB[2] = colorHSB[2] - ((1+Mth.sin((float)pPos.getX() + (float)pPos.getY() + (float)pPos.getZ())) / 15);
+                        colorHSB[2] = (float) (colorHSB[2] - 1 + Mth.sin((float)pPos.getX() + (float)pPos.getY() + (float)pPos.getZ())) / 15;
                     }
 
                     if (colorHSB[1] < 0.3){
-                        colorHSB[1] = colorHSB[1] + ((1+Mth.sin((float)pPos.getX() + (float)pPos.getY() + (float)pPos.getZ())) / 12);
+                        colorHSB[1] = (float) (colorHSB[1] + 1 + Mth.sin((float)pPos.getX() + (float)pPos.getY() + (float)pPos.getZ())) / 12;
                     }
 
 
