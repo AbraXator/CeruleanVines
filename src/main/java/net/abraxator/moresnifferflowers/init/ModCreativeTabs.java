@@ -26,6 +26,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.AMBER_MOSAIC_SLAB.get());
                 output.accept(ModBlocks.AMBER_MOSAIC_WALL.get());
                 output.accept(ModBlocks.CHISELED_AMBER.get());
+                output.accept(ModBlocks.CHISELED_AMBER_SLAB.get());
                 output.accept(ModBlocks.CRACKED_AMBER.get());
 
                 output.accept(ModItems.AMBER_SHARD.get());

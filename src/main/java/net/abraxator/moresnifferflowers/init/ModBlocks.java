@@ -40,11 +40,12 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> AMBER_BLOCK = registerBlockWithItem("amber_block", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
     public static final DeferredBlock<Block> CHISELED_AMBER = registerBlockWithItem("chiseled_amber", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
+    public static final DeferredBlock<Block> CHISELED_AMBER_SLAB = registerBlockWithItem("chiseled_amber_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.CHISELED_AMBER.get())));
     public static final DeferredBlock<Block> CRACKED_AMBER = registerBlockWithItem("cracked_amber", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
     public static final DeferredBlock<Block> AMBER_MOSAIC = registerBlockWithItem("amber_mosaic", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
     public static final DeferredBlock<Block> AMBER_MOSAIC_SLAB = registerBlockWithItem("amber_mosaic_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.AMBER_MOSAIC.get())));
     public static final DeferredBlock<Block> AMBER_MOSAIC_STAIRS = registerBlockWithItem("amber_mosaic_stairs", () -> stair(AMBER_MOSAIC.get()));
-    public static final DeferredBlock<Block> AMBER_MOSAIC_WALL = registerBlockWithItem("amber_mosaic_wall", () -> new HalfTRasparentWallBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.AMBER_MOSAIC.get())));
+    public static final DeferredBlock<Block> AMBER_MOSAIC_WALL = registerBlockWithItem("amber_mosaic_wall", () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.AMBER_MOSAIC.get())));
 
     public static final DeferredBlock<Block> CAULORFLOWER = registerBlockNoItem("caulorflower", () ->  new CaulorflowerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).sound(SoundType.GRASS).strength(2.0F).noCollission().noOcclusion().randomTicks()));
     
