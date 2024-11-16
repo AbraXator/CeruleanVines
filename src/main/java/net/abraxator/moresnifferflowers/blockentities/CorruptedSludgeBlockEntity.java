@@ -2,6 +2,7 @@ package net.abraxator.moresnifferflowers.blockentities;
 
 import net.abraxator.moresnifferflowers.entities.CorruptedProjectile;
 import net.abraxator.moresnifferflowers.init.ModBlockEntities;
+import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -51,11 +52,10 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
 
         @Override
         public boolean handleGameEvent(ServerLevel pLevel, Holder<GameEvent> pGameEvent, GameEvent.Context pContext, Vec3 pPos) {
-            if(pGameEvent.is(GameEvent.BLOCK_DESTROY) && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_BLOCKS) && !pPos.equals(this.positionSource.getPosition(pLevel).get()) && pContext.sourceEntity() instanceof Player player) {
+            if(pGameEvent.is(GameEvent.BLOCK_DESTROY) && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get()) && pContext.sourceEntity() instanceof Player player) {
                 Vec3 center = this.getListenerSource().getPosition(pLevel).get();
                 var radius = 2.5;
-                var projectileNumber = pLevel.random.nextInt(10) + 2;
-                int attempts = 0;
+                var projectileNumber = pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES) ? pLevel.random.nextInt(1) + 1 : pLevel.random.nextInt(5) + 1;
                 Set<Vec3> placed = new HashSet<>();
                 
                 for(int i = 0; i < projectileNumber; i++) {

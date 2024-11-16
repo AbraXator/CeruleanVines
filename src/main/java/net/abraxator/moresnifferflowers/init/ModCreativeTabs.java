@@ -36,6 +36,7 @@ public class ModCreativeTabs {
 
                 output.accept(ModItems.DYESPRIA_SEEDS.get());
                 output.accept(ModItems.DYESPRIA.get());
+                output.accept(ModItems.DYESCRAPIA.get());
                 
                 output.accept(ModBlocks.CAULORFLOWER.get());
                 

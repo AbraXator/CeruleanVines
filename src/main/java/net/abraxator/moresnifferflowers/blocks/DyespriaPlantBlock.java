@@ -4,10 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.abraxator.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
 import net.abraxator.moresnifferflowers.components.Colorable;
 import net.abraxator.moresnifferflowers.components.Dye;
-import net.abraxator.moresnifferflowers.init.ModAdvancementCritters;
-import net.abraxator.moresnifferflowers.init.ModDataComponents;
-import net.abraxator.moresnifferflowers.init.ModItems;
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import net.abraxator.moresnifferflowers.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -128,10 +125,10 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         return mayPlaceOn(pLevel.getBlockState(pPos.below()));
     }
-
+    
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if(!pState.is(pNewState.getBlock()) && pLevel.getBlockEntity(pPos) instanceof DyespriaPlantBlockEntity entity && isMaxAge(pState)) {
+        if(!pNewState.is(ModBlocks.DYESCRAPIA_PLANT) && !pState.is(pNewState.getBlock()) && pLevel.getBlockEntity(pPos) instanceof DyespriaPlantBlockEntity entity && isMaxAge(pState)) {
             var dyespria = ModItems.DYESPRIA.get().getDefaultInstance();
             var dye = new ItemStack(DyeItem.byColor(entity.dye.color()), entity.dye.amount());
 

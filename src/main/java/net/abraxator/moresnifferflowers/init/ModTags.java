@@ -28,6 +28,7 @@ public class ModTags {
         public static final TagKey<Block> GIANT_CROPS = create(Registries.BLOCK, "giant_crops");
         public static final TagKey<Block> VIVICUS_BLOCKS = create(Registries.BLOCK, "vivicus_blocks");
         public static final TagKey<Block> CORRUPTED_BLOCKS = create(Registries.BLOCK, "corrupted_blocks");
+        public static final TagKey<Block> CORRUPTED_SLUDGE = create(Registries.BLOCK, "corrupted_sludge");
         public static final TagKey<Block> VIVICUS_TREE_REPLACABLE = create(Registries.BLOCK, "vivicus_tree_replacable");
     }
 

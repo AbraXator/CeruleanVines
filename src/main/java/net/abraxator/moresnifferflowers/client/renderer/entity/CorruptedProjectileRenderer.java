@@ -25,18 +25,20 @@ public class CorruptedProjectileRenderer extends EntityRenderer<CorruptedProject
 
     @Override
     public void render(CorruptedProjectile pEntity, float pEntityYaw, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight) {
-        pPoseStack.pushPose();
-        pPoseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTick, pEntity.yRotO, pEntity.getYRot()) - 180F));
-        pPoseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(pPartialTick, pEntity.xRotO, pEntity.getXRot())));
-        pPoseStack.translate(0, -0.5, 0);
-        pPoseStack.scale(0.6F, 0.6F, 0.6F);
-        this.model.renderToBuffer(
-                pPoseStack,
-                pBufferSource.getBuffer(this.model.renderType(this.getTextureLocation(pEntity))),
-                pPackedLight,
-                OverlayTexture.NO_OVERLAY);
-        pPoseStack.popPose();
-        super.render(pEntity, pEntityYaw, pPartialTick, pPoseStack, pBufferSource, pPackedLight);
+        if(pEntity.tickCount >= 2 || !(this.entityRenderDispatcher.camera.getEntity().distanceToSqr(pEntity) < 12.25)) {
+            pPoseStack.pushPose();
+            pPoseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTick, pEntity.yRotO, pEntity.getYRot()) - 180F));
+            pPoseStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(pPartialTick, pEntity.xRotO, pEntity.getXRot())));
+            pPoseStack.translate(0, -0.5, 0);
+            pPoseStack.scale(0.6F, 0.6F, 0.6F);
+            this.model.renderToBuffer(
+                    pPoseStack,
+                    pBufferSource.getBuffer(this.model.renderType(this.getTextureLocation(pEntity))),
+                    pPackedLight,
+                    OverlayTexture.NO_OVERLAY);
+            pPoseStack.popPose();
+            super.render(pEntity, pEntityYaw, pPartialTick, pPoseStack, pBufferSource, pPackedLight);
+        }
     }
 
     @Override

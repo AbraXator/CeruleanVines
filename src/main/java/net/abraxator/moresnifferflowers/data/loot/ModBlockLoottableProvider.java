@@ -87,6 +87,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.BOBLING_HEAD.get());
         dropSelf(ModBlocks.CRACKED_AMBER.get());
         dropSelf(ModBlocks.CHISELED_AMBER.get());
+        dropSelf(ModBlocks.CHISELED_AMBER_SLAB.get());
         dropSelf(ModBlocks.AMBER_MOSAIC.get());
         dropSelf(ModBlocks.AMBER_MOSAIC_SLAB.get());
         dropSelf(ModBlocks.AMBER_MOSAIC_STAIRS.get());

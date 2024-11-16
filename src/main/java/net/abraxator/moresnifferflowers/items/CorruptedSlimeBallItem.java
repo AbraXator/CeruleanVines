@@ -35,7 +35,7 @@ public class CorruptedSlimeBallItem extends Item implements ProjectileItem {
                 0.4F / (pLevel.getRandom().nextFloat() * 0.4F + 0.8F)
         );
         if (!pLevel.isClientSide) {
-            CorruptedProjectile projectile = new CorruptedProjectile(pLevel);
+            CorruptedProjectile projectile = new CorruptedProjectile(pLevel, pPlayer);
             projectile.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1.5F, 1.0F);
             pLevel.addFreshEntity(projectile);
         }
