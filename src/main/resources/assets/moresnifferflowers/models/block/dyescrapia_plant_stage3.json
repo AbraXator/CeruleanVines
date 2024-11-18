@@ -1,0 +1,36 @@
+{
+	"gui_light": "front",
+	"ambientocclusion": false,
+ 	"render_type": "cutout",
+	"display": {
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 2],
+            "scale":[ 0.6, 0.6, 0.6 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 75, 45, 0 ],
+            "translation": [ 2, -2, 0],
+            "scale": [ 0.6, 0.6, 0.6 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 45, 0 ],
+            "translation": [ 3, 0, 0 ],
+            "scale": [ 0.8, 0.8, 0.8 ]
+        },
+        "firstperson_lefthand": {
+            "rotation": [ 0, 225, 0 ],
+            "translation": [ 0, 0, -3 ],
+            "scale": [ 0.8, 0.80, 0.80 ]
+        }
+      },
+	"loader": "neoforge:obj",
+	"flip-v": true,
+	"model": "moresnifferflowers:models/block/obj/dyescrapia_plant.obj",
+	"textures": {
+		"texture0": "moresnifferflowers:block/obj/dyescrapia_plant_0",
+		"particle": "moresnifferflowers:block/obj/dyescrapia_plant_0",
+		"texture1": "moresnifferflowers:block/obj/dyescrapia_plant_1"
+
+	}
+}
