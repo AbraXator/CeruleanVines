@@ -31,9 +31,10 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
         Holder<Block> holder = block.builtInRegistryHolder();
         Corruptable corruptable = holder.getData(ModDataMaps.CORRUPTABLE);
         Block hardcodedBlock = hardcodedBlock(block);
+        Optional<Block> ret = Optional.empty();
         
         if(hardcodedBlock != Blocks.AIR) {
-            return Optional.of(hardcodedBlock);
+            ret = Optional.of(hardcodedBlock);
         }
         
         if (corruptable != null) {
@@ -45,13 +46,13 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
             for (Pair<Block, Integer> pair : corruptableList) {
                 cumulativeWeight += pair.getSecond();
                 if(randomValue < cumulativeWeight) {
-                    return Optional.of(pair.getFirst());
+                    ret = Optional.of(pair.getFirst());
                 }
             }
         }
         
         MoreSnifferFlowers.LOGGER.error("No block selected for corruption, probably missing entry");
-        return Optional.empty();
+        return ret;
     }
     
     private static Block hardcodedBlock(Block block) {
@@ -67,7 +68,7 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
             return ModBlocks.GARBUSH_BOTTOM.get();
         }
         
-        return block;
+        return Blocks.AIR;
     }
     
     public static boolean canBeCorrupted(Block block, RandomSource random) {
