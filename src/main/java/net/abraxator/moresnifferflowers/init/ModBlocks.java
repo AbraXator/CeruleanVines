@@ -51,6 +51,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> AMBER_MOSAIC_SLAB = registerBlockWithItem("amber_mosaic_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.AMBER_MOSAIC.get())));
     public static final DeferredBlock<Block> AMBER_MOSAIC_STAIRS = registerBlockWithItem("amber_mosaic_stairs", () -> stair(AMBER_MOSAIC.get()));
     public static final DeferredBlock<Block> AMBER_MOSAIC_WALL = registerBlockWithItem("amber_mosaic_wall", () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.AMBER_MOSAIC.get())));
+    public static final DeferredBlock<Block> GARNET_BLOCK = registerBlockWithItem("garnet_block", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(5.0F).noOcclusion()));
 
     public static final DeferredBlock<Block> CAULORFLOWER = registerBlockNoItem("caulorflower", () ->  new CaulorflowerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).sound(SoundType.GRASS).strength(2.0F).noCollission().noOcclusion().randomTicks()));
     

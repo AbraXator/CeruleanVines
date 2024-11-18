@@ -1,0 +1,7 @@
+{
+  "render_type": "cutout",
+  "parent": "moresnifferflowers:block/farmland_cross",
+  "textures": {
+    "cross": "moresnifferflowers:block/garbush_top_stage_7"
+  }
+}
