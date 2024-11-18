@@ -118,11 +118,11 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         return false;
     }
     
-    private boolean canBeTransformed(BlockState state) {
+    private static boolean canBeTransformed(BlockState state) {
         return TRANSFORMED_BLOCKS.containsKey(state.getBlock()) || state.is(BlockTags.LOGS);
     }
     
-    private boolean checkState(BlockState state) {
+    private static boolean checkState(BlockState state) {
         return state.is(ModBlocks.CORRUPTED_SLIME_LAYER) && state.getValue(ModStateProperties.LAYER) != 8;
     }
 }

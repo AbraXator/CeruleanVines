@@ -113,7 +113,6 @@ public class ClientEvents {
         event.registerSpriteSet(ModParticles.CARROT.get(), CarrotParticle.Provider::new);
         event.registerSpriteSet(ModParticles.AMBUSH.get(), AmbushParticle.Provider::new);
         event.registerSpriteSet(ModParticles.GIANT_CROP.get(), GiantCropParticle.Provider::new);
-        event.registerSpriteSet(ModParticles.GIANT_CROP.get(), GiantCropParticle.Provider::new);
         event.registerSpriteSet(ModParticles.BONDRIPIA.get(), BondripiaParticle.BondripiaParticleProvider::new);
     }
 

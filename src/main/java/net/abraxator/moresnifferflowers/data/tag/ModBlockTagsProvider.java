@@ -67,6 +67,7 @@ public class ModBlockTagsProvider extends IntrinsicHolderTagsProvider<Block> {
                 ModBlocks.CORRUPTED_SLUDGE.get());
         this.tag(ModTags.ModBlockTags.CORRUPTED_SLUDGE).add(ModBlocks.CORRUPTED_LOG.get(), ModBlocks.CORRUPTED_LEAVES.get(), ModBlocks.CORRUPTED_LEAVES_BUSH.get());
         this.tag(ModTags.ModBlockTags.VIVICUS_TREE_REPLACABLE).addTag(BlockTags.REPLACEABLE_BY_TREES).add(ModBlocks.VIVICUS_SAPLING.get());
+        this.tag(ModTags.ModBlockTags.CORRUPTION_TRANSFORMABLES).add(ModBlocks.DYESPRIA_PLANT.get(), ModBlocks.DAWNBERRY_VINE.get());
     
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_DYESPRIA.get(), ModBlocks.POTTED_CORRUPTED_SAPLING.get(), ModBlocks.POTTED_VIVICUS_SAPLING.get());
     }

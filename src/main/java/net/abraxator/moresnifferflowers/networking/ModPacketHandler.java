@@ -24,6 +24,7 @@ public class ModPacketHandler {
     
     protected void registerServerToClient(ModPacketRegistrar registrar) {
         registrar.play(DyespriaDisplayModeChangePacket.TYPE, DyespriaDisplayModeChangePacket.STREAM_CODEC);
+        registrar.play(CorruptedSludgePacket.TYPE, CorruptedSludgePacket.STREAM_CODEC);
     }
 
     public static ModPacketHandler register(IEventBus iEventBus, int version) {
