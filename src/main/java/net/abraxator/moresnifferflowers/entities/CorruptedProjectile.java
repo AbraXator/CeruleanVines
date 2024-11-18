@@ -1,6 +1,7 @@
 package net.abraxator.moresnifferflowers.entities;
 
 import com.google.common.collect.Maps;
+import net.abraxator.moresnifferflowers.data.datamaps.Corruptable;
 import net.abraxator.moresnifferflowers.init.*;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -24,6 +25,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class CorruptedProjectile extends ThrowableItemProjectile {
     public static final Map<Block, Block> TRANSFORMED_BLOCKS = Util.make(Maps.newHashMap(), map -> {
@@ -103,23 +105,17 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
     }
     
     private boolean transformBlock(Level level, BlockPos blockPos) {
-        var pos = BlockPos.findClosestMatch(blockPos, 1, 1, blockPos1 -> canBeTransformed(level.getBlockState(blockPos1)));
+        var pos = BlockPos.findClosestMatch(blockPos, 1, 1, blockPos1 -> Corruptable.canBeCorrupted(level.getBlockState(blockPos1).getBlock(), random));
         var state = level.getBlockState(blockPos);
         
-        if(canBeTransformed(state)) {
-            var transformedBlock = TRANSFORMED_BLOCKS.getOrDefault(state.getBlock(),
-                    state.is(BlockTags.LOGS) ? ModBlocks.DECAYED_LOG.get() : state.getBlock());
-
-            level.setBlock(blockPos, transformedBlock.withPropertiesOf(state), 3);
+        if(Corruptable.canBeCorrupted(state.getBlock(), random)) {
+            Optional<Block> optional = Corruptable.getCorruptedBlock(state.getBlock(), this.random);
+            optional.ifPresent(block -> level.setBlock(blockPos, block.withPropertiesOf(state), 3));
             
             return true;
         }
         
         return false;
-    }
-    
-    private static boolean canBeTransformed(BlockState state) {
-        return TRANSFORMED_BLOCKS.containsKey(state.getBlock()) || state.is(BlockTags.LOGS);
     }
     
     private static boolean checkState(BlockState state) {

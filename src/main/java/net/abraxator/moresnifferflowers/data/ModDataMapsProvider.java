@@ -1,13 +1,19 @@
 package net.abraxator.moresnifferflowers.data;
 
+import com.mojang.datafixers.util.Pair;
+import net.abraxator.moresnifferflowers.data.datamaps.Corruptable;
+import net.abraxator.moresnifferflowers.data.datamaps.ModDataMaps;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModDataMapsProvider extends DataMapProvider {
@@ -34,5 +40,12 @@ public class ModDataMapsProvider extends DataMapProvider {
         compostables.add(ModBlocks.VIVICUS_SAPLING.asItem().builtInRegistryHolder(), new Compostable(1.0F), false);
         compostables.add(ModBlocks.CORRUPTED_LEAVES.asItem().builtInRegistryHolder(), new Compostable(1.0F), false);
         compostables.add(ModBlocks.VIVICUS_LEAVES.asItem().builtInRegistryHolder(), new Compostable(1.0F), false);
+        
+        var corruptables = this.builder(ModDataMaps.CORRUPTABLE);
+        corruptables.add(Blocks.GRASS_BLOCK.builtInRegistryHolder(), new Corruptable(List.of(Pair.of(Blocks.DIRT, 100), Pair.of(Blocks.COARSE_DIRT, 60))), false);
+        corruptables.add(Blocks.DIRT.builtInRegistryHolder(), new Corruptable(Blocks.COARSE_DIRT), false);
+        corruptables.add(Blocks.DIRT.builtInRegistryHolder(), new Corruptable(Blocks.COARSE_DIRT), false);
+        corruptables.add(BlockTags.LOGS, new Corruptable(ModBlocks.DECAYED_LOG.get()), false);
+        
     }
 }
