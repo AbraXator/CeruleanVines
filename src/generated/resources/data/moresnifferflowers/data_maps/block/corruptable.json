@@ -1,0 +1,32 @@
+{
+  "values": {
+    "#minecraft:logs": {
+      "value": [
+        {
+          "block": "moresnifferflowers:decayed_log",
+          "weight": 100
+        }
+      ]
+    },
+    "minecraft:dirt": {
+      "value": [
+        {
+          "block": "minecraft:coarse_dirt",
+          "weight": 100
+        }
+      ]
+    },
+    "minecraft:grass_block": {
+      "value": [
+        {
+          "block": "minecraft:dirt",
+          "weight": 100
+        },
+        {
+          "block": "minecraft:coarse_dirt",
+          "weight": 60
+        }
+      ]
+    }
+  }
+}
