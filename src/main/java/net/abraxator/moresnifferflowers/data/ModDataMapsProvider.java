@@ -44,7 +44,9 @@ public class ModDataMapsProvider extends DataMapProvider {
         var corruptables = this.builder(ModDataMaps.CORRUPTABLE);
         corruptables.add(Blocks.GRASS_BLOCK.builtInRegistryHolder(), new Corruptable(List.of(Pair.of(Blocks.DIRT, 100), Pair.of(Blocks.COARSE_DIRT, 60))), false);
         corruptables.add(Blocks.DIRT.builtInRegistryHolder(), new Corruptable(Blocks.COARSE_DIRT), false);
-        corruptables.add(Blocks.DIRT.builtInRegistryHolder(), new Corruptable(Blocks.COARSE_DIRT), false);
         corruptables.add(BlockTags.LOGS, new Corruptable(ModBlocks.DECAYED_LOG.get()), false);
+        corruptables.add(BlockTags.LEAVES, new Corruptable(Blocks.AIR), false);
+
+
     }
 }

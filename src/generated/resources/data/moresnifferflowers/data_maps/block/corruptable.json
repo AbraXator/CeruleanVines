@@ -1,5 +1,13 @@
 {
   "values": {
+    "#minecraft:leaves": {
+      "value": [
+        {
+          "block": "minecraft:air",
+          "weight": 100
+        }
+      ]
+    },
     "#minecraft:logs": {
       "value": [
         {

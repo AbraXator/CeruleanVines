@@ -39,7 +39,7 @@ public class ModBlocks {
     
     public static final DeferredBlock<Block> AMBUSH_BOTTOM = registerBlockNoItem("ambush_bottom", () -> new AmbushBlockBase(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
     public static final DeferredBlock<Block> AMBUSH_TOP = registerBlockNoItem("ambush_top", () -> new AmbushBlockUpper(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
-    public static final DeferredBlock<Block> GARBUSH_BOTTOM = registerBlockNoItem("grabush_bottom", () -> new AmbushBlockBase(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
+    public static final DeferredBlock<Block> GARBUSH_BOTTOM = registerBlockNoItem("garbush_bottom", () -> new AmbushBlockBase(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
     public static final DeferredBlock<Block> GARBUSH_TOP = registerBlockNoItem("garbush_top", () -> new AmbushBlockUpper(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
 
     

@@ -18,7 +18,9 @@ public class ModCreativeTabs {
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.DAWNBERRY_VINE_SEEDS.get());
                 output.accept(ModItems.DAWNBERRY.get());
-                
+                output.accept(ModItems.GLOOMBERRY_VINE_SEEDS);
+                output.accept(ModItems.GLOOMBERRY);
+
                 output.accept(ModItems.AMBUSH_SEEDS.get());
                 output.accept(ModBlocks.AMBER_BLOCK.get());
                 output.accept(ModBlocks.AMBER_MOSAIC.get());
@@ -34,16 +36,23 @@ public class ModCreativeTabs {
                 output.accept(ModItems.DRAGONFLY.get());
                 output.accept(ModItems.AMBUSH_BANNER_PATTERN.get());
 
+                output.accept(ModItems.GARBUSH_SEEDS);
+                output.accept(ModBlocks.GARNET_BLOCK.get());
+                output.accept(ModItems.GARNET_SHARD);
+
                 output.accept(ModItems.DYESPRIA_SEEDS.get());
                 output.accept(ModItems.DYESPRIA.get());
-                output.accept(ModItems.DYESCRAPIA.get());
-                
+                output.accept(ModItems.DYESCRAPIA);
+
                 output.accept(ModBlocks.CAULORFLOWER.get());
                 
                 output.accept(ModItems.BONMEELIA_SEEDS.get());
                 output.accept(ModItems.JAR_OF_BONMEEL.get());
                 output.accept(ModItems.BONDRIPIA_SEEDS);
-                
+                output.accept(ModItems.BONWILTIA_SEEDS.get());
+                output.accept(ModItems.JAR_OF_ACID.get());
+                output.accept(ModItems.ACIDRIPIA_SEEDS);
+
                 output.accept(ModItems.BELT_PIECE.get());
                 output.accept(ModItems.ENGINE_PIECE.get());
                 output.accept(ModItems.TUBE_PIECE.get());
@@ -80,7 +89,29 @@ public class ModCreativeTabs {
                 output.accept(ModItems.CORRUPTED_BOBLING_CORE);
                 output.accept(ModItems.BOBLING_CORE);
                 output.accept(ModItems.CORRUPTED_SLIME_BALL);
-                
+
+                output.accept(ModBlocks.VIVICUS_LOG.get());
+                output.accept(ModBlocks.VIVICUS_WOOD.get());
+                output.accept(ModBlocks.STRIPPED_VIVICUS_LOG.get());
+                output.accept(ModBlocks.STRIPPED_VIVICUS_WOOD.get());
+                output.accept(ModBlocks.VIVICUS_PLANKS.get());
+                output.accept(ModBlocks.VIVICUS_STAIRS.get());
+                output.accept(ModBlocks.VIVICUS_SLAB.get());
+                output.accept(ModBlocks.VIVICUS_FENCE.get());
+                output.accept(ModBlocks.VIVICUS_FENCE_GATE.get());
+                output.accept(ModBlocks.VIVICUS_DOOR.get());
+                output.accept(ModBlocks.VIVICUS_TRAPDOOR.get());
+                output.accept(ModBlocks.VIVICUS_PRESSURE_PLATE.get());
+                output.accept(ModBlocks.VIVICUS_BUTTON.get());
+                output.accept(ModBlocks.VIVICUS_LEAVES.get());
+                output.accept(ModBlocks.VIVICUS_SAPLING.get());
+                output.accept(ModBlocks.SPROUTING_VIVICUS_LEAVES.get());
+                output.accept(ModBlocks.VIVICUS_LEAVES_SPROUT.get());
+                output.accept(ModItems.VIVICUS_SIGN.get());
+                output.accept(ModItems.VIVICUS_HANGING_SIGN.get());
+                output.accept(ModItems.VIVICUS_BOAT);
+                output.accept(ModItems.VIVICUS_CHEST_BOAT);
+
                 output.accept(ModBlocks.CORRUPTED_LOG.get());
                 output.accept(ModBlocks.CORRUPTED_WOOD.get());
                 output.accept(ModBlocks.STRIPPED_CORRUPTED_LOG.get());
@@ -104,27 +135,6 @@ public class ModCreativeTabs {
                 output.accept(ModItems.CORRUPTED_CHEST_BOAT);
 
 
-                output.accept(ModBlocks.VIVICUS_LOG.get());
-                output.accept(ModBlocks.VIVICUS_WOOD.get());
-                output.accept(ModBlocks.STRIPPED_VIVICUS_LOG.get());
-                output.accept(ModBlocks.STRIPPED_VIVICUS_WOOD.get());
-                output.accept(ModBlocks.VIVICUS_PLANKS.get());
-                output.accept(ModBlocks.VIVICUS_STAIRS.get());
-                output.accept(ModBlocks.VIVICUS_SLAB.get());
-                output.accept(ModBlocks.VIVICUS_FENCE.get());
-                output.accept(ModBlocks.VIVICUS_FENCE_GATE.get());
-                output.accept(ModBlocks.VIVICUS_DOOR.get());
-                output.accept(ModBlocks.VIVICUS_TRAPDOOR.get());
-                output.accept(ModBlocks.VIVICUS_PRESSURE_PLATE.get());
-                output.accept(ModBlocks.VIVICUS_BUTTON.get());
-                output.accept(ModBlocks.VIVICUS_LEAVES.get());
-                output.accept(ModBlocks.VIVICUS_SAPLING.get());
-                output.accept(ModBlocks.SPROUTING_VIVICUS_LEAVES.get());
-                output.accept(ModBlocks.VIVICUS_LEAVES_SPROUT.get());
-                output.accept(ModItems.VIVICUS_SIGN.get());
-                output.accept(ModItems.VIVICUS_HANGING_SIGN.get());
-                output.accept(ModItems.VIVICUS_BOAT);
-                output.accept(ModItems.VIVICUS_CHEST_BOAT);
             })
             .backgroundTexture(MoreSnifferFlowers.loc("textures/gui/container/tab_items.png"))
             .withTabsImage(MoreSnifferFlowers.loc("textures/gui/container/tabs.png"))
