@@ -98,6 +98,8 @@ public class MoreSnifferFlowers {
         fireBlock.setFlammable(ModBlocks.VIVICUS_LEAVES.get(), 5, 20);
         fireBlock.setFlammable(ModBlocks.VIVICUS_SAPLING.get(), 5, 20);
         fireBlock.setFlammable(ModBlocks.SPROUTING_VIVICUS_LEAVES.get(), 5, 20);
+        
+        ModCauldronInteractions.bootstrap();
     }
     
     public static ResourceLocation loc(String path) {
