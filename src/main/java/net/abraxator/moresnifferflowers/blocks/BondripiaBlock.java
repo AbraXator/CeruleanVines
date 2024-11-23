@@ -107,7 +107,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
     
     private void fillCauldron(Level level, BlockPos blockPos, BlockState blockState) {
-        BlockState blockstate = ModBlocks.BONMEEL_FILLED_CAULDRON.defaultBlockState();
+        BlockState blockstate = ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
         int fluidLevel = blockState.getOptionalValue(LayeredCauldronBlock.LEVEL).orElse(0);
         if(fluidLevel < 3) {
             level.setBlockAndUpdate(blockPos, blockstate.setValue(LayeredCauldronBlock.LEVEL, fluidLevel + 1));

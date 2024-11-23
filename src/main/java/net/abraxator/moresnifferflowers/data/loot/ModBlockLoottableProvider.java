@@ -102,10 +102,8 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         //UNCOMMON
                         .add(LootItem.lootTableItem(Items.CARROT).setWeight(50))
                         .add(LootItem.lootTableItem(Items.POTATO).setWeight(50))
-                        .add(LootItem.lootTableItem(Items.BEETROOT).setWeight(50))
                         .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).setWeight(50))
                         .add(LootItem.lootTableItem(Items.NETHER_WART).setWeight(50))
-                        .add(LootItem.lootTableItem(Items.WHEAT).setWeight(50))
                         .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).setWeight(50))
                         //RARE
                         .add(LootItem.lootTableItem(Items.SNORT_POTTERY_SHERD).setWeight(25))
@@ -116,14 +114,16 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(ModItems.PRESS_PIECE.get()).setWeight(25))
                         .add(LootItem.lootTableItem(ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get()).setWeight(25))
                         .add(LootItem.lootTableItem(ModItems.AMBUSH_BANNER_PATTERN.get()).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.EXTRACTION_BOTTLE.get()).setWeight(25))
                         //VERY RARE
                         .add(LootItem.lootTableItem(Items.TORCHFLOWER_SEEDS).setWeight(12))
                         .add(LootItem.lootTableItem(Items.PITCHER_POD).setWeight(12))
                         .add(LootItem.lootTableItem(Items.SNIFFER_EGG).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.DAWNBERRY_VINE_SEEDS.get()).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.AMBUSH_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.CAULORFLOWER_SEEDS.get()).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.DYESPRIA_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.BONDRIPIA_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModBlocks.VIVICUS_SAPLING.get()).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.BONMEELIA_SEEDS.get()).setWeight(12))));
 
         dropSelf(ModBlocks.BOBLING_HEAD.get());
