@@ -1,14 +1,15 @@
 package net.abraxator.moresnifferflowers.entities;
 
-import com.google.common.collect.Maps;
 import net.abraxator.moresnifferflowers.data.datamaps.Corruptable;
 import net.abraxator.moresnifferflowers.init.*;
-import net.minecraft.Util;
+import net.abraxator.moresnifferflowers.networking.CorruptedSludgePacket;
+import net.minecraft.client.multiplayer.chat.report.ReportEnvironment;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -18,25 +19,16 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 
-import java.util.Map;
 import java.util.Optional;
 
 public class CorruptedProjectile extends ThrowableItemProjectile {
-    public static final Map<Block, Block> TRANSFORMED_BLOCKS = Util.make(Maps.newHashMap(), map -> {
-        map.put(Blocks.DIRT, Blocks.COARSE_DIRT);
-        map.put(Blocks.GRASS_BLOCK, Blocks.COARSE_DIRT);
-        map.put(Blocks.SAND, Blocks.RED_SAND);
-        map.put(Blocks.STONE, Blocks.NETHERRACK);
-        map.put(ModBlocks.DYESPRIA_PLANT.get(), ModBlocks.DYESCRAPIA_PLANT.get());
-        map.put(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.GLOOMBERRY_VINE.get());
-    });
-    
     public CorruptedProjectile(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -110,8 +102,18 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         
         if(Corruptable.canBeCorrupted(state.getBlock(), random)) {
             Optional<Block> optional = Corruptable.getCorruptedBlock(state.getBlock(), this.random);
-            optional.ifPresent(block -> level.setBlock(blockPos, block.withPropertiesOf(state), 3));
-            
+            optional.ifPresent(block -> {
+                if (level.getBlockState(blockPos).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.Corruptable corruptable && level instanceof ServerLevel serverLevel) {
+                    corruptable.onCorrupt(serverLevel, blockPos, level.getBlockState(blockPos), block);
+                } else {
+                    level.setBlockAndUpdate(blockPos, block.withPropertiesOf(state));
+                }
+                level.addParticle(
+                        new DustParticleOptions(Vec3.fromRGB24(0x0443248).toVector3f(), 1.0F),
+                        blockPos.getX() + level.random.nextDouble(), blockPos.getY() + level.random.nextDouble(), blockPos.getZ() + level.random.nextDouble(),
+                        0.0D, 0.0D, 0.0D);
+            });
+
             return true;
         }
         

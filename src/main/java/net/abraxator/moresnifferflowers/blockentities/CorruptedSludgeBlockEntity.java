@@ -9,6 +9,7 @@ import net.abraxator.moresnifferflowers.networking.CorruptedSludgePacket;
 import net.abraxator.moresnifferflowers.networking.DyespriaDisplayModeChangePacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -63,9 +64,21 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 Vec3 startPos = this.getListenerSource().getPosition(pLevel).get();
                 Vec3 dirNormal = new Vec3(pPos.x - startPos.x, pPos.y - startPos.y, pPos.z - startPos.z).normalize();
                 Optional<Block> corrupted = Corruptable.getCorruptedBlock(pContext.affectedState().getBlock(), pLevel.random);
+                BlockPos blockPos = BlockPos.containing(pPos);
                 corrupted.ifPresent(block -> {
                     PacketDistributor.sendToAllPlayers(new CorruptedSludgePacket(startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()));
-                    pLevel.setBlockAndUpdate(BlockPos.containing(pPos), block.withPropertiesOf(pContext.affectedState()));
+                    if(pLevel.getBlockState(BlockPos.containing(pPos)).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.Corruptable corruptable) {
+                        corruptable.onCorrupt(pLevel, blockPos, pLevel.getBlockState(BlockPos.containing(pPos)), block);
+                    } else {
+                        pLevel.setBlockAndUpdate(BlockPos.containing(pPos), block.withPropertiesOf(pContext.affectedState()));
+                    }
+                    pLevel.sendParticles(
+                            new DustParticleOptions(Vec3.fromRGB24(0x0443248).toVector3f(), 1.0F),
+                            blockPos.getX() + pLevel.random.nextDouble(), blockPos.getY() + pLevel.random.nextDouble(), blockPos.getZ() + pLevel.random.nextDouble(),
+                            10,
+                            0.0D, 0.0D, 0.0D,
+                            0.0D
+                    );
                 }); 
             }
             

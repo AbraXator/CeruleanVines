@@ -5,9 +5,9 @@ import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AmbushBlockEntity extends GrowingCropBlockEntity {
-    public AmbushBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.AMBUSH.get(), pPos, pBlockState, 0.001f);
+public class XbushBlockEntity extends GrowingCropBlockEntity {
+    public XbushBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(ModBlockEntities.XBUSH.get(), pPos, pBlockState, 0.001f);
     }
 
     @Override

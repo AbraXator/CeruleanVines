@@ -64,8 +64,10 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
             return ModBlocks.BONWILTIA.get();
         } else if(block == ModBlocks.BONDRIPIA.get()) {
             return ModBlocks.BONDRIPIA.get();
-        } else if(block == ModBlocks.AMBUSH_BOTTOM.get() || block == ModBlocks.AMBUSH_TOP.get()) {
+        } else if(block == ModBlocks.AMBUSH_BOTTOM.get()) {
             return ModBlocks.GARBUSH_BOTTOM.get();
+        } else if (block == ModBlocks.AMBUSH_TOP.get()) {
+            return ModBlocks.GARBUSH_TOP.get();
         }
         
         return Blocks.AIR;

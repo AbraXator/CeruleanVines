@@ -2,7 +2,6 @@ package net.abraxator.moresnifferflowers.blocks;
 
 import com.mojang.serialization.MapCodec;
 import net.abraxator.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
-import net.abraxator.moresnifferflowers.components.Colorable;
 import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.init.*;
 import net.minecraft.core.BlockPos;
@@ -41,9 +40,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
-
-public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEntityBlock {
+public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEntityBlock, Corruptable {
     public static final MapCodec<DyespriaPlantBlock> CODEC = simpleCodec(DyespriaPlantBlock::new);
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 16, 14);
 
@@ -139,6 +136,18 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
+
+    @Override
+    public void onCorrupt(ServerLevel level, BlockPos pos, BlockState oldState, Block corruptedBlock) {
+        if(level.getBlockEntity(pos) instanceof DyespriaPlantBlockEntity entity && isMaxAge(oldState)) {
+            var dye = new ItemStack(DyeItem.byColor(entity.dye.color()), entity.dye.amount());
+
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), dye);
+        }
+        
+        Corruptable.super.onCorrupt(level, pos, oldState, corruptedBlock);
+    }
+    
     @Override
     public boolean mayPlaceOn(BlockState pState) {
         return pState.is(BlockTags.DIRT) && !(pState.getBlock() instanceof FarmBlock);
