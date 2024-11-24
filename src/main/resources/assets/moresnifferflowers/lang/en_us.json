@@ -1,16 +1,25 @@
 {
 	"item.moresnifferflowers.dawnberry": "Dawnberry",
 	"item.moresnifferflowers.dawnberry_vine_seeds": "Dawnberry Vine Seeds",
+	"item.moresnifferflowers.gloomberry": "Gloomberry",
+	"item.moresnifferflowers.gloomberry_vine_seeds": "Gloomberry Vine Seeds",
+
 	"item.moresnifferflowers.ambush_seeds": "Ambush Seeds",
+	"item.moresnifferflowers.garbush_seeds": "Garbush Seeds",
 	"item.moresnifferflowers.ambush_banner_pattern": "Banner Pattern",
 	"item.moresnifferflowers.ambush_banner_pattern.desc": "Ambush",
 	"item.moresnifferflowers.amber_shard": "Amber Shard",
+	"item.moresnifferflowers.garnet_shard": "Garnet Shard",
 	"item.moresnifferflowers.dragonfly": "Dragonfly",
 	"item.moresnifferflowers.dyespria": "Dyespria",
+	"item.moresnifferflowers.dyescrapia": "Dyecrapia",
 	"item.moresnifferflowers.dyespria_seeds": "Dyespria Seed",
 	"item.moresnifferflowers.jar_of_bonmeel": "Jar of Bonmeel",
+	"item.moresnifferflowers.jar_of_acid": "Jar of Acid",
 	"item.moresnifferflowers.bonmeelia_seeds": "Bonmeelia Seed",
+	"item.moresnifferflowers.bonwiltia_seeds": "Bonwiltia Seed",
 	"item.moresnifferflowers.bondripia_seeds": "Bondripia Seed",
+	"item.moresnifferflowers.acidripia_seeds": "Acidripia Seed",
 	"item.moresnifferflowers.belt_piece": "Belt Piece",
 	"item.moresnifferflowers.tube_piece": "Tube Piece",
 	"item.moresnifferflowers.scrap_piece": "Scrap Piece",
@@ -40,7 +49,7 @@
 	"item.moresnifferflowers.carotene_armor_trim_smithing_template": "Smithing Template",
 	"item.moresnifferflowers.grain_armor_trim_smithing_template": "Smithing Template",
 	"item.moresnifferflowers.beat_armor_trim_smithing_template": "Smithing Template",
-	"item.moresnifferflowers.corrupted_slime_ball": "Corrupted Ball",
+	"item.moresnifferflowers.corrupted_slime_ball": "Corrupted Slime Ball",
 	"item.moresnifferflowers.vivicus_antidote": "Vivicus Antidote",
 	"item.moresnifferflowers.corrupted_bobling_core": "Corrupted Bobling Core",
 	"item.moresnifferflowers.bobling_core": "Bobling Core",
@@ -49,6 +58,8 @@
 	"item.moresnifferflowers.corrupted_boat": "Corrupted Boat",
 	"item.moresnifferflowers.corrupted_chest_boat": "Corrupted Boat with Chest",
 	"item.moresnifferflowers.caulorflower_seeds": "Caulorflower Seed",
+
+
 
 	"block.moresnifferflowers.dawnberry_vine": "Dawnberry Vine",
 	"block.moresnifferflowers.ambush": "Ambush",
@@ -60,9 +71,24 @@
 	"block.moresnifferflowers.cracked_amber": "Cracked Amber",
 	"block.moresnifferflowers.chiseled_amber": "Chiseled Amber",
 	"block.moresnifferflowers.chiseled_amber_slab": "Chiseled Amber Slab",
+	
+	"block.moresnifferflowers.gloomberry_vine": "Gloomberry Vine",
+	"block.moresnifferflowers.garbush": "Garbush",
+	"block.moresnifferflowers.garnet_block": "Garnet Block",
+	"block.moresnifferflowers.garnet_mosaic": "Garnet Mosaic",
+	"block.moresnifferflowers.garnet_mosaic_stairs": "Garnet Mosaic Stairs",
+	"block.moresnifferflowers.garnet_mosaic_slab": "Garnet Mosaic Slab",
+	"block.moresnifferflowers.garnet_mosaic_wall": "Garnet Mosaic Wall",
+	"block.moresnifferflowers.cracked_garnet": "Cracked Garnet",
+	"block.moresnifferflowers.chiseled_garnet": "Chiseled Garnet",
+	"block.moresnifferflowers.chiseled_garnet_slab": "Chiseled Garnet Slab",
+
 	"block.moresnifferflowers.caulorflower": "Caulorflower",
 	"block.moresnifferflowers.bonmeelia": "Bonmeelia",
 	"block.moresnifferflowers.bondripia": "Bondripia",
+	"block.moresnifferflowers.bonwiltia": "Bonwiltia",
+	"block.moresnifferflowers.Acidripia": "Acidripia",
+	
 	"block.moresnifferflowers.cropressor": "Cropressor",
 	"block.moresnifferflowers.giant_potato": "Giant Potato",
 	"block.moresnifferflowers.giant_netherwart": "Giant Nether Wart",
@@ -92,7 +118,6 @@
 	"block.moresnifferflowers.vivicus_leaves_sprout": "Vivicus Leaves Sprout",
 	"block.moresnifferflowers.corrupted_sprouting_vivicus_leaves": "Corrupted Sprouting Vivicus Leaves",
 	
-
 	"block.moresnifferflowers.corrupted_log": "Corrupted Log",
 	"block.moresnifferflowers.corrupted_wood": "Corrupted Wood",
 	"block.moresnifferflowers.stripped_corrupted_log": "Stripped Corrupted Log",
@@ -112,6 +137,8 @@
 	"block.moresnifferflowers.corrupted_hanging_sign": "Corrupted Hanging Sign",
 	"block.moresnifferflowers.corrupted_sludge": "Corrupted Sludge",
 	"block.moresnifferflowers.corrupted_slime_layer": "Corrupted Slime Layer",
+
+
 
 	"message.more_sniffer_flowers.dyespria_mode": "Current Mode",
 

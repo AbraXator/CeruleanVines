@@ -1,0 +1,11 @@
+{
+  "render_type": "cutout",
+  "parent": "moresnifferflowers:block/farmland_cross",
+  "textures": {
+<<<<<<<< HEAD:src/main/resources/assets/moresnifferflowers/models/block/garbush/ambush_top_stage_4.json
+    "cross": "moresnifferflowers:block/ambush_top_stage_4"
+========
+    "cross": "moresnifferflowers:block/bonwiltia_stage0"
+>>>>>>>> origin/update:src/main/resources/assets/moresnifferflowers/models/block/bonwiltia_stage0.json
+  }
+}

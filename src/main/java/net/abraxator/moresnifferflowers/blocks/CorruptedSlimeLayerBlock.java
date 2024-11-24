@@ -38,7 +38,7 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
             pEntity.playSound(this.soundType.getFallSound(), this.soundType.getVolume() * 0.5F, this.soundType.getPitch() * 0.75F);
         }
     }
-    
+
     @Override
     public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
         double d0 = Math.abs(pEntity.getDeltaMovement().y);
@@ -56,13 +56,5 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
             }
         }
     }
-    
-    @Override
-    protected boolean isRandomlyTicking(BlockState pState) {
-        return false;
-    }
 
-    @Override
-    protected void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-    }
 }

@@ -86,7 +86,46 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(ModItems.AMBUSH_SEEDS.get()).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.DYESPRIA_SEEDS.get()).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.BONMEELIA_SEEDS.get()).setWeight(12))));
-        
+
+        add(ModBlocks.GARNET_BLOCK.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .when(hasSilkTouch())
+                        .add(LootItem.lootTableItem(ModBlocks.GARNET_BLOCK.get())))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .when(doesNotHaveSilkTouch())
+                        //COMMON
+                        .add(LootItem.lootTableItem(Items.COAL).setWeight(100))
+                        .add(LootItem.lootTableItem(Items.EMERALD).setWeight(100))
+                        .add(LootItem.lootTableItem(Items.STICK).setWeight(100))
+                        .add(LootItem.lootTableItem(ModItems.AMBER_SHARD.get()).setWeight(100))
+                        .add(LootItem.lootTableItem(ModItems.DRAGONFLY.get()).setWeight(100))
+                        //UNCOMMON
+                        .add(LootItem.lootTableItem(Items.CARROT).setWeight(50))
+                        .add(LootItem.lootTableItem(Items.POTATO).setWeight(50))
+                        .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).setWeight(50))
+                        .add(LootItem.lootTableItem(Items.NETHER_WART).setWeight(50))
+                        .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).setWeight(50))
+                        //RARE
+                        .add(LootItem.lootTableItem(Items.SNORT_POTTERY_SHERD).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.BELT_PIECE.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.ENGINE_PIECE.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.SCRAP_PIECE.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.TUBE_PIECE.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.PRESS_PIECE.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.AMBUSH_BANNER_PATTERN.get()).setWeight(25))
+                        //VERY RARE
+                        .add(LootItem.lootTableItem(Items.TORCHFLOWER_SEEDS).setWeight(12))
+                        .add(LootItem.lootTableItem(Items.PITCHER_POD).setWeight(12))
+                        .add(LootItem.lootTableItem(Items.SNIFFER_EGG).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.DAWNBERRY_VINE_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.AMBUSH_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.CAULORFLOWER_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.DYESPRIA_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.BONDRIPIA_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModBlocks.VIVICUS_SAPLING.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.BONMEELIA_SEEDS.get()).setWeight(12))));
+
         dropSelf(ModBlocks.BOBLING_HEAD.get());
         dropSelf(ModBlocks.CRACKED_AMBER.get());
         dropSelf(ModBlocks.CHISELED_AMBER.get());
@@ -98,12 +137,17 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
 
         add(ModBlocks.AMBUSH_TOP.get(), noDrop());
         dropSelf(ModBlocks.AMBUSH_BOTTOM.get());
+        add(ModBlocks.GARBUSH_TOP.get(), noDrop());
+        dropSelf(ModBlocks.GARBUSH_BOTTOM.get());
+
         dropSelf(ModBlocks.CAULORFLOWER.get());
+
         add(ModBlocks.GIANT_CARROT.get(), giantCropLoot(Items.CARROT, ModItems.CROPRESSED_CARROT.get(), Items.AIR, ModItems.BELT_PIECE.get(), ModItems.CAROTENE_ARMOR_TRIM_SMITHING_TEMPLATE.get()));
         add(ModBlocks.GIANT_POTATO.get(), giantCropLoot(Items.POTATO, ModItems.CROPRESSED_POTATO.get(), Items.AIR, ModItems.TUBE_PIECE.get(), ModItems.TATER_ARMOR_TRIM_SMITHING_TEMPLATE.get()));
         add(ModBlocks.GIANT_NETHERWART.get(), giantCropLoot(Items.NETHER_WART, ModItems.CROPRESSED_NETHERWART.get(), ModItems.BROKEN_REBREWING_STAND.get(), ModItems.ENGINE_PIECE.get(), ModItems.NETHER_WART_ARMOR_TRIM_SMITHING_TEMPLATE.get()));
         add(ModBlocks.GIANT_BEETROOT.get(), giantCropLoot(Items.BEETROOT, ModItems.CROPRESSED_BEETROOT.get(), Items.AIR, ModItems.PRESS_PIECE.get(), ModItems.BEAT_ARMOR_TRIM_SMITHING_TEMPLATE.get()));
         add(ModBlocks.GIANT_WHEAT.get(), giantCropLoot(Items.WHEAT, ModItems.CROPRESSED_WHEAT.get(), Items.AIR, ModItems.SCRAP_PIECE.get(), ModItems.GRAIN_ARMOR_TRIM_SMITHING_TEMPLATE.get()));
+
         add(ModBlocks.BONMEELIA.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(ModItems.BONMEELIA_SEEDS.get())))
@@ -122,6 +166,26 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                                 .and(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONMEELIA.get())
                                         .setProperties((StatePropertiesPredicate.Builder.properties()
                                                 .hasProperty(BonmeeliaBlock.HAS_BOTTLE, true)))))));
+
+        add(ModBlocks.BONWILTIA.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(ModItems.BONMEELIA_SEEDS.get())))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(ModItems.JAR_OF_BONMEEL.get()))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONMEELIA.get())
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(BonmeeliaBlock.AGE, BonmeeliaBlock.MAX_AGE)
+                                        .hasProperty(BonmeeliaBlock.HAS_BOTTLE, true))))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(Items.GLASS_BOTTLE))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONMEELIA.get())
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(BonmeeliaBlock.AGE, BonmeeliaBlock.MAX_AGE))
+                                .invert()
+                                .and(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONMEELIA.get())
+                                        .setProperties((StatePropertiesPredicate.Builder.properties()
+                                                .hasProperty(BonmeeliaBlock.HAS_BOTTLE, true)))))));
+
         dropSelf(ModBlocks.CROPRESSOR_OUT.get());
         dropSelf(ModBlocks.CROPRESSOR_CENTER.get());
         dropSelf(ModBlocks.MORE_SNIFFER_FLOWER.get());
@@ -196,6 +260,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         dropOther(ModBlocks.VIVICUS_WALL_HANGING_SIGN.get(), ModItems.VIVICUS_HANGING_SIGN);
 
         add(ModBlocks.BONDRIPIA.get(), noDrop());
+        add(ModBlocks.ACIDRIPIA.get(), noDrop());
     }
 
     private LootTable.Builder giantCropLoot(Item crop, Item cropressed, Item special, Item piece, Item trim) {

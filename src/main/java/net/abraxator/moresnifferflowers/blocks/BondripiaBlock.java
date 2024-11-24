@@ -1,6 +1,7 @@
 package net.abraxator.moresnifferflowers.blocks;
 
 import net.abraxator.moresnifferflowers.blockentities.BondripiaBlockEntity;
+import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModParticles;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.init.ModTags;
@@ -13,23 +14,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.SporeBlossomBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import org.apache.logging.log4j.util.PropertySource;
-import org.checkerframework.checker.i18nformatter.qual.I18nFormat;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import javax.lang.model.element.ModuleElement;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock, ModCropBlock {
     public BondripiaBlock(Properties p_49795_) {
@@ -102,11 +96,23 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
                             }
                         }
 
+                    } else if (pLevel.getBlockState(currentPos).getBlock() instanceof AbstractCauldronBlock block) {
+                        
                     }
-                    
+
                     currentPos = currentPos.below();
                 }
             }
+        }
+    }
+    
+    private void fillCauldron(Level level, BlockPos blockPos, BlockState blockState) {
+        BlockState blockstate = ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
+        int fluidLevel = blockState.getOptionalValue(LayeredCauldronBlock.LEVEL).orElse(0);
+        if(fluidLevel < 3) {
+            level.setBlockAndUpdate(blockPos, blockstate.setValue(LayeredCauldronBlock.LEVEL, fluidLevel + 1));
+            level.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(blockstate));
+            level.levelEvent(1047, blockPos, 0);
         }
     }
     

@@ -44,6 +44,9 @@ public class ModItems {
     public static final DeferredItem<Item> BONMEELIA_SEEDS = ITEMS.register("bonmeelia_seeds", () -> new ItemNameBlockItem(ModBlocks.BONMEELIA.get(), new Item.Properties()));
     public static final DeferredItem<Item> JAR_OF_BONMEEL = ITEMS.register("jar_of_bonmeel", () -> new JarOfBonmeelItem(new Item.Properties()));
     public static final DeferredItem<Item> BONDRIPIA_SEEDS = ITEMS.register("bondripia_seeds", () -> new ItemNameBlockItem(ModBlocks.BONDRIPIA.get(), new Item.Properties()));
+    public static final DeferredItem<Item> BONWILTIA_SEEDS = ITEMS.register("bonwiltia_seeds", () -> new ItemNameBlockItem(ModBlocks.BONWILTIA.get(), new Item.Properties()));
+    public static final DeferredItem<Item> JAR_OF_ACID = ITEMS.register("jar_of_acid", () -> new JarOfBonmeelItem(new Item.Properties()));
+    public static final DeferredItem<Item> ACIDRIPIA_SEEDS = ITEMS.register("acidripia_seeds", () -> new ItemNameBlockItem(ModBlocks.ACIDRIPIA.get(), new Item.Properties()));
 
     public static final DeferredItem<Item> CROPRESSOR = ITEMS.register("cropressor", () -> new CropressorItem(ModBlocks.CROPRESSOR_OUT.get(), new Item.Properties()));
     public static final DeferredItem<Item> TUBE_PIECE = ITEMS.register("tube_piece", () -> new Item(new Item.Properties()));
@@ -98,4 +101,6 @@ public class ModItems {
     public static final DeferredItem<Item> CAULORFLOWER_SEEDS = ITEMS.register("caulorflower_seeds", () -> new ItemNameBlockItem(ModBlocks.CAULORFLOWER.get(), new Item.Properties()));
     
     public static final DeferredItem<Item> CREATIVE_TAB_ICON = ITEMS.register("creative_tab_icon", () -> new CreativeTabItem(new Item.Properties()));
+    public static final DeferredItem<Item> WAND_OF_CUBING = ITEMS.register("wand_of_cubing", () -> new WandOfCubingItem(new Item.Properties()));
+
 }
