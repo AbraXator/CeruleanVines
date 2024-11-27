@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:bonmeelia_seeds"
+          "name": "moresnifferflowers:bonwiltia_seeds"
         }
       ],
       "rolls": 1.0
@@ -15,7 +15,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "block": "moresnifferflowers:bonmeelia",
+          "block": "moresnifferflowers:bonwiltia",
           "condition": "minecraft:block_state_property",
           "properties": {
             "age": "6",
@@ -26,7 +26,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:jar_of_bonmeel"
+          "name": "moresnifferflowers:jar_of_acid"
         }
       ],
       "rolls": 1.0
@@ -40,7 +40,7 @@
             {
               "condition": "minecraft:inverted",
               "term": {
-                "block": "moresnifferflowers:bonmeelia",
+                "block": "moresnifferflowers:bonwiltia",
                 "condition": "minecraft:block_state_property",
                 "properties": {
                   "age": "6"
@@ -48,7 +48,7 @@
               }
             },
             {
-              "block": "moresnifferflowers:bonmeelia",
+              "block": "moresnifferflowers:bonwiltia",
               "condition": "minecraft:block_state_property",
               "properties": {
                 "bottle": "true"

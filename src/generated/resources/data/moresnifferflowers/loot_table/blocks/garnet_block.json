@@ -53,7 +53,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:coal",
+          "name": "minecraft:raw_copper",
           "weight": 100
         },
         {
@@ -63,52 +63,37 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:stick",
+          "name": "minecraft:raw_iron",
           "weight": 100
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:amber_shard",
+          "name": "moresnifferflowers:garnet_shard",
           "weight": 100
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:dragonfly",
+          "name": "minecraft:raw_gold",
           "weight": 100
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:carrot",
+          "name": "minecraft:iron_ingot",
           "weight": 50
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:potato",
+          "name": "minecraft:gold_ingot",
           "weight": 50
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:beetroot",
+          "name": "minecraft:diamond",
           "weight": 50
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:beetroot_seeds",
-          "weight": 50
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:nether_wart",
-          "weight": 50
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:wheat",
-          "weight": 50
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:wheat_seeds",
+          "name": "minecraft:netherite_scrap",
           "weight": 50
         },
         {
@@ -118,53 +103,28 @@
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:belt_piece",
+          "name": "minecraft:iron_block",
           "weight": 25
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:engine_piece",
+          "name": "minecraft:totem_of_undying",
           "weight": 25
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:scrap_piece",
+          "name": "moresnifferflowers:corrupted_sapling",
           "weight": 25
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:tube_piece",
+          "name": "moresnifferflowers:garbage_armor_trim_smithing_template",
           "weight": 25
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:press_piece",
+          "name": "moresnifferflowers:evil_banner_pattern",
           "weight": 25
-        },
-        {
-          "type": "minecraft:item",
-          "name": "moresnifferflowers:aroma_armor_trim_smithing_template",
-          "weight": 25
-        },
-        {
-          "type": "minecraft:item",
-          "name": "moresnifferflowers:ambush_banner_pattern",
-          "weight": 25
-        },
-        {
-          "type": "minecraft:item",
-          "name": "moresnifferflowers:extraction_bottle",
-          "weight": 25
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:torchflower_seeds",
-          "weight": 12
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:pitcher_pod",
-          "weight": 12
         },
         {
           "type": "minecraft:item",
@@ -173,22 +133,22 @@
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:dawnberry_vine_seeds",
+          "name": "minecraft:wither_skeleton_skull",
           "weight": 12
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:ambush_seeds",
+          "name": "minecraft:netherite_ingot",
           "weight": 12
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:dyespria_seeds",
+          "name": "minecraft:diamond_block",
           "weight": 12
         },
         {
           "type": "minecraft:item",
-          "name": "moresnifferflowers:bonmeelia_seeds",
+          "name": "minecraft:heavy_core",
           "weight": 12
         }
       ],

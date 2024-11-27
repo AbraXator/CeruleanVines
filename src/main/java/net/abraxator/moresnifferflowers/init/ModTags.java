@@ -35,6 +35,8 @@ public class ModTags {
 
     public static class ModBannerPatternTags {
         public static final TagKey<BannerPattern> AMBUSH_BANNER_PATTERN = create(Registries.BANNER_PATTERN, "pattern_item/ambush");
+        public static final TagKey<BannerPattern> EVIL_BANNER_PATTERN = create(Registries.BANNER_PATTERN, "pattern_item/evil");
+
     }
     
     public static class ModBiomeTags {

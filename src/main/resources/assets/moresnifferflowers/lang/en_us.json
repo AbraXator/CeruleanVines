@@ -97,6 +97,7 @@
 	"block.moresnifferflowers.giant_beetroot": "Giant Beetroot",
 	"block.moresnifferflowers.rebrewing_stand": "Rebrewing Stand",	
 	"block.moresnifferflowers.dyespria_plant": "Dyespria",
+	"block.moresnifferflowers.dyescrapia_plant": "Dyecrapia",
 	"block.moresnifferflowers.vivicus_log": "Vivicus Log",
 	"block.moresnifferflowers.vivicus_wood": "Vivicus Wood",
 	"block.moresnifferflowers.stripped_vivicus_log": "Stripped Vivicus Log",
@@ -170,6 +171,7 @@
 	"trim_pattern.moresnifferflowers.beat": "Beat Armor Trim",
 
 	"trim_material.moresnifferflowers.amber": "Amber Material",
+	"trim_material.moresnifferflowers.garnet": "Garnet Material",
 	"trim_material.moresnifferflowers.nether_wart": "Nether Wart Material",
 	"trim_material.moresnifferflowers.potato": "Potato Material",
 	"trim_material.moresnifferflowers.carrot": "Carrot Material",

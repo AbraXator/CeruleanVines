@@ -1,0 +1,8 @@
+{
+  "asset_id": "moresnifferflowers:garbage",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.moresnifferflowers.garbage"
+  },
+  "template_item": "moresnifferflowers:garbage_armor_trim_smithing_template"
+}

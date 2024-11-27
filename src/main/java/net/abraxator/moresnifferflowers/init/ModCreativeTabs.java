@@ -38,7 +38,17 @@ public class ModCreativeTabs {
 
                 output.accept(ModItems.GARBUSH_SEEDS);
                 output.accept(ModBlocks.GARNET_BLOCK.get());
+                output.accept(ModBlocks.GARNET_MOSAIC.get());
+                output.accept(ModBlocks.GARNET_MOSAIC_STAIRS.get());
+                output.accept(ModBlocks.GARNET_MOSAIC_SLAB.get());
+                output.accept(ModBlocks.GARNET_MOSAIC_WALL.get());
+                output.accept(ModBlocks.CHISELED_GARNET.get());
+                output.accept(ModBlocks.CHISELED_GARNET_SLAB.get());
+                output.accept(ModBlocks.CRACKED_GARNET.get());
                 output.accept(ModItems.GARNET_SHARD);
+
+                output.accept(ModItems.GARBAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get());
+                output.accept(ModItems.EVIL_BANNER_PATTERN.get());
 
                 output.accept(ModItems.DYESPRIA_SEEDS.get());
                 output.accept(ModItems.DYESPRIA.get());

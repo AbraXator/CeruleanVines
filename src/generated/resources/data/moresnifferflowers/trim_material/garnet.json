@@ -1,0 +1,9 @@
+{
+  "asset_name": "garnet",
+  "description": {
+    "color": "#8D182B",
+    "translate": "trim_material.moresnifferflowers.garnet"
+  },
+  "ingredient": "moresnifferflowers:garnet_shard",
+  "item_model_index": 0.4
+}

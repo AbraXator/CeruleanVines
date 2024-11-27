@@ -15,12 +15,17 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.MultifaceBlock;
+import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -94,37 +99,29 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .when(doesNotHaveSilkTouch())
                         //COMMON
-                        .add(LootItem.lootTableItem(Items.COAL).setWeight(100))
+                        .add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(100))
                         .add(LootItem.lootTableItem(Items.EMERALD).setWeight(100))
-                        .add(LootItem.lootTableItem(Items.STICK).setWeight(100))
-                        .add(LootItem.lootTableItem(ModItems.AMBER_SHARD.get()).setWeight(100))
-                        .add(LootItem.lootTableItem(ModItems.DRAGONFLY.get()).setWeight(100))
+                        .add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(100))
+                        .add(LootItem.lootTableItem(ModItems.GARNET_SHARD.get()).setWeight(100))
+                        .add(LootItem.lootTableItem(Items.RAW_GOLD).setWeight(100))
                         //UNCOMMON
-                        .add(LootItem.lootTableItem(Items.CARROT).setWeight(50))
-                        .add(LootItem.lootTableItem(Items.POTATO).setWeight(50))
-                        .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).setWeight(50))
-                        .add(LootItem.lootTableItem(Items.NETHER_WART).setWeight(50))
-                        .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).setWeight(50))
+                        .add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(50))
+                        .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(50))
+                        .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(50))
+                        .add(LootItem.lootTableItem(Items.NETHERITE_SCRAP).setWeight(50))
                         //RARE
                         .add(LootItem.lootTableItem(Items.SNORT_POTTERY_SHERD).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.BELT_PIECE.get()).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.ENGINE_PIECE.get()).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.SCRAP_PIECE.get()).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.TUBE_PIECE.get()).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.PRESS_PIECE.get()).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get()).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.AMBUSH_BANNER_PATTERN.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(Items.IRON_BLOCK).setWeight(25))
+                        .add(LootItem.lootTableItem(Items.TOTEM_OF_UNDYING).setWeight(25))
+                        .add(LootItem.lootTableItem(ModBlocks.CORRUPTED_SAPLING.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.GARBAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.EVIL_BANNER_PATTERN.get()).setWeight(25))
                         //VERY RARE
-                        .add(LootItem.lootTableItem(Items.TORCHFLOWER_SEEDS).setWeight(12))
-                        .add(LootItem.lootTableItem(Items.PITCHER_POD).setWeight(12))
                         .add(LootItem.lootTableItem(Items.SNIFFER_EGG).setWeight(12))
-                        .add(LootItem.lootTableItem(ModItems.DAWNBERRY_VINE_SEEDS.get()).setWeight(12))
-                        .add(LootItem.lootTableItem(ModItems.AMBUSH_SEEDS.get()).setWeight(12))
-                        .add(LootItem.lootTableItem(ModItems.CAULORFLOWER_SEEDS.get()).setWeight(12))
-                        .add(LootItem.lootTableItem(ModItems.DYESPRIA_SEEDS.get()).setWeight(12))
-                        .add(LootItem.lootTableItem(ModItems.BONDRIPIA_SEEDS.get()).setWeight(12))
-                        .add(LootItem.lootTableItem(ModBlocks.VIVICUS_SAPLING.get()).setWeight(12))
-                        .add(LootItem.lootTableItem(ModItems.BONMEELIA_SEEDS.get()).setWeight(12))));
+                        .add(LootItem.lootTableItem(Items.WITHER_SKELETON_SKULL).setWeight(12))
+                        .add(LootItem.lootTableItem(Items.NETHERITE_INGOT).setWeight(12))
+                        .add(LootItem.lootTableItem(Items.DIAMOND_BLOCK).setWeight(12))
+                        .add(LootItem.lootTableItem(Items.HEAVY_CORE).setWeight(12))));
 
         dropSelf(ModBlocks.BOBLING_HEAD.get());
         dropSelf(ModBlocks.CRACKED_AMBER.get());
@@ -134,6 +131,13 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.AMBER_MOSAIC_SLAB.get());
         dropSelf(ModBlocks.AMBER_MOSAIC_STAIRS.get());
         dropSelf(ModBlocks.AMBER_MOSAIC_WALL.get());
+        dropSelf(ModBlocks.CRACKED_GARNET.get());
+        dropSelf(ModBlocks.CHISELED_GARNET.get());
+        dropSelf(ModBlocks.CHISELED_GARNET_SLAB.get());
+        dropSelf(ModBlocks.GARNET_MOSAIC.get());
+        dropSelf(ModBlocks.GARNET_MOSAIC_SLAB.get());
+        dropSelf(ModBlocks.GARNET_MOSAIC_STAIRS.get());
+        dropSelf(ModBlocks.GARNET_MOSAIC_WALL.get());
 
         add(ModBlocks.AMBUSH_TOP.get(), noDrop());
         dropSelf(ModBlocks.AMBUSH_BOTTOM.get());
@@ -169,20 +173,20 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
 
         add(ModBlocks.BONWILTIA.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(ModItems.BONMEELIA_SEEDS.get())))
+                        .add(LootItem.lootTableItem(ModItems.BONWILTIA_SEEDS.get())))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(ModItems.JAR_OF_BONMEEL.get()))
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONMEELIA.get())
+                        .add(LootItem.lootTableItem(ModItems.JAR_OF_ACID.get()))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONWILTIA.get())
                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                         .hasProperty(BonmeeliaBlock.AGE, BonmeeliaBlock.MAX_AGE)
                                         .hasProperty(BonmeeliaBlock.HAS_BOTTLE, true))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(LootItem.lootTableItem(Items.GLASS_BOTTLE))
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONMEELIA.get())
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONWILTIA.get())
                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                         .hasProperty(BonmeeliaBlock.AGE, BonmeeliaBlock.MAX_AGE))
                                 .invert()
-                                .and(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONMEELIA.get())
+                                .and(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONWILTIA.get())
                                         .setProperties((StatePropertiesPredicate.Builder.properties()
                                                 .hasProperty(BonmeeliaBlock.HAS_BOTTLE, true)))))));
 
@@ -243,7 +247,22 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         add(ModBlocks.CORRUPTED_LEAVES_BUSH.get(), noDrop());
 
         add(ModBlocks.BOBLING_SACK.get(), noDrop());
-        add(ModBlocks.CORRUPTED_SLIME_LAYER.get(), noDrop());
+        add(ModBlocks.CORRUPTED_SLIME_LAYER.get(),
+                p_344229_ -> LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                        .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS))
+                                        .add(AlternativesEntry.alternatives(
+                                                SnowLayerBlock.LAYERS.getPossibleValues(),
+                                                p_252097_ -> LootItem.lootTableItem(ModItems.CORRUPTED_SLIME_BALL.get()).when(
+                                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(p_344229_)
+                                                                .setProperties(
+                                                                        StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, p_252097_.intValue())
+                                                                )).apply(SetItemCountFunction.setCount(ConstantValue.exactly((float)p_252097_.intValue())))
+                                                )
+
+                                        )
+                        )
+        );
 
         dropPottedContents(ModBlocks.POTTED_DYESPRIA.get());
         dropPottedContents(ModBlocks.POTTED_CORRUPTED_SAPLING.get());
@@ -258,6 +277,10 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         dropOther(ModBlocks.VIVICUS_WALL_SIGN.get(), ModItems.VIVICUS_SIGN);
         dropOther(ModBlocks.VIVICUS_HANGING_SIGN.get(), ModItems.VIVICUS_HANGING_SIGN);
         dropOther(ModBlocks.VIVICUS_WALL_HANGING_SIGN.get(), ModItems.VIVICUS_HANGING_SIGN);
+
+        add(ModBlocks.BONMEEL_FILLED_CAULDRON.get(), createSingleItemTable(Blocks.CAULDRON));
+        add(ModBlocks.ACID_FILLED_CAULDRON.get(), createSingleItemTable(Blocks.CAULDRON));
+
 
         add(ModBlocks.BONDRIPIA.get(), noDrop());
         add(ModBlocks.ACIDRIPIA.get(), noDrop());

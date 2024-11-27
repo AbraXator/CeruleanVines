@@ -83,10 +83,9 @@ public class JarOfAcidProjectile extends ThrowableItemProjectile {
                 BlockPos blockPos1 = BlockPos.containing(x, y, z);
                 BlockState blockState = level().getBlockState(blockPos1);
                 if(!blockState.is(Blocks.AIR)) {
-                    Vec3 vec3 = new Vec3(blockPos1.getX() + random.nextDouble(), blockPos1.getY() + random.nextDouble(), blockPos1.getZ() + random.nextDouble())
+                    Vec3 vec3 = new Vec3(blockPos1.getX() + random.nextDouble(), blockPos1.getY() + random.nextDouble(), blockPos1.getZ() + random.nextDouble());
                     this.level().addParticle(new DustParticleOptions(Vec3.fromRGB24(0xa1e820).toVector3f(), 1), vec3.x, vec3.y, vec3.z, 0, 0, 0);
                     FallingBlockEntity block = new FallingBlockEntity(EntityType.FALLING_BLOCK, level());
-                    block.state
                 }
             }
         };

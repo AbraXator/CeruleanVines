@@ -2,8 +2,8 @@ package net.abraxator.moresnifferflowers.init;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.blocks.*;
-import net.abraxator.moresnifferflowers.blocks.ambush.AmbushBlockBase;
-import net.abraxator.moresnifferflowers.blocks.ambush.AmbushBlockUpper;
+import net.abraxator.moresnifferflowers.blocks.xbush.AmbushBlockLower;
+import net.abraxator.moresnifferflowers.blocks.xbush.AmbushBlockUpper;
 import net.abraxator.moresnifferflowers.blocks.cropressor.CropressorBlockBase;
 import net.abraxator.moresnifferflowers.blocks.cropressor.CropressorBlockOut;
 import net.abraxator.moresnifferflowers.blocks.giantcrops.GiantCropBlock;
@@ -14,6 +14,8 @@ import net.abraxator.moresnifferflowers.blocks.signs.ModStandingSignBlock;
 import net.abraxator.moresnifferflowers.blocks.signs.ModWallHangingSign;
 import net.abraxator.moresnifferflowers.blocks.signs.ModWallSignBlock;
 import net.abraxator.moresnifferflowers.blocks.vivicus.*;
+import net.abraxator.moresnifferflowers.blocks.xbush.GarbushBlockLower;
+import net.abraxator.moresnifferflowers.blocks.xbush.GarbushBlockUpper;
 import net.abraxator.moresnifferflowers.items.GiantCropItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -37,10 +39,10 @@ public class ModBlocks {
     public static final DeferredBlock<Block> DAWNBERRY_VINE = registerBlockNoItem("dawnberry_vine", () -> new DawnberryVineBlock(BlockBehaviour.Properties.of().mapColor(MapColor.GLOW_LICHEN).replaceable().noCollission().strength(0.2F).sound(SoundType.GLOW_LICHEN).lightLevel(value -> value.getValue(DawnberryVineBlock.AGE) >= 3 ? 3 : 0).ignitedByLava().pushReaction(PushReaction.DESTROY).randomTicks().noOcclusion(), false));
     public static final DeferredBlock<Block> GLOOMBERRY_VINE = registerBlockNoItem("gloomberry_vine", () -> new GloomberryVineBlock(BlockBehaviour.Properties.of().mapColor(MapColor.GLOW_LICHEN).replaceable().noCollission().strength(0.2F).sound(SoundType.GLOW_LICHEN).ignitedByLava().pushReaction(PushReaction.DESTROY).randomTicks().noOcclusion()));
     
-    public static final DeferredBlock<Block> AMBUSH_BOTTOM = registerBlockNoItem("ambush_bottom", () -> new AmbushBlockBase(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
+    public static final DeferredBlock<Block> AMBUSH_BOTTOM = registerBlockNoItem("ambush_bottom", () -> new AmbushBlockLower(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
     public static final DeferredBlock<Block> AMBUSH_TOP = registerBlockNoItem("ambush_top", () -> new AmbushBlockUpper(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
-    public static final DeferredBlock<Block> GARBUSH_BOTTOM = registerBlockNoItem("garbush_bottom", () -> new AmbushBlockBase(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
-    public static final DeferredBlock<Block> GARBUSH_TOP = registerBlockNoItem("garbush_top", () -> new AmbushBlockUpper(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
+    public static final DeferredBlock<Block> GARBUSH_BOTTOM = registerBlockNoItem("garbush_bottom", () -> new GarbushBlockLower(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
+    public static final DeferredBlock<Block> GARBUSH_TOP = registerBlockNoItem("garbush_top", () -> new GarbushBlockUpper(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F)));
     
     public static final DeferredBlock<Block> AMBER_BLOCK = registerBlockWithItem("amber_block", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
     public static final DeferredBlock<Block> CHISELED_AMBER = registerBlockWithItem("chiseled_amber", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
@@ -51,6 +53,13 @@ public class ModBlocks {
     public static final DeferredBlock<Block> AMBER_MOSAIC_STAIRS = registerBlockWithItem("amber_mosaic_stairs", () -> stair(AMBER_MOSAIC.get()));
     public static final DeferredBlock<Block> AMBER_MOSAIC_WALL = registerBlockWithItem("amber_mosaic_wall", () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.AMBER_MOSAIC.get())));
     public static final DeferredBlock<Block> GARNET_BLOCK = registerBlockWithItem("garnet_block", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(5.0F).noOcclusion()));
+    public static final DeferredBlock<Block> CHISELED_GARNET = registerBlockWithItem("chiseled_garnet", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
+    public static final DeferredBlock<Block> CHISELED_GARNET_SLAB = registerBlockWithItem("chiseled_garnet_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.CHISELED_GARNET.get())));
+    public static final DeferredBlock<Block> CRACKED_GARNET = registerBlockWithItem("cracked_garnet", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
+    public static final DeferredBlock<Block> GARNET_MOSAIC = registerBlockWithItem("garnet_mosaic", () -> new HalfTransparentBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).sound(SoundType.GLASS).strength(3.0F).noOcclusion()));
+    public static final DeferredBlock<Block> GARNET_MOSAIC_SLAB = registerBlockWithItem("garnet_mosaic_slab", () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.GARNET_MOSAIC.get())));
+    public static final DeferredBlock<Block> GARNET_MOSAIC_STAIRS = registerBlockWithItem("garnet_mosaic_stairs", () -> stair(GARNET_MOSAIC.get()));
+    public static final DeferredBlock<Block> GARNET_MOSAIC_WALL = registerBlockWithItem("garnet_mosaic_wall", () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.GARNET_MOSAIC.get())));
 
     public static final DeferredBlock<Block> CAULORFLOWER = registerBlockNoItem("caulorflower", () ->  new CaulorflowerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).sound(SoundType.GRASS).strength(2.0F).noCollission().noOcclusion().randomTicks()));
     
@@ -64,8 +73,8 @@ public class ModBlocks {
     public static final DeferredBlock<Block> BONWILTIA = registerBlockNoItem("bonwiltia", () ->  new BonmeeliaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F).lightLevel(value -> 3).noOcclusion()));
     public static final DeferredBlock<Block> BONDRIPIA = registerBlockWithItem("bondripia", () ->  new BondripiaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks()));
     public static final DeferredBlock<Block> ACIDRIPIA = registerBlockWithItem("acidripia", () ->  new BondripiaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks()));
-    public static final DeferredBlock<Block> BONMEEL_FILLED_CAULDRON = registerBlockWithItem("bonmeel_filled_cauldron", () ->  new LayeredCauldronBlock(Biome.Precipitation.NONE, ModCauldronInteractions.BONMEEL, BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)));
-    public static final DeferredBlock<Block> ACID_FILLED_CAULDRON = registerBlockWithItem("acid_filled_cauldron", () ->  new LayeredCauldronBlock(Biome.Precipitation.NONE, ModCauldronInteractions.ACID, BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)));
+    public static final DeferredBlock<Block> BONMEEL_FILLED_CAULDRON = registerBlockNoItem("bonmeel_filled_cauldron", () ->  new LayeredCauldronBlock(Biome.Precipitation.NONE, ModCauldronInteractions.BONMEEL, BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)));
+    public static final DeferredBlock<Block> ACID_FILLED_CAULDRON = registerBlockNoItem("acid_filled_cauldron", () ->  new LayeredCauldronBlock(Biome.Precipitation.NONE, ModCauldronInteractions.ACID, BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)));
     
     public static final DeferredBlock<Block> CROPRESSOR_CENTER = registerBlockNoItem("cropressor_center", () ->  new CropressorBlockBase(BlockBehaviour.Properties.ofFullCopy(Blocks.ANVIL), CropressorBlockBase.Part.CENTER));
     public static final DeferredBlock<Block> CROPRESSOR_OUT = registerBlockNoItem("cropressor_out", () ->  new CropressorBlockOut(BlockBehaviour.Properties.ofFullCopy(Blocks.ANVIL), CropressorBlockBase.Part.OUT));
@@ -93,8 +102,8 @@ public class ModBlocks {
     public static final DeferredBlock<Block> CORRUPTED_BUTTON = registerBlockWithItem("corrupted_button", () -> new ButtonBlock(BlockSetType.WARPED, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_BUTTON)));
     public static final DeferredBlock<Block> CORRUPTED_LEAVES = registerBlockWithItem("corrupted_leaves", () -> new CorruptedLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_WART_BLOCK).noOcclusion()));
     public static final DeferredBlock<Block> CORRUPTED_SAPLING = registerBlockWithItem("corrupted_sapling", () -> new SaplingBlock(ModTreeGrowers.CORRUPTED_TREE, BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_FUNGUS)));
-    public static final DeferredBlock<Block> CORRUPTED_SLUDGE = registerBlockWithItem("corrupted_sludge", () -> new CorruptedSludgeBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SLIME_BLOCK).lightLevel(value -> 4)));
-    public static final DeferredBlock<Block> CORRUPTED_SLIME_LAYER = registerBlockWithItem("corrupted_slime_layer", () -> new CorruptedSlimeLayerBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.CORRUPTED_SLUDGE.get()).lightLevel(value -> 4)));
+    public static final DeferredBlock<Block> CORRUPTED_SLUDGE = registerBlockWithItem("corrupted_sludge", () -> new CorruptedSludgeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_MAGENTA).strength(2.0F).friction(0.8F).sound(SoundType.SLIME_BLOCK).lightLevel(value -> 4)));
+    public static final DeferredBlock<Block> CORRUPTED_SLIME_LAYER = registerBlockWithItem("corrupted_slime_layer", () -> new CorruptedSlimeLayerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_MAGENTA).strength(0.8F).friction(0.8F).noOcclusion().randomTicks().requiresCorrectToolForDrops().pushReaction(PushReaction.DESTROY).sound(SoundType.SLIME_BLOCK).lightLevel(value -> 4)));
     public static final DeferredBlock<Block> CORRUPTED_SIGN = registerBlockNoItem("corrupted_sign", () -> new ModStandingSignBlock(ModWoodTypes.CORRUPTED, BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_SIGN)));
     public static final DeferredBlock<Block> CORRUPTED_WALL_SIGN = registerBlockNoItem("corrupted_wall_sign", () -> new ModWallSignBlock(ModWoodTypes.CORRUPTED, BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_WALL_SIGN)));
     public static final DeferredBlock<Block> CORRUPTED_HANGING_SIGN = registerBlockNoItem("corrupted_hanging_sign", () -> new ModHangingSignBlock(ModWoodTypes.CORRUPTED, BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_HANGING_SIGN)));
@@ -118,7 +127,7 @@ public class ModBlocks {
     public static final DeferredBlock<Block> VIVICUS_BUTTON = registerBlockWithItem("vivicus_button", () -> new VivicusButtonBlock(BlockSetType.CHERRY, 30, BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_BUTTON)));
     public static final DeferredBlock<Block> VIVICUS_LEAVES = registerBlockWithItem("vivicus_leaves", () -> new VivicusLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_LEAVES)));
     public static final DeferredBlock<Block> VIVICUS_SAPLING = registerBlockWithItem("vivicus_sapling", () -> new VivicusSaplingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_SAPLING)));
-    public static final DeferredBlock<Block> SPROUTING_VIVICUS_LEAVES = registerBlockWithItem("sprouting_vivicus_leaves", () -> new VivicusSproutingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_LEAVES)));
+    public static final DeferredBlock<Block> SPROUTING_VIVICUS_LEAVES = registerBlockWithItem("sprouting_vivicus_leaves", () -> new VivicusSproutingBlock(BlockBehaviour.Properties.of().noCollission().mapColor(MapColor.COLOR_PINK).strength(0.2F).randomTicks().sound(SoundType.CHERRY_LEAVES).noOcclusion()));
     public static final DeferredBlock<Block> VIVICUS_LEAVES_SPROUT = registerBlockWithItem("vivicus_leaves_sprout", () -> new VivicusSproutingBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_LEAVES)));
     public static final DeferredBlock<Block> VIVICUS_SIGN = registerBlockNoItem("vivicus_sign", () -> new VivicusStandingSignBlock(ModWoodTypes.VIVICUS, BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_SIGN)));
     public static final DeferredBlock<Block> VIVICUS_WALL_SIGN = registerBlockNoItem("vivicus_wall_sign", () -> new VivicusWallSignBlock(ModWoodTypes.VIVICUS, BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_WALL_SIGN)));
