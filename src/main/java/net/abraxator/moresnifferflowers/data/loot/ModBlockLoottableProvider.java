@@ -10,10 +10,13 @@ import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.MultifaceBlock;
@@ -23,6 +26,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
@@ -41,6 +45,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
+        HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         add(ModBlocks.DAWNBERRY_VINE.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool().add(this.applyExplosionDecay(ModItems.DAWNBERRY_VINE_SEEDS.get(), LootItem.lootTableItem(ModItems.DAWNBERRY_VINE_SEEDS.get()).apply(Direction.values(), (p_251536_) ->
                         SetItemCountFunction.setCount(ConstantValue.exactly(1.0F), true)
@@ -57,6 +62,11 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                 .withPool(LootPool.lootPool()
                         .when(hasSilkTouch())
                         .add(LootItem.lootTableItem(ModBlocks.AMBER_BLOCK.get())))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .when(doesNotHaveSilkTouch())
+                        .add(LootItem.lootTableItem(ModItems.AMBER_SHARD.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
+                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5F, 2))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .when(doesNotHaveSilkTouch())
                         //COMMON
@@ -90,12 +100,19 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(ModItems.DAWNBERRY_VINE_SEEDS.get()).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.AMBUSH_SEEDS.get()).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.DYESPRIA_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModItems.BONDRIPIA_SEEDS.get()).setWeight(12))
+                        .add(LootItem.lootTableItem(ModBlocks.VIVICUS_SAPLING.get()).setWeight(12))
                         .add(LootItem.lootTableItem(ModItems.BONMEELIA_SEEDS.get()).setWeight(12))));
 
         add(ModBlocks.GARNET_BLOCK.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .when(hasSilkTouch())
                         .add(LootItem.lootTableItem(ModBlocks.GARNET_BLOCK.get())))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .when(doesNotHaveSilkTouch())
+                        .add(LootItem.lootTableItem(ModItems.GARNET_SHARD.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
+                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5F, 2))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .when(doesNotHaveSilkTouch())
                         //COMMON
@@ -124,20 +141,21 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(Items.HEAVY_CORE).setWeight(12))));
 
         dropSelf(ModBlocks.BOBLING_HEAD.get());
-        dropSelf(ModBlocks.CRACKED_AMBER.get());
-        dropSelf(ModBlocks.CHISELED_AMBER.get());
-        dropSelf(ModBlocks.CHISELED_AMBER_SLAB.get());
-        dropSelf(ModBlocks.AMBER_MOSAIC.get());
-        dropSelf(ModBlocks.AMBER_MOSAIC_SLAB.get());
-        dropSelf(ModBlocks.AMBER_MOSAIC_STAIRS.get());
-        dropSelf(ModBlocks.AMBER_MOSAIC_WALL.get());
-        dropSelf(ModBlocks.CRACKED_GARNET.get());
-        dropSelf(ModBlocks.CHISELED_GARNET.get());
-        dropSelf(ModBlocks.CHISELED_GARNET_SLAB.get());
-        dropSelf(ModBlocks.GARNET_MOSAIC.get());
-        dropSelf(ModBlocks.GARNET_MOSAIC_SLAB.get());
-        dropSelf(ModBlocks.GARNET_MOSAIC_STAIRS.get());
-        dropSelf(ModBlocks.GARNET_MOSAIC_WALL.get());
+
+        dropWhenSilkTouch(ModBlocks.CRACKED_AMBER.get());
+        dropWhenSilkTouch(ModBlocks.CHISELED_AMBER.get());
+        dropWhenSilkTouch(ModBlocks.CHISELED_AMBER_SLAB.get());
+        dropWhenSilkTouch(ModBlocks.AMBER_MOSAIC.get());
+        dropWhenSilkTouch(ModBlocks.AMBER_MOSAIC_SLAB.get());
+        dropWhenSilkTouch(ModBlocks.AMBER_MOSAIC_STAIRS.get());
+        dropWhenSilkTouch(ModBlocks.AMBER_MOSAIC_WALL.get());
+        dropWhenSilkTouch(ModBlocks.CRACKED_GARNET.get());
+        dropWhenSilkTouch(ModBlocks.CHISELED_GARNET.get());
+        dropWhenSilkTouch(ModBlocks.CHISELED_GARNET_SLAB.get());
+        dropWhenSilkTouch(ModBlocks.GARNET_MOSAIC.get());
+        dropWhenSilkTouch(ModBlocks.GARNET_MOSAIC_SLAB.get());
+        dropWhenSilkTouch(ModBlocks.GARNET_MOSAIC_STAIRS.get());
+        dropWhenSilkTouch(ModBlocks.GARNET_MOSAIC_WALL.get());
 
         add(ModBlocks.AMBUSH_TOP.get(), noDrop());
         dropSelf(ModBlocks.AMBUSH_BOTTOM.get());
@@ -222,7 +240,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         add(ModBlocks.CORRUPTED_SLUDGE.get(), block -> this.createSilkTouchDispatchTable(
                 block, this.applyExplosionCondition(
                         block, LootItem.lootTableItem(ModItems.CORRUPTED_SLIME_BALL)
-                                .when(LootItemRandomChanceCondition.randomChance(0.175F))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 12.0F)))
                 )
         ));
         dropSelf(ModBlocks.DECAYED_LOG.get());

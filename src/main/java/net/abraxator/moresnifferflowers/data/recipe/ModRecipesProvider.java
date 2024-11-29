@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 
 import java.util.concurrent.CompletableFuture;
@@ -53,7 +54,33 @@ public class ModRecipesProvider extends RecipeProvider {
                 .unlockedBy("has_amber_shard", has(ModItems.AMBER_SHARD.get()))
                 .save(pRecipeOutput);
 
-        twoByTwoPacker(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.AMBER_BLOCK.get(), ModItems.AMBER_SHARD.get());
+
+        threeByThreePacker(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.AMBER_BLOCK.get(), ModItems.AMBER_SHARD.get());
+        twoByTwoPacker(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.AMBER_MOSAIC.get(), ModItems.AMBER_SHARD.get());
+        slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.AMBER_MOSAIC_SLAB.get(), ModBlocks.AMBER_MOSAIC.get());
+        stairBuilder(ModBlocks.AMBER_MOSAIC_STAIRS, Ingredient.of(ModBlocks.AMBER_MOSAIC))
+                .unlockedBy("has_amber_mosaic", has(ModBlocks.AMBER_MOSAIC))
+                .save(pRecipeOutput);
+        wall(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.AMBER_MOSAIC_WALL.get(), ModBlocks.AMBER_MOSAIC.get());
+        chiseled(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CHISELED_AMBER.get(), ModBlocks.AMBER_MOSAIC_SLAB.get());
+        slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CHISELED_AMBER_SLAB.get(), ModBlocks.CHISELED_AMBER.get());
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.AMBER_MOSAIC.get()), RecipeCategory.BUILDING_BLOCKS, ModBlocks.CRACKED_AMBER.get().asItem(), 0.1F, 200)
+                .unlockedBy("has_amber_mosaic", has(ModBlocks.AMBER_MOSAIC))
+                .save(pRecipeOutput);
+
+        threeByThreePacker(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.GARNET_BLOCK.get(), ModItems.GARNET_SHARD.get());
+        twoByTwoPacker(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.GARNET_MOSAIC.get(), ModItems.GARNET_SHARD.get());
+        slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.GARNET_MOSAIC_SLAB.get(), ModBlocks.GARNET_MOSAIC.get());
+        stairBuilder(ModBlocks.GARNET_MOSAIC_STAIRS, Ingredient.of(ModBlocks.GARNET_MOSAIC))
+                .unlockedBy("has_garnet_mosaic", has(ModBlocks.GARNET_MOSAIC))
+                .save(pRecipeOutput);
+        wall(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.GARNET_MOSAIC_WALL.get(), ModBlocks.GARNET_MOSAIC.get());
+        chiseled(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CHISELED_GARNET.get(), ModBlocks.GARNET_MOSAIC_SLAB.get());
+        slab(pRecipeOutput, RecipeCategory.BUILDING_BLOCKS, ModBlocks.CHISELED_GARNET_SLAB.get(), ModBlocks.CHISELED_GARNET.get());
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.GARNET_MOSAIC.get()), RecipeCategory.BUILDING_BLOCKS, ModBlocks.CRACKED_GARNET.get().asItem(), 0.1F, 200)
+                .unlockedBy("has_garnet_mosaic", has(ModBlocks.GARNET_MOSAIC))
+                .save(pRecipeOutput);
+
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CROPRESSOR.get())
                 .requires(ModItems.TUBE_PIECE.get())

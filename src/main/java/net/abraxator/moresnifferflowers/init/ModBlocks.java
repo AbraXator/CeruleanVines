@@ -71,8 +71,8 @@ public class ModBlocks {
     
     public static final DeferredBlock<Block> BONMEELIA = registerBlockNoItem("bonmeelia", () ->  new BonmeeliaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F).lightLevel(value -> 3).noOcclusion()));
     public static final DeferredBlock<Block> BONWILTIA = registerBlockNoItem("bonwiltia", () ->  new BonmeeliaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT).strength(0.2F).lightLevel(value -> 3).noOcclusion()));
-    public static final DeferredBlock<Block> BONDRIPIA = registerBlockWithItem("bondripia", () ->  new BondripiaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks()));
-    public static final DeferredBlock<Block> ACIDRIPIA = registerBlockWithItem("acidripia", () ->  new BondripiaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks()));
+    public static final DeferredBlock<Block> BONDRIPIA = registerBlockNoItem("bondripia", () ->  new BondripiaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks()));
+    public static final DeferredBlock<Block> ACIDRIPIA = registerBlockNoItem("acidripia", () ->  new BondripiaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks()));
     public static final DeferredBlock<Block> BONMEEL_FILLED_CAULDRON = registerBlockNoItem("bonmeel_filled_cauldron", () ->  new LayeredCauldronBlock(Biome.Precipitation.NONE, ModCauldronInteractions.BONMEEL, BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)));
     public static final DeferredBlock<Block> ACID_FILLED_CAULDRON = registerBlockNoItem("acid_filled_cauldron", () ->  new LayeredCauldronBlock(Biome.Precipitation.NONE, ModCauldronInteractions.ACID, BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)));
     

@@ -55,7 +55,7 @@ public class ModBlockTagsProvider extends IntrinsicHolderTagsProvider<Block> {
         this.tag(BlockTags.WOODEN_TRAPDOORS).add(ModBlocks.CORRUPTED_TRAPDOOR.get(), ModBlocks.VIVICUS_TRAPDOOR.get());
         this.tag(BlockTags.PLANKS).add(ModBlocks.CORRUPTED_PLANKS.get(), ModBlocks.VIVICUS_PLANKS.get());
         this.tag(BlockTags.SAPLINGS).add(ModBlocks.CORRUPTED_SAPLING.get(), ModBlocks.VIVICUS_SAPLING.get());
-        this.tag(BlockTags.WALLS).add(ModBlocks.AMBER_MOSAIC_WALL.get());
+        this.tag(BlockTags.WALLS).add(ModBlocks.AMBER_MOSAIC_WALL.get(), ModBlocks.GARNET_MOSAIC_WALL.get());
 
         this.tag(ModTags.ModBlockTags.VIVICUS_BLOCKS).add(
             ModBlocks.STRIPPED_VIVICUS_WOOD.get(), ModBlocks.STRIPPED_VIVICUS_LOG.get(), ModBlocks.VIVICUS_BUTTON.get(),
