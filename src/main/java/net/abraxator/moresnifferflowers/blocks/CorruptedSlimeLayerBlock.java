@@ -1,17 +1,24 @@
 package net.abraxator.moresnifferflowers.blocks;
 
+import net.abraxator.moresnifferflowers.entities.CorruptedProjectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -23,10 +30,27 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
     public CorruptedSlimeLayerBlock(Properties p_56585_) {
         super(p_56585_);
     }
-
+    
     @Override
     protected @NotNull VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return Block.box(0, 0, 0, 16, Math.max((pState.getValue(LAYERS) - 3) * 2, 0), 16);
+    }
+
+    @Override
+    protected void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
+        pLevel.scheduleTick(pPos, this, this.getDelayAfterPlace());
+    }
+
+    @Override
+    protected boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+        return true;
+        //return pLevel.getBlockState(pPos.below()).isFaceSturdy(pLevel, pPos.below(), Direction.UP);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+        pLevel.scheduleTick(pCurrentPos, this, this.getDelayAfterPlace());
+        return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
     }
 
     @Override
@@ -47,6 +71,27 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
             pEntity.setDeltaMovement(pEntity.getDeltaMovement().multiply(d1, 1.0, d1));
         }
     }
+
+    protected int getDelayAfterPlace() {
+        return 2;
+    }
+
+    public static boolean isFree(BlockState pState) {
+        return pState.isAir() || pState.is(BlockTags.FIRE) || pState.liquid() || pState.canBeReplaced();
+    }
+
+    @Override
+    protected void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+        if (isFree(pLevel.getBlockState(pPos.below())) && pPos.getY() >= pLevel.getMinBuildHeight()) {
+            for (int i = 0; i < pState.getValue(LAYERS); i++) {
+                pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
+                CorruptedProjectile projectile = new CorruptedProjectile(pLevel);
+                projectile.setPos(pPos.getBottomCenter());
+                projectile.setXRot(Mth.PI / 90.0F);
+                pLevel.addFreshEntity(projectile);   
+            }
+        }
+    }
     
     private void showParticles(Entity pEntity, int pParticleCount) {
         if (pEntity.level().isClientSide) {
@@ -56,5 +101,4 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
             }
         }
     }
-
 }

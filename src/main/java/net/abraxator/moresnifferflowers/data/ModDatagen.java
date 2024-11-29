@@ -5,16 +5,16 @@ import net.abraxator.moresnifferflowers.data.advancement.ModAdvancementGenerator
 import net.abraxator.moresnifferflowers.data.loot.ModLootModifierProvider;
 import net.abraxator.moresnifferflowers.data.loot.ModLoottableProvider;
 import net.abraxator.moresnifferflowers.data.recipe.ModRecipesProvider;
-import net.abraxator.moresnifferflowers.data.tag.ModBiomeTagProvider;
-import net.abraxator.moresnifferflowers.data.tag.ModBlockTagsProvider;
-import net.abraxator.moresnifferflowers.data.tag.ModItemTagsProvider;
-import net.abraxator.moresnifferflowers.data.tag.ModPaintingTagsProvider;
+import net.abraxator.moresnifferflowers.data.tag.*;
+import net.minecraft.core.HolderLookup;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber(modid = MoreSnifferFlowers.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModDatagen {
@@ -25,6 +25,8 @@ public class ModDatagen {
         var registries = event.getLookupProvider();
         var packOutput = generator.getPackOutput();
         var future = event.getLookupProvider();
+        var datapackProvider = new RegistryDataGenerator(packOutput, event.getLookupProvider());
+        var lookupProvider = datapackProvider.getRegistryProvider();
         
         //BLOCKMODELS
         generator.addProvider(event.includeClient(), new ModBlockStateGenerator(packOutput, existingFileHelper));
@@ -49,9 +51,7 @@ public class ModDatagen {
         generator.addProvider(event.includeServer(), new ModPaintingTagsProvider(packOutput, future, existingFileHelper));
         //generator.addProvider(event.includeServer(), new ModBannerPatternTagsProvider(packOutput, future, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModBiomeTagProvider(packOutput, future, existingFileHelper));
-    
-        //DATA MAPS
-        //generator.addProvider(event.includeServer(), new ModDataMapProvider(packOutput, future));
+        generator.addProvider(event.includeServer(), new ModBannerPatternTagsProvider(packOutput, lookupProvider, existingFileHelper));
         
         //ADVANCEMENTS
         generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, registries, existingFileHelper, List.of(new ModAdvancementGenerator())));
