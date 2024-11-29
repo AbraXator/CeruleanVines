@@ -47,7 +47,7 @@ public class CorruptedSlimeBallItem extends Item implements ProjectileItem {
 
     @Override
     public Projectile asProjectile(Level pLevel, Position pPos, ItemStack pStack, Direction pDirection) {
-        Snowball snowball = new Snowball(pLevel, pPos.x(), pPos.y(), pPos.z());
+        CorruptedProjectile snowball = new CorruptedProjectile(pLevel);
         snowball.setItem(pStack);
         return snowball;
     }

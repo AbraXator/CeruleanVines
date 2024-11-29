@@ -79,7 +79,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                             0.0D, 0.0D, 0.0D,
                             0.0D
                     );
-                }); 
+                });
             }
             
             if(pGameEvent.is(GameEvent.BLOCK_DESTROY) && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get()) && pContext.sourceEntity() instanceof Player player) {

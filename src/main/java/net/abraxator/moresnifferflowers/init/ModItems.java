@@ -47,7 +47,7 @@ public class ModItems {
     public static final DeferredItem<Item> JAR_OF_BONMEEL = ITEMS.register("jar_of_bonmeel", () -> new JarOfBonmeelItem(new Item.Properties()));
     public static final DeferredItem<Item> BONDRIPIA_SEEDS = ITEMS.register("bondripia_seeds", () -> new ItemNameBlockItem(ModBlocks.BONDRIPIA.get(), new Item.Properties()));
     public static final DeferredItem<Item> BONWILTIA_SEEDS = ITEMS.register("bonwiltia_seeds", () -> new ItemNameBlockItem(ModBlocks.BONWILTIA.get(), new Item.Properties()));
-    public static final DeferredItem<Item> JAR_OF_ACID = ITEMS.register("jar_of_acid", () -> new JarOfBonmeelItem(new Item.Properties()));
+    public static final DeferredItem<Item> JAR_OF_ACID = ITEMS.register("jar_of_acid", () -> new JarOfAcidItem(new Item.Properties()));
     public static final DeferredItem<Item> ACIDRIPIA_SEEDS = ITEMS.register("acidripia_seeds", () -> new ItemNameBlockItem(ModBlocks.ACIDRIPIA.get(), new Item.Properties()));
 
     public static final DeferredItem<Item> CROPRESSOR = ITEMS.register("cropressor", () -> new CropressorItem(ModBlocks.CROPRESSOR_OUT.get(), new Item.Properties()));

@@ -27,6 +27,7 @@ public class ModEntityTypes {
     public static final DeferredHolder<EntityType<?>, EntityType<ModChestBoatEntity>> MOD_CORRUPTED_CHEST_BOAT = buildNoEgg(MoreSnifferFlowers.loc("mod_corrupted_chest_boat"), makeBuilder(ModChestBoatEntity::new, MobCategory.MISC, 1.375f, 0.5625f, 80, 3), false);
     public static final DeferredHolder<EntityType<?>, EntityType<VivicusBoatEntity>> MOD_VIVICUS_BOAT = buildNoEgg(MoreSnifferFlowers.loc("mod_vivicus_boat"), makeBuilder(VivicusBoatEntity::new, MobCategory.MISC, 1.375f, 0.5625f, 80, 3), false);
     public static final DeferredHolder<EntityType<?>, EntityType<VivicusChestBoatEntity>> MOD_VIVICUS_CHEST_BOAT = buildNoEgg(MoreSnifferFlowers.loc("mod_vivicus_chest_boat"), makeBuilder(VivicusChestBoatEntity::new, MobCategory.MISC, 1.375f, 0.5625f, 80, 3), false);
+    public static final DeferredHolder<EntityType<?>, EntityType<JarOfAcidProjectile>> JAR_OF_ACID = buildNoEgg(MoreSnifferFlowers.loc("jar_of_acid"), makeBuilder(JarOfAcidProjectile::new, MobCategory.MISC, 0.25F, 0.25F, 80, 3), false);
 
     private static <E extends Entity> DeferredHolder<EntityType<?>, EntityType<E>> make(ResourceLocation id, EntityType.EntityFactory<E> factory, MobCategory classification, float width, float height, int primary, int secondary) {
         return make(id, factory, classification, width, height, false, primary, secondary);

@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -22,8 +23,10 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock, ModCropBlock {
     public BondripiaBlock(Properties p_49795_) {
@@ -40,17 +43,28 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
 
     @Override
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @Nullable LivingEntity pPlacer, ItemStack pStack) {
-        Direction.Plane.HORIZONTAL.forEach(direction -> {
-            BlockPos blockPos = pPos.relative(direction);
-            
-            pLevel.setBlock(blockPos, this.defaultBlockState().setValue(ModStateProperties.CENTER, pPos.equals(blockPos)), 3);
-            
-            if(pLevel.getBlockEntity(blockPos) instanceof BondripiaBlockEntity entity) {
-                entity.center = pPos;
-            }
+        getPositionsForPlant(pLevel, pPos).ifPresent(list -> {
+            list.forEach(blockPos -> {
+                pLevel.setBlock(blockPos, this.defaultBlockState().setValue(ModStateProperties.CENTER, pPos.equals(blockPos)), 3);
+                if(pLevel.getBlockEntity(blockPos) instanceof BondripiaBlockEntity entity) {
+                    entity.center = pPos;
+                }
+            });
         });
     }
 
+    private Optional<List<BlockPos>> getPositionsForPlant(BlockGetter pLevel, BlockPos pPos) {
+        List<BlockPos> positions = new ArrayList<>();
+        positions.add(pPos);
+        boolean b = Direction.Plane.HORIZONTAL.stream()
+                .allMatch(direction -> pLevel.getBlockState(pPos.relative(direction)).canBeReplaced());
+        if(b) {
+            positions.addAll(Direction.Plane.HORIZONTAL.stream().map(direction -> pPos.relative(direction).immutable()).toList());
+        }
+        
+        return positions.size() == 5 ? Optional.of(positions) : Optional.empty();
+    }
+    
     @Override
     protected boolean isRandomlyTicking(BlockState pState) {
         return true;
@@ -97,7 +111,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
                         }
 
                     } else if (pLevel.getBlockState(currentPos).getBlock() instanceof AbstractCauldronBlock block) {
-                        
+                        fillCauldron(pLevel, currentPos, pLevel.getBlockState(currentPos));
                     }
 
                     currentPos = currentPos.below();
@@ -119,9 +133,8 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     private void grow(Level level, BlockPos blockPos) {
         if(level.getBlockEntity(blockPos) instanceof BondripiaBlockEntity entity) {
             makeGrowOnBonemeal(level, entity.center, level.getBlockState(entity.center));
-            Direction.Plane.HORIZONTAL.forEach(direction -> {
-                makeGrowOnBonemeal(level, entity.center.relative(direction), level.getBlockState(entity.center.relative(direction)));
-            });
+            Direction.Plane.HORIZONTAL.forEach(direction ->
+                    makeGrowOnBonemeal(level, entity.center.relative(direction), level.getBlockState(entity.center.relative(direction))));
         }
     }
     
@@ -132,7 +145,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     @Override
     protected boolean canSurvive(BlockState blockState, LevelReader level, BlockPos blockPos) {
         var list = Direction.Plane.HORIZONTAL.stream().filter(direction -> super.canSurvive(level.getBlockState(blockPos.relative(direction)), level, blockPos.relative(direction))).toList();
-        return super.canSurvive(blockState, level, blockPos) && list.size() == 4;
+        return super.canSurvive(blockState, level, blockPos) && list.size() == 4 && getPositionsForPlant(level, blockPos).isPresent();
     }
 
     @Override

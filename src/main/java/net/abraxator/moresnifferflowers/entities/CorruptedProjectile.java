@@ -2,8 +2,6 @@ package net.abraxator.moresnifferflowers.entities;
 
 import net.abraxator.moresnifferflowers.data.datamaps.Corruptable;
 import net.abraxator.moresnifferflowers.init.*;
-import net.abraxator.moresnifferflowers.networking.CorruptedSludgePacket;
-import net.minecraft.client.multiplayer.chat.report.ReportEnvironment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -24,7 +22,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Optional;
 
