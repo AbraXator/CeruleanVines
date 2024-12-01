@@ -6,10 +6,10 @@
       "tag": "c:glass_blocks/colorless"
     },
     "B": {
-      "item": "moresnifferflowers:corrupted_slime_ball"
+      "item": "moresnifferflowers:jar_of_acid"
     },
     "C": {
-      "item": "moresnifferflowers:bobling_core"
+      "item": "moresnifferflowers:corrupted_bobling_core"
     },
     "D": {
       "tag": "c:ingots/iron"

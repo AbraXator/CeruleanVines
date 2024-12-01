@@ -1,3 +1,6 @@
 {
-  "parent": "moresnifferflowers:block/vivicus_leaves_sprout_2"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "moresnifferflowers:item/vivicus_leaves_sprout"
+  }
 }

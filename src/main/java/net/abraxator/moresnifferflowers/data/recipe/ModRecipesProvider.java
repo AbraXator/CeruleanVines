@@ -26,13 +26,15 @@ public class ModRecipesProvider extends RecipeProvider {
     @Override
     protected void buildRecipes(RecipeOutput pRecipeOutput) {
         trimSmithing(pRecipeOutput, ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
+        trimSmithing(pRecipeOutput, ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
         trimSmithing(pRecipeOutput, ModItems.NETHER_WART_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.NETHER_WART_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
         trimSmithing(pRecipeOutput, ModItems.TATER_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.TATER_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
         trimSmithing(pRecipeOutput, ModItems.CAROTENE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.CAROTENE_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
         trimSmithing(pRecipeOutput, ModItems.GRAIN_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.GRAIN_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
         trimSmithing(pRecipeOutput, ModItems.BEAT_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.BEAT_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
 
-        trimCrafting(pRecipeOutput, ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ModTags.ModItemTags.AROMA_TRIM_TEMPLATE_INGREDIENT);
+        trimCrafting(pRecipeOutput, ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ModItems.AMBER_SHARD.get());
+        trimCrafting(pRecipeOutput, ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ModItems.GARNET_SHARD.get());
         trimCrafting(pRecipeOutput, ModItems.NETHER_WART_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ModItems.CROPRESSED_NETHERWART.get());
         trimCrafting(pRecipeOutput, ModItems.CAROTENE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ModItems.CROPRESSED_CARROT.get());
         trimCrafting(pRecipeOutput, ModItems.TATER_ARMOR_TRIM_SMITHING_TEMPLATE.get(), ModItems.CROPRESSED_POTATO.get());
@@ -130,6 +132,13 @@ public class ModRecipesProvider extends RecipeProvider {
         buttonBuilder(ModBlocks.CORRUPTED_BUTTON, Ingredient.of(ModBlocks.CORRUPTED_PLANKS))
                 .unlockedBy("has_corrupted_planks", has(ModBlocks.CORRUPTED_PLANKS))
                 .save(pRecipeOutput);
+        woodenBoat(pRecipeOutput, ModItems.CORRUPTED_BOAT.get(), ModBlocks.CORRUPTED_PLANKS.get());
+        chestBoat(pRecipeOutput, ModItems.CORRUPTED_CHEST_BOAT.get(), ModItems.CORRUPTED_BOAT.get());
+        signBuilder(ModBlocks.CORRUPTED_SIGN, Ingredient.of(ModBlocks.CORRUPTED_PLANKS))
+                .unlockedBy("has_corrupted_planks", has(ModBlocks.CORRUPTED_PLANKS))
+                .save(pRecipeOutput);
+        hangingSign(pRecipeOutput, ModItems.CORRUPTED_HANGING_SIGN.get(), ModBlocks.CORRUPTED_PLANKS.get());
+
 
         woodFromLogs(pRecipeOutput, ModBlocks.VIVICUS_WOOD, ModBlocks.VIVICUS_LOG);
         woodFromLogs(pRecipeOutput, ModBlocks.STRIPPED_VIVICUS_WOOD, ModBlocks.STRIPPED_VIVICUS_LOG);
@@ -153,16 +162,22 @@ public class ModRecipesProvider extends RecipeProvider {
         buttonBuilder(ModBlocks.VIVICUS_BUTTON, Ingredient.of(ModBlocks.VIVICUS_PLANKS))
                 .unlockedBy("has_VIVICUS_planks", has(ModBlocks.VIVICUS_PLANKS))
                 .save(pRecipeOutput);
+        woodenBoat(pRecipeOutput, ModItems.VIVICUS_BOAT.get(), ModBlocks.VIVICUS_PLANKS.get());
+        chestBoat(pRecipeOutput, ModItems.VIVICUS_CHEST_BOAT.get(), ModItems.VIVICUS_BOAT.get());
+        signBuilder(ModBlocks.VIVICUS_SIGN, Ingredient.of(ModBlocks.VIVICUS_PLANKS))
+                .unlockedBy("has_vivicus_planks", has(ModBlocks.VIVICUS_PLANKS))
+                .save(pRecipeOutput);
+        hangingSign(pRecipeOutput, ModItems.VIVICUS_HANGING_SIGN.get(), ModBlocks.VIVICUS_PLANKS.get());
         
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.VIVICUS_ANTIDOTE, 1)
                         .pattern(" AB")
                         .pattern("ACA")
                         .pattern("DA ")
                         .define('A', Tags.Items.GLASS_BLOCKS_COLORLESS)
-                        .define('B', ModItems.CORRUPTED_SLIME_BALL)
-                        .define('C', ModItems.BOBLING_CORE)
+                        .define('B', ModItems.JAR_OF_ACID)
+                        .define('C', ModItems.CORRUPTED_BOBLING_CORE)
                         .define('D', Tags.Items.INGOTS_IRON)
-                        .unlockedBy("has_corrupted_slime_ball", has(ModItems.CORRUPTED_SLIME_BALL))
+                        .unlockedBy("has_jar_of_acid", has(ModItems.JAR_OF_ACID))
                         .save(pRecipeOutput);
 
         SpecialRecipeBuilder.special(RebrewedTippedArrowRecipe::new).save(pRecipeOutput, "rebrewed_tipped_arrow");

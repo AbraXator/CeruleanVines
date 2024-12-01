@@ -33,7 +33,6 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.fml.common.Mod;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -131,7 +130,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(Items.IRON_BLOCK).setWeight(25))
                         .add(LootItem.lootTableItem(Items.TOTEM_OF_UNDYING).setWeight(25))
                         .add(LootItem.lootTableItem(ModBlocks.CORRUPTED_SAPLING.get()).setWeight(25))
-                        .add(LootItem.lootTableItem(ModItems.GARBAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get()).setWeight(25))
+                        .add(LootItem.lootTableItem(ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get()).setWeight(25))
                         .add(LootItem.lootTableItem(ModItems.EVIL_BANNER_PATTERN.get()).setWeight(25))
                         //VERY RARE
                         .add(LootItem.lootTableItem(Items.SNIFFER_EGG).setWeight(12))

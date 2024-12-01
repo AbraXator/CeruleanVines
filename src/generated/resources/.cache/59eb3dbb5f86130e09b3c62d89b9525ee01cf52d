@@ -1,4 +1,4 @@
-// 1.21.1	2024-11-29T22:56:25.8652504	Loot Tables
+// 1.21.1	2024-12-01T17:27:19.0785828	Loot Tables
 d4911378e2a6a51e1f4b1222b049c50f33028309 data/moresnifferflowers/loot_table/blocks/acidripia.json
 16882dced81963aacd1b4d32ed8e0ca33a618998 data/moresnifferflowers/loot_table/blocks/acid_filled_cauldron.json
 867be0e1c64c89c59a6ef95f1d02bf10cf067d66 data/moresnifferflowers/loot_table/blocks/amber_block.json
@@ -49,7 +49,7 @@ e33cb65db844cac49b4511f4adee00e35a593fe7 data/moresnifferflowers/loot_table/bloc
 14e8f69291189cb3ab885c31a058ddf83a8c9c08 data/moresnifferflowers/loot_table/blocks/dyespria_plant.json
 db51c22fd53a94a85d4f249e0ecbabe5a1968970 data/moresnifferflowers/loot_table/blocks/garbush_bottom.json
 d536ae10a5cb8f208db459088b49d2d36d15b98f data/moresnifferflowers/loot_table/blocks/garbush_top.json
-4a5e61b182e79d9053a2118fbecbd87cfa8bec7f data/moresnifferflowers/loot_table/blocks/garnet_block.json
+bd488300c7d26342822aa39d82683c6658316aed data/moresnifferflowers/loot_table/blocks/garnet_block.json
 42a1152f6c684850e17af8a8f78a8950216e3660 data/moresnifferflowers/loot_table/blocks/garnet_mosaic.json
 d375826896ca54d92d06fe3ee64cf19c03467429 data/moresnifferflowers/loot_table/blocks/garnet_mosaic_slab.json
 ed913a65495229be3e719adc7ac96f6b5e1bbd7f data/moresnifferflowers/loot_table/blocks/garnet_mosaic_stairs.json

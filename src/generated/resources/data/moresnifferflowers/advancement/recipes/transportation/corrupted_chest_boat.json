@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_jar_of_acid": {
+    "has_boat": {
       "conditions": {
         "items": [
           {
-            "items": "moresnifferflowers:jar_of_acid"
+            "items": "#minecraft:boats"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "moresnifferflowers:vivicus_antidote"
+        "recipe": "moresnifferflowers:corrupted_chest_boat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_jar_of_acid"
+      "has_boat"
     ]
   ],
   "rewards": {
     "recipes": [
-      "moresnifferflowers:vivicus_antidote"
+      "moresnifferflowers:corrupted_chest_boat"
     ]
   }
 }

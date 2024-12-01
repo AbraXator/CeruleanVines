@@ -47,7 +47,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.CRACKED_GARNET.get());
                 output.accept(ModItems.GARNET_SHARD);
 
-                output.accept(ModItems.GARBAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get());
+                output.accept(ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get());
                 output.accept(ModItems.EVIL_BANNER_PATTERN.get());
 
                 output.accept(ModItems.DYESPRIA_SEEDS.get());

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_jar_of_acid": {
+    "has_carnage_armor_trim_smithing_template_trim_template": {
       "conditions": {
         "items": [
           {
-            "items": "moresnifferflowers:jar_of_acid"
+            "items": "moresnifferflowers:aroma_armor_trim_smithing_template"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "moresnifferflowers:vivicus_antidote"
+        "recipe": "moresnifferflowers:carnage_armor_trim_smithing_template_from_trim_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_jar_of_acid"
+      "has_carnage_armor_trim_smithing_template_trim_template"
     ]
   ],
   "rewards": {
     "recipes": [
-      "moresnifferflowers:vivicus_antidote"
+      "moresnifferflowers:carnage_armor_trim_smithing_template_from_trim_crafting"
     ]
   }
 }

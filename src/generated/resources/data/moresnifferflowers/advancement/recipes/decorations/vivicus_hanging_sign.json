@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_jar_of_acid": {
+    "has_stripped_logs": {
       "conditions": {
         "items": [
           {
-            "items": "moresnifferflowers:jar_of_acid"
+            "items": "moresnifferflowers:vivicus_planks"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "moresnifferflowers:vivicus_antidote"
+        "recipe": "moresnifferflowers:vivicus_hanging_sign"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_jar_of_acid"
+      "has_stripped_logs"
     ]
   ],
   "rewards": {
     "recipes": [
-      "moresnifferflowers:vivicus_antidote"
+      "moresnifferflowers:vivicus_hanging_sign"
     ]
   }
 }

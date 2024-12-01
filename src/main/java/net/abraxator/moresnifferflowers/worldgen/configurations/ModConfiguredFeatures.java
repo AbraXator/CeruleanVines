@@ -40,6 +40,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecora
 import net.minecraft.world.level.levelgen.feature.trunkplacers.CherryTrunkPlacer;
 
 import java.util.List;
+import java.util.OptionalInt;
 
 public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("corrupted_tree"));
@@ -116,14 +117,14 @@ public class ModConfiguredFeatures {
     private static TreeConfiguration.TreeConfigurationBuilder vivicusTree() {
         return new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(ModBlocks.VIVICUS_LOG.get()),
-                new VivicusTrunkPlacer(10, 2, 2),
+                new VivicusTrunkPlacer(17, 0, 0),
                 //new VivicusTrunkPlacer(6, 3, 3, UniformInt.of(3, 5), 1F, UniformInt.of(0, 1), blockHolderGetter.getOrThrow(ModTags.ModBlockTags.VIVICUS_TREE_REPLACABLE)),
                 BlockStateProvider.simple(ModBlocks.VIVICUS_LEAVES.get().defaultBlockState()),
-                new FancyFoliagePlacer(ConstantInt.of(3), ConstantInt.of(4), 4),
+                new FancyFoliagePlacer(ConstantInt.of(3), ConstantInt.of(2), 4),
                 //new RandomSpreadFoliagePlacer(ConstantInt.of(4), ConstantInt.of(0), ConstantInt.of(3), 90),
                 //new CherryFoliagePlacer(UniformInt.of(3, 6), ConstantInt.ZERO, UniformInt.of(4, 5), 0.5F, 0.4F, 0.7F, 0.4F),
                 //new RandomSpreadFoliagePlacer(UniformInt.of(3, 6), ConstantInt.ZERO, UniformInt.of(2, 4), 40),
-                new TwoLayersFeatureSize(2, 0, 2)
+                new TwoLayersFeatureSize(0, 0, 0, OptionalInt.of(4))
         );
     }
 }
