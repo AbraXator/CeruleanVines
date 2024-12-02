@@ -115,7 +115,6 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.VIVICUS_BUTTON.get());
                 output.accept(ModBlocks.VIVICUS_LEAVES.get());
                 output.accept(ModBlocks.VIVICUS_SAPLING.get());
-                output.accept(ModBlocks.SPROUTING_VIVICUS_LEAVES.get());
                 output.accept(ModBlocks.VIVICUS_LEAVES_SPROUT.get());
                 output.accept(ModItems.VIVICUS_SIGN.get());
                 output.accept(ModItems.VIVICUS_HANGING_SIGN.get());
