@@ -60,7 +60,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
 
         @Override
         public boolean handleGameEvent(ServerLevel pLevel, Holder<GameEvent> pGameEvent, GameEvent.Context pContext, Vec3 pPos) {
-            if(pGameEvent.is(GameEvent.BLOCK_PLACE) && Corruptable.canBeCorrupted(pContext.affectedState().getBlock(), pLevel.random)) {
+            if(pGameEvent.is(GameEvent.BLOCK_PLACE) && Corruptable.canBeCorrupted(pContext.affectedState(), pLevel.random)) {
                 Vec3 startPos = this.getListenerSource().getPosition(pLevel).get();
                 Vec3 dirNormal = new Vec3(pPos.x - startPos.x, pPos.y - startPos.y, pPos.z - startPos.z).normalize();
                 Optional<Block> corrupted = Corruptable.getCorruptedBlock(pContext.affectedState().getBlock(), pLevel.random);

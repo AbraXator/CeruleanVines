@@ -10,9 +10,11 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public record Corruptable(List<Pair<Block, Integer>> list) {
     public static final Codec<Pair<Block, Integer>> PAIR_CODEC = Codec.pair(
@@ -71,6 +73,10 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
         }
         
         return Blocks.AIR;
+    }
+    
+    public static boolean canBeCorrupted(BlockState blockState, RandomSource randomSource) {
+        return blockState != null && canBeCorrupted(blockState.getBlock(), randomSource);
     }
     
     public static boolean canBeCorrupted(Block block, RandomSource random) {
