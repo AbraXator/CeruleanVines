@@ -5,6 +5,7 @@ import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.boblingtree.BoblingTreeTrunkPlacer;
+import net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted.CorruptedSludgeDecorator;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted.CorruptedTrunkPlacer;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.vivicus.VivicusTrunkPlacer;
 import net.abraxator.moresnifferflowers.worldgen.feature.ModFeatures;
@@ -58,19 +59,37 @@ public class ModConfiguredFeatures {
                                         .add(ModBlocks.CORRUPTED_LOG.get().defaultBlockState(), 10)
                                         .add(ModBlocks.STRIPPED_CORRUPTED_LOG.get().defaultBlockState(), 4)
                         ),
-                        new CorruptedTrunkPlacer(4, 1, 1),
+                        new CorruptedTrunkPlacer(15, 1, 1),
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
                                         .add(ModBlocks.CORRUPTED_LEAVES.get().defaultBlockState(), 10)
                                         .add(ModBlocks.CORRUPTED_LEAVES_BUSH.get().defaultBlockState(), 2)
-                                        .add(ModBlocks.CORRUPTED_SLUDGE.get().defaultBlockState(), 1)
                         ),
-                        //new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 2),
-                        new RandomSpreadFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), UniformInt.of(2, 3), 20),
+                        new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 2),
+                        //new RandomSpreadFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), UniformInt.of(2, 3), 20),
                         new TwoLayersFeatureSize(2, 0, 2)
                 )
+                        .decorators(
+                                List.of(
+                                        new AttachedToLeavesDecorator(
+                                                0.09F,
+                                                4,
+                                                3,
+                                                new RandomizedIntStateProvider(
+                                                        BlockStateProvider.simple(
+                                                                ModBlocks.CORRUPTED_SLUDGE.get().defaultBlockState()
+                                                        ),
+                                                        MangrovePropaguleBlock.AGE,
+                                                        UniformInt.of(0, 4)
+                                                ),
+                                                6,
+                                                List.of(Direction.DOWN)
+                                        )
+                                )
+                        )
                         .ignoreVines()
                         .build());
+
         FeatureUtils.register(
                 context, CURED_VIVICUS_TREE, ModFeatures.VIVICUS_TREE.get(), vivicusTree()
                         .ignoreVines()

@@ -53,21 +53,7 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
             for (int b = 0; b < pRandom.nextInt(2); b++) {
                 addBranch(mainTrunk.immutable(), ret, pBlockSetter, pLevel, pConfig, pRandom, pFreeTreeHeight);
             }
-            
-            if (growthDir != null) {
-                pPos = pPos.relative(growthDir).relative(growthDir.getClockWise());
-                mainTrunk.move(growthDir).move(growthDir.getClockWise());
-            }
-            
-            /*for(BlockPos branchPos : branches.keySet()) {
-                pBlockSetter.accept(branchPos, Blocks.ORANGE_WOOL.defaultBlockState());
-                //this.placeLog(pLevel, pBlockSetter, pRandom, branchPos, pConfig);
 
-                if(i == pFreeTreeHeight - 1) {
-                    ret.add(new FoliagePlacer.FoliageAttachment(branchPos, 0, false));
-                }
-            };*/
-            
             if (i == 0) {
                 for(Direction direction : Direction.Plane.HORIZONTAL) {
                     if(pRandom.nextDouble() <= 0.90D) {
@@ -78,7 +64,7 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
                         }
 
                         if(pRandom.nextDouble() <= 0.8D) {
-                            ret.add(new FoliagePlacer.FoliageAttachment(blockPosInner.above(innerHeight), 0, false));
+                            ret.add(new FoliagePlacer.FoliageAttachment(blockPosInner.above(innerHeight), 1, false));
                         }
 
                         if(pRandom.nextDouble() <= 0.90D) {
