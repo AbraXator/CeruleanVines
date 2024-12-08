@@ -234,7 +234,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.CORRUPTED_TRAPDOOR.get()); 
         dropSelf(ModBlocks.CORRUPTED_PRESSURE_PLATE.get());
         dropSelf(ModBlocks.CORRUPTED_BUTTON.get());
-        add(ModBlocks.CORRUPTED_LEAVES.get(), block -> createLeavesDrops(block, ModBlocks.CORRUPTED_SAPLING.get(), 0.05F, 0.0625F, 0.083333336F, 0.1F));
+        add(ModBlocks.CORRUPTED_LEAVES.get(), block -> createLeavesDrops(block, Blocks.DEAD_BUSH, 0.05F, 0.0625F, 0.083333336F, 0.1F));
         dropSelf(ModBlocks.CORRUPTED_SAPLING.get());
         add(ModBlocks.CORRUPTED_SLUDGE.get(), block -> this.createSilkTouchDispatchTable(
                 block, this.applyExplosionCondition(
@@ -257,7 +257,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.VIVICUS_TRAPDOOR.get());
         dropSelf(ModBlocks.VIVICUS_PRESSURE_PLATE.get());
         dropSelf(ModBlocks.VIVICUS_BUTTON.get());
-        add(ModBlocks.VIVICUS_LEAVES.get(), block -> createLeavesDrops(block, ModBlocks.VIVICUS_SAPLING.get(), 0.05F, 0.0625F, 0.083333336F, 0.1F));
+        add(ModBlocks.VIVICUS_LEAVES.get(), block -> createLeavesDrops(block, Blocks.DEAD_BUSH, 0.05F, 0.0625F, 0.083333336F, 0.1F));
         dropSelf(ModBlocks.VIVICUS_SAPLING.get());
         add(ModBlocks.VIVICUS_LEAVES_SPROUT.get(), BlockLootSubProvider::createShearsOnlyDrop);
         add(ModBlocks.CORRUPTED_LEAVES_BUSH.get(), noDrop());

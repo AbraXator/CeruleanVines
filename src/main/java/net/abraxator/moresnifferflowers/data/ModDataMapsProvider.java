@@ -28,7 +28,7 @@ public class ModDataMapsProvider extends DataMapProvider {
         compostables.add(ModItems.DAWNBERRY_VINE_SEEDS, new Compostable(0.3F), false);
         compostables.add(ModItems.DAWNBERRY, new Compostable(0.3F), false);
         compostables.add(ModItems.AMBUSH_SEEDS, new Compostable(0.3F), false);
-        compostables.add(ModBlocks.CAULORFLOWER.asItem().builtInRegistryHolder(), new Compostable(0.4F), false);
+        compostables.add(ModItems.CAULORFLOWER_SEEDS, new Compostable(0.4F), false);
         compostables.add(ModItems.DYESPRIA_SEEDS, new Compostable(0.4F), false);
         compostables.add(ModItems.BONMEELIA_SEEDS, new Compostable(0.5F), false);
         compostables.add(ModItems.CROPRESSED_BEETROOT, new Compostable(1.0F), false);

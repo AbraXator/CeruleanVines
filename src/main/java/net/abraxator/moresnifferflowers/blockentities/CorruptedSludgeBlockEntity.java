@@ -85,7 +85,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
             if(pGameEvent.is(GameEvent.BLOCK_DESTROY) && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get()) && pContext.sourceEntity() instanceof Player player) {
                 Vec3 center = this.getListenerSource().getPosition(pLevel).get();
                 var radius = 2.5;
-                var projectileNumber = pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES) ? pLevel.random.nextInt(1) + 1 : pLevel.random.nextInt(5) + 1;
+                var projectileNumber = pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES) || pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES_BUSH)  ? pLevel.random.nextInt(1) + 1 : pLevel.random.nextInt(5) + 1;
                 Set<Vec3> placed = new HashSet<>();
                 
                 for(int i = 0; i < projectileNumber; i++) {
