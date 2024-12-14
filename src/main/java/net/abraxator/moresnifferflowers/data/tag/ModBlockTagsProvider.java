@@ -29,7 +29,7 @@ public class ModBlockTagsProvider extends IntrinsicHolderTagsProvider<Block> {
                 ModBlocks.GIANT_CARROT.get(), ModBlocks.GIANT_POTATO.get(), ModBlocks.GIANT_NETHERWART.get(), ModBlocks.GIANT_BEETROOT.get(), ModBlocks.GIANT_WHEAT.get());
         this.tag(BlockTags.MINEABLE_WITH_HOE).add(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.AMBUSH_BOTTOM.get(), ModBlocks.AMBUSH_TOP.get(), ModBlocks.BONMEELIA.get(), ModBlocks.GIANT_CARROT.get(), ModBlocks.GIANT_POTATO.get(), ModBlocks.GIANT_NETHERWART.get(), ModBlocks.GIANT_BEETROOT.get(), ModBlocks.GIANT_WHEAT.get(), ModBlocks.CAULORFLOWER.get());
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.GIANT_CARROT.get(), ModBlocks.GIANT_POTATO.get(), ModBlocks.GIANT_NETHERWART.get(), ModBlocks.GIANT_BEETROOT.get(), ModBlocks.GIANT_WHEAT.get(), ModBlocks.CAULORFLOWER.get());
-        this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.CORRUPTED_SLUDGE.get(), ModBlocks.CORRUPTED_SLIME_LAYER.get());
+        this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.CORRUPTED_SLUDGE.get(), ModBlocks.CORRUPTED_SLIME_LAYER.get(), ModBlocks.CORRUPTED_GRASS_BLOCK.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 ModBlocks.AMBER_BLOCK.get(), ModBlocks.GARNET_BLOCK.get(), ModBlocks.CROPRESSOR_OUT.get(), ModBlocks.CROPRESSOR_CENTER.get(), ModBlocks.REBREWING_STAND_BOTTOM.get(),
@@ -75,7 +75,7 @@ public class ModBlockTagsProvider extends IntrinsicHolderTagsProvider<Block> {
         this.tag(ModTags.ModBlockTags.CORRUPTION_TRANSFORMABLES).add(ModBlocks.DYESPRIA_PLANT.get(), ModBlocks.DAWNBERRY_VINE.get());
 
         this.tag(BlockTags.CAULDRONS).add(ModBlocks.ACID_FILLED_CAULDRON.get(), ModBlocks.BONMEEL_FILLED_CAULDRON.get());
-
+        this.tag(BlockTags.DIRT).add(ModBlocks.CORRUPTED_GRASS_BLOCK.get());
         this.tag(BlockTags.FLOWER_POTS).add(ModBlocks.POTTED_DYESPRIA.get(), ModBlocks.POTTED_CORRUPTED_SAPLING.get(), ModBlocks.POTTED_VIVICUS_SAPLING.get());
     }
 }

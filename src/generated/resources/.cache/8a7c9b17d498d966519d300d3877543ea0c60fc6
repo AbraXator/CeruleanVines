@@ -1,5 +1,6 @@
-// 1.21	2024-12-08T19:47:08.2480986	Tags for minecraft:block mod id moresnifferflowers
+// 1.21	2024-12-14T14:19:49.7549712	Tags for minecraft:block mod id moresnifferflowers
 a4a6a65c9ff027e1e1a8624a3079962b61fb88d4 data/minecraft/tags/block/cauldrons.json
+bd336a2ca5a3f195900738dd7779e46615776a6e data/minecraft/tags/block/dirt.json
 6d8903ab7204569206b2f7cb5c89b74235cf79d6 data/minecraft/tags/block/fence_gates.json
 a35451bb68f3a8a583bedb76e58fb615112996fd data/minecraft/tags/block/flowers.json
 ba3ad935e689eea8825820b9de4cc87ab3e3c8fb data/minecraft/tags/block/flower_pots.json
@@ -9,7 +10,7 @@ b54d66bc3e28b09da9c8e0f1cb93e812d4aab2e8 data/minecraft/tags/block/logs.json
 7147f6e1dab213e3dc51bc838d8b27e97d7086c3 data/minecraft/tags/block/mineable/axe.json
 30116b0006454945bd34e848a1e4adee2f5fa09e data/minecraft/tags/block/mineable/hoe.json
 c9646f36423face24d636d355cd7d17fbb9a92cf data/minecraft/tags/block/mineable/pickaxe.json
-53ae084510dcc9f63b29dc449c0157456cb92bb5 data/minecraft/tags/block/mineable/shovel.json
+ef4323172b36e6ca2b046e3218699944aa42a529 data/minecraft/tags/block/mineable/shovel.json
 83d2879fd344f55b734a9d153953237283104b17 data/minecraft/tags/block/needs_iron_tool.json
 cc87198368386d83a3e3bab1c343988afb547f61 data/minecraft/tags/block/planks.json
 4624239ad2a34409633762b810c001740df32e54 data/minecraft/tags/block/saplings.json

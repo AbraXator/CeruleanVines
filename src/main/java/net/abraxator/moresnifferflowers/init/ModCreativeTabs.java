@@ -100,6 +100,10 @@ public class ModCreativeTabs {
                 output.accept(ModItems.BOBLING_CORE);
                 output.accept(ModItems.CORRUPTED_SLIME_BALL);
 
+                output.accept(ModBlocks.DECAYED_LOG);
+                output.accept(ModBlocks.CORRUPTED_GRASS_BLOCK);
+
+
                 output.accept(ModBlocks.VIVICUS_LOG.get());
                 output.accept(ModBlocks.VIVICUS_WOOD.get());
                 output.accept(ModBlocks.STRIPPED_VIVICUS_LOG.get());
@@ -135,6 +139,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.CORRUPTED_PRESSURE_PLATE.get());
                 output.accept(ModBlocks.CORRUPTED_BUTTON.get());
                 output.accept(ModBlocks.CORRUPTED_LEAVES.get());
+                output.accept(ModBlocks.CORRUPTED_LEAVES_BUSH.get());
                 output.accept(ModBlocks.CORRUPTED_SAPLING.get());
                 output.accept(ModBlocks.CORRUPTED_SLUDGE);
                 output.accept(ModBlocks.CORRUPTED_SLIME_LAYER);

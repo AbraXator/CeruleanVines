@@ -136,11 +136,15 @@
 	"block.moresnifferflowers.corrupted_pressure_plate": "Corrupted Pressure Plate",
 	"block.moresnifferflowers.corrupted_button": "Corrupted Button",
 	"block.moresnifferflowers.corrupted_leaves": "Corrupted Leaves",
+	"block.moresnifferflowers.corrupted_leaves_bush": "Corrupted Leaves Bush",
 	"block.moresnifferflowers.corrupted_sapling": "Corrupted Sapling",
 	"block.moresnifferflowers.corrupted_sign": "Corrupted Sign",
 	"block.moresnifferflowers.corrupted_hanging_sign": "Corrupted Hanging Sign",
 	"block.moresnifferflowers.corrupted_sludge": "Corrupted Sludge",
 	"block.moresnifferflowers.corrupted_slime_layer": "Corrupted Slime Layer",
+
+	"block.moresnifferflowers.decayed_log": "Decayed Log",
+	"block.moresnifferflowers.corrupted_grass_block": "Corrupted Grass Block",
 
 
 

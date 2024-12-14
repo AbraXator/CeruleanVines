@@ -20,11 +20,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:brush",
-          "weight": 3
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:gold_block",
           "weight": 3
         },
