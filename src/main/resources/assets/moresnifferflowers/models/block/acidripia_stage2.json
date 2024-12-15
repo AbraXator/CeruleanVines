@@ -1,0 +1,6 @@
+{
+  "parent": "moresnifferflowers:block/empty",
+  "textures": {
+	"particle": "moresnifferflowers:block/acidripia_stage1"
+	}
+}

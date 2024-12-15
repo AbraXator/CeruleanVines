@@ -97,6 +97,9 @@ public class JarOfAcidProjectile extends ThrowableItemProjectile {
             if(state.is(BlockTags.LEAVES)) {
                 level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
             }
+            if(state.is(BlockTags.DIRT)) {
+                level().setBlock(pos, Blocks.DIRT.defaultBlockState(), 2);
+            }
         });
     }
 
