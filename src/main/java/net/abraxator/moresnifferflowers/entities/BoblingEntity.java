@@ -135,16 +135,17 @@ public class BoblingEntity extends PathfinderMob {
                 this.attackPlayerGoal = new BoblingAttackPlayerGoal(this, 1.5F, false);
             }
 
-            this.goalSelector.addGoal(3, this.attackPlayerGoal);
-        } else if (this.getBoblingType() == Type.CURED) {
-            this.goalSelector.addGoal(3, new TemptGoal(this, 0.9F, itemStack -> 
-                    itemStack.is(ModItems.JAR_OF_BONMEEL), false));
+            this.goalSelector.addGoal(2, this.attackPlayerGoal);
         }
+        /* else if (this.getBoblingType() == Type.CURED) {
+            this.goalSelector.addGoal(3, new TemptGoal(this, 0.9F, itemStack ->
+                    itemStack.is(ModItems.JAR_OF_BONMEEL), false));
+        }*/
 
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        //this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8F));
+        //this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
@@ -171,6 +172,7 @@ public class BoblingEntity extends PathfinderMob {
             if (plantingProgress >= MAX_PLANTING_PROGRESS) {
                 var blockPos = BlockPos.containing(this.position()).relative(this.getDirection());
                 this.level().setBlockAndUpdate(blockPos, ModBlocks.CORRUPTED_SAPLING.get().defaultBlockState());
+                this.level().broadcastEntityEvent(this, (byte) 104);
                 this.discard();
             }
         }
@@ -194,9 +196,22 @@ public class BoblingEntity extends PathfinderMob {
 
         if (this.isRunning() && this.isAlive() && !this.isPlanting() && this.getWantedPos() != null && AABB.ofSize(getWantedPos().getCenter(), 2.0D, 2.0D, 2.0D).contains(this.position())) {
             this.setYRot(this.getDirection().toYRot());
-            this.plantingAnimationState.start(this.tickCount);
+            this.level().broadcastEntityEvent(this, (byte) 103);
             this.setPlanting(true);
             this.removeFreeWill();
+        }
+    }
+
+    @Override
+    public void handleEntityEvent(byte id) {
+        super.handleEntityEvent(id);
+        
+        if (id == 103) {
+            this.plantingAnimationState.start(this.tickCount);
+            this.plantingAnimationState.startIfStopped(this.tickCount);
+        }
+        if (id == 104) {
+            this.plantingAnimationState.ifStarted(AnimationState::stop);
         }
     }
 
@@ -234,14 +249,14 @@ public class BoblingEntity extends PathfinderMob {
     
     @Override
     public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
-        return false;
+        return this.getBoblingType() == Type.CURED;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0).add(Attributes.MOVEMENT_SPEED, 0.25F).add(Attributes.ATTACK_DAMAGE, 3.0);
     }
 
-    public static enum Type implements StringRepresentable {
+    public enum Type implements StringRepresentable {
         CORRUPTED(0, "corrupted"), 
         CURED(1, "cured");
 

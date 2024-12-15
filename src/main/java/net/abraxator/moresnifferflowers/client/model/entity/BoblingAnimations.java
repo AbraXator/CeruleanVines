@@ -20,7 +20,7 @@ public class BoblingAnimations {
 			new Keyframe(1.25F, KeyframeAnimations.posVec(0.0F, -6.75F, -16.41F), AnimationChannel.Interpolations.CATMULLROM),
 			new Keyframe(1.2917F, KeyframeAnimations.posVec(0.0F, -9.0F, -16.75F), AnimationChannel.Interpolations.CATMULLROM)
 		))
-		.addAnimation("torso_lower", new AnimationChannel(AnimationChannel.Targets.ROTATION, 
+		.addAnimation("torso_lower", new AnimationChannel(AnimationChannel.Targets.ROTATION,
 			new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 			new Keyframe(0.125F, KeyframeAnimations.degreeVec(30.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
 			new Keyframe(0.6667F, KeyframeAnimations.degreeVec(30.0F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
