@@ -1,17 +1,21 @@
 package net.abraxator.moresnifferflowers.data.datamaps;
 
+import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.jarjar.nio.pathfs.PathFileSystem;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public record Corruptable(List<Pair<Block, Integer>> list) {
@@ -22,6 +26,14 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
     public static final Codec<Corruptable> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             PAIR_CODEC.listOf().fieldOf("value").forGetter(Corruptable::list)
     ).apply(instance, Corruptable::new));
+    public static final Map<Block, Block> HARDCODED_BLOCK = Util.make(Maps.newHashMap(), map -> {
+        map.put(ModBlocks.DYESPRIA_PLANT.get(), ModBlocks.DYESCRAPIA_PLANT.get());
+        map.put(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.GLOOMBERRY_VINE.get());
+        map.put(ModBlocks.BONMEELIA.get(), ModBlocks.BONWILTIA.get());
+        map.put(ModBlocks.BONDRIPIA.get(), ModBlocks.ACIDRIPIA.get());
+        map.put(ModBlocks.AMBUSH_BOTTOM.get(), ModBlocks.GARBUSH_BOTTOM.get());
+        map.put(ModBlocks.AMBUSH_TOP.get(), ModBlocks.GARBUSH_TOP.get());
+    });
     
     public Corruptable(Block block) {
         this(List.of(Pair.of(block, 100)));
@@ -30,7 +42,7 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
     public static Optional<Block> getCorruptedBlock(Block block, RandomSource random) {
         Holder<Block> holder = block.builtInRegistryHolder();
         Corruptable corruptable = holder.getData(ModDataMaps.CORRUPTABLE);
-        Block hardcodedBlock = hardcodedBlock(block);
+        Block hardcodedBlock = HARDCODED_BLOCK.get(block);
         Optional<Block> ret = Optional.empty();
         
         if(hardcodedBlock != Blocks.AIR) {
@@ -53,24 +65,6 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
         
         MoreSnifferFlowers.LOGGER.error("No block selected for corruption, probably missing entry");
         return ret;
-    }
-    
-    private static Block hardcodedBlock(Block block) {
-        if(block == ModBlocks.DYESPRIA_PLANT.get()) {
-            return ModBlocks.DYESCRAPIA_PLANT.get();
-        } else if(block == ModBlocks.DAWNBERRY_VINE.get()) {
-            return ModBlocks.GLOOMBERRY_VINE.get();
-        } else if(block == ModBlocks.BONMEELIA.get()) {
-            return ModBlocks.BONWILTIA.get();
-        } else if(block == ModBlocks.BONDRIPIA.get()) {
-            return ModBlocks.BONDRIPIA.get();
-        } else if(block == ModBlocks.AMBUSH_BOTTOM.get()) {
-            return ModBlocks.GARBUSH_BOTTOM.get();
-        } else if (block == ModBlocks.AMBUSH_TOP.get()) {
-            return ModBlocks.GARBUSH_TOP.get();
-        }
-        
-        return Blocks.AIR;
     }
     
     public static boolean canBeCorrupted(Block block, RandomSource random) {

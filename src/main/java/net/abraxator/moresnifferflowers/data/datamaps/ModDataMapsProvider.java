@@ -1,8 +1,6 @@
-package net.abraxator.moresnifferflowers.data;
+package net.abraxator.moresnifferflowers.data.datamaps;
 
 import com.mojang.datafixers.util.Pair;
-import net.abraxator.moresnifferflowers.data.datamaps.Corruptable;
-import net.abraxator.moresnifferflowers.data.datamaps.ModDataMaps;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.minecraft.core.HolderLookup;

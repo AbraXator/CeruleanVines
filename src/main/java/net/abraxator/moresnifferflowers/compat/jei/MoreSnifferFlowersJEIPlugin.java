@@ -8,6 +8,8 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.client.gui.screen.RebrewingStandScreen;
+import net.abraxator.moresnifferflowers.compat.jei.corruption.CorruptionCategory;
+import net.abraxator.moresnifferflowers.compat.jei.corruption.CorruptionRecipe;
 import net.abraxator.moresnifferflowers.compat.jei.cropressing.CropressingRecipeCategory;
 import net.abraxator.moresnifferflowers.compat.jei.rebrewing.JeiRebrewingRecipe;
 import net.abraxator.moresnifferflowers.compat.jei.rebrewing.RebrewingCategory;
@@ -38,6 +40,7 @@ public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(ModItems.CROPRESSOR.get().getDefaultInstance(), CropressingRecipeCategory.CROPRESSING);
         registration.addRecipeCatalyst(ModItems.REBREWING_STAND.get().getDefaultInstance(), RebrewingCategory.REBREWING);
+        registration.addRecipeCatalyst(ModItems.CORRUPTED_SLIME_BALL.get().getDefaultInstance(), CorruptionCategory.CORRUPTING);
     }
 
     @Override
@@ -49,6 +52,7 @@ public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new CropressingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
         registration.addRecipeCategories(new RebrewingCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new CorruptionCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -58,5 +62,6 @@ public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
         recipeManager.getAllRecipesFor(ModRecipeTypes.CROPRESSING.get()).forEach(o -> list.add(o.value()));
         registration.addRecipes(CropressingRecipeCategory.CROPRESSING, list);
         registration.addRecipes(RebrewingCategory.REBREWING, JeiRebrewingRecipe.createRecipes());
+        registration.addRecipes(CorruptionCategory.CORRUPTING, CorruptionRecipe.createRecipes());
     }
 }
