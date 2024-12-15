@@ -47,7 +47,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.CRACKED_GARNET.get());
                 output.accept(ModItems.GARNET_SHARD);
 
-                output.accept(ModItems.GARBAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get());
+                output.accept(ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get());
                 output.accept(ModItems.EVIL_BANNER_PATTERN.get());
 
                 output.accept(ModItems.DYESPRIA_SEEDS.get());
@@ -100,6 +100,10 @@ public class ModCreativeTabs {
                 output.accept(ModItems.BOBLING_CORE);
                 output.accept(ModItems.CORRUPTED_SLIME_BALL);
 
+                output.accept(ModBlocks.DECAYED_LOG);
+                output.accept(ModBlocks.CORRUPTED_GRASS_BLOCK);
+
+
                 output.accept(ModBlocks.VIVICUS_LOG.get());
                 output.accept(ModBlocks.VIVICUS_WOOD.get());
                 output.accept(ModBlocks.STRIPPED_VIVICUS_LOG.get());
@@ -115,7 +119,6 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.VIVICUS_BUTTON.get());
                 output.accept(ModBlocks.VIVICUS_LEAVES.get());
                 output.accept(ModBlocks.VIVICUS_SAPLING.get());
-                output.accept(ModBlocks.SPROUTING_VIVICUS_LEAVES.get());
                 output.accept(ModBlocks.VIVICUS_LEAVES_SPROUT.get());
                 output.accept(ModItems.VIVICUS_SIGN.get());
                 output.accept(ModItems.VIVICUS_HANGING_SIGN.get());
@@ -136,6 +139,7 @@ public class ModCreativeTabs {
                 output.accept(ModBlocks.CORRUPTED_PRESSURE_PLATE.get());
                 output.accept(ModBlocks.CORRUPTED_BUTTON.get());
                 output.accept(ModBlocks.CORRUPTED_LEAVES.get());
+                output.accept(ModBlocks.CORRUPTED_LEAVES_BUSH.get());
                 output.accept(ModBlocks.CORRUPTED_SAPLING.get());
                 output.accept(ModBlocks.CORRUPTED_SLUDGE);
                 output.accept(ModBlocks.CORRUPTED_SLIME_LAYER);

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_corrupted_slime_ball": {
+    "has_jar_of_acid": {
       "conditions": {
         "items": [
           {
-            "items": "moresnifferflowers:corrupted_slime_ball"
+            "items": "moresnifferflowers:jar_of_acid"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_corrupted_slime_ball"
+      "has_jar_of_acid"
     ]
   ],
   "rewards": {

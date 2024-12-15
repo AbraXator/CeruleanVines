@@ -8,6 +8,8 @@
 	"item.moresnifferflowers.garbush_seeds": "Garbush Seeds",
 	"item.moresnifferflowers.ambush_banner_pattern": "Banner Pattern",
 	"item.moresnifferflowers.ambush_banner_pattern.desc": "Ambush",
+	"item.moresnifferflowers.evil_banner_pattern": "Banner Pattern",
+	"item.moresnifferflowers.evil_banner_pattern.desc": "Pattern of Evil",
 	"item.moresnifferflowers.amber_shard": "Amber Shard",
 	"item.moresnifferflowers.garnet_shard": "Garnet Shard",
 	"item.moresnifferflowers.dragonfly": "Dragonfly",
@@ -44,6 +46,7 @@
    	"item.moresnifferflowers.broken_rebrewing_stand": "Broken Rebrewing Stand",
 	"item.moresnifferflowers.cropressor": "Cropressor",
 	"item.moresnifferflowers.aroma_armor_trim_smithing_template": "Smithing Template",
+	"item.moresnifferflowers.carnage_armor_trim_smithing_template": "Smithing Template",
 	"item.moresnifferflowers.nether_wart_armor_trim_smithing_template": "Smithing Template",
 	"item.moresnifferflowers.tater_armor_trim_smithing_template": "Smithing Template",
 	"item.moresnifferflowers.carotene_armor_trim_smithing_template": "Smithing Template",
@@ -133,11 +136,15 @@
 	"block.moresnifferflowers.corrupted_pressure_plate": "Corrupted Pressure Plate",
 	"block.moresnifferflowers.corrupted_button": "Corrupted Button",
 	"block.moresnifferflowers.corrupted_leaves": "Corrupted Leaves",
+	"block.moresnifferflowers.corrupted_leaves_bush": "Corrupted Leaves Bush",
 	"block.moresnifferflowers.corrupted_sapling": "Corrupted Sapling",
 	"block.moresnifferflowers.corrupted_sign": "Corrupted Sign",
 	"block.moresnifferflowers.corrupted_hanging_sign": "Corrupted Hanging Sign",
 	"block.moresnifferflowers.corrupted_sludge": "Corrupted Sludge",
 	"block.moresnifferflowers.corrupted_slime_layer": "Corrupted Slime Layer",
+
+	"block.moresnifferflowers.decayed_log": "Decayed Log",
+	"block.moresnifferflowers.corrupted_grass_block": "Corrupted Grass Block",
 
 
 
@@ -148,6 +155,7 @@
 	"tooltip.jar_of_bonmeel.usage": "Can be applied to a fully grown 3x3 grid of the following crops: \nCarrot, Potato, Wheat, Beetroot and Nether Wart",
 	"tooltip.amber_shard.usage": "Can be used as an armor trim material",
 	"tooltip.dyespria_seeds": "Shear to hide dye",
+	"tooltip.bondripia_seeds": "Plantable underneath an area of 5 blocks in a + shape",
 	"bottle_of_extraction.tooltip.usage": "Drink to extract current effects into a bottle",
 
 	"advancements.more_sniffer_flowers.dyespria_plant": "Colorful plants",
@@ -164,6 +172,7 @@
 	"advancements.more_sniffer_flowers.rebrew_desc": "Rebrew an Extracted Potion",
 
 	"trim_pattern.moresnifferflowers.aroma": "Aroma Armor Trim",
+	"trim_pattern.moresnifferflowers.carnage": "Carnage Armor Trim",
 	"trim_pattern.moresnifferflowers.nether_wart": "Nether Wart Armor Trim",
 	"trim_pattern.moresnifferflowers.tater": "Tater Armor Trim",
 	"trim_pattern.moresnifferflowers.carotene": "Carotene Armor Trim",
@@ -194,7 +203,24 @@
 	"block.minecraft.banner.moresnifferflowers.ambush.purple": "Purple Ambush",
 	"block.minecraft.banner.moresnifferflowers.ambush.magenta": "Magenta Ambush",
 	"block.minecraft.banner.moresnifferflowers.ambush.pink": "Pink Ambush",
-	
+
+	"block.minecraft.banner.moresnifferflowers.evil.white": "White Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.light_gray": "Light Gray Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.gray": "Gray Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.black": "Black Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.brown": "Brown Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.red": "Red Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.orange": "Orange Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.yellow": "Yellow Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.lime": "Lime Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.green": "Green Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.cyan": "Cyan Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.light_blue": "Light Blue Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.blue": "Blue Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.purple": "Purple Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.magenta": "Magenta Pattern of Evil",
+	"block.minecraft.banner.moresnifferflowers.evil.pink": "Pink Pattern of Evil",
+
 	"effect.moresnifferflowers.extracted": "Extracted",
 	
 	"tooltip.extracted_bottle.obtain": "Obtainable using Bottle o' Extraction",

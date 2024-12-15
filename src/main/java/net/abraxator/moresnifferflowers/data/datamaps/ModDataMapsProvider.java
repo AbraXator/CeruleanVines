@@ -26,7 +26,7 @@ public class ModDataMapsProvider extends DataMapProvider {
         compostables.add(ModItems.DAWNBERRY_VINE_SEEDS, new Compostable(0.3F), false);
         compostables.add(ModItems.DAWNBERRY, new Compostable(0.3F), false);
         compostables.add(ModItems.AMBUSH_SEEDS, new Compostable(0.3F), false);
-        compostables.add(ModBlocks.CAULORFLOWER.asItem().builtInRegistryHolder(), new Compostable(0.4F), false);
+        compostables.add(ModItems.CAULORFLOWER_SEEDS, new Compostable(0.4F), false);
         compostables.add(ModItems.DYESPRIA_SEEDS, new Compostable(0.4F), false);
         compostables.add(ModItems.BONMEELIA_SEEDS, new Compostable(0.5F), false);
         compostables.add(ModItems.CROPRESSED_BEETROOT, new Compostable(1.0F), false);
@@ -40,7 +40,7 @@ public class ModDataMapsProvider extends DataMapProvider {
         compostables.add(ModBlocks.VIVICUS_LEAVES.asItem().builtInRegistryHolder(), new Compostable(1.0F), false);
         
         var corruptables = this.builder(ModDataMaps.CORRUPTABLE);
-        corruptables.add(Blocks.GRASS_BLOCK.builtInRegistryHolder(), new Corruptable(List.of(Pair.of(Blocks.DIRT, 100), Pair.of(Blocks.COARSE_DIRT, 60))), false);
+        corruptables.add(Blocks.GRASS_BLOCK.builtInRegistryHolder(), new Corruptable(ModBlocks.CORRUPTED_GRASS_BLOCK.get()), false);
         corruptables.add(Blocks.DIRT.builtInRegistryHolder(), new Corruptable(Blocks.COARSE_DIRT), false);
         corruptables.add(BlockTags.LOGS, new Corruptable(ModBlocks.DECAYED_LOG.get()), false);
         corruptables.add(BlockTags.LEAVES, new Corruptable(Blocks.AIR), false);

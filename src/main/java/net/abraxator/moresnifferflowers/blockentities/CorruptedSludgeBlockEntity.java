@@ -60,7 +60,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
 
         @Override
         public boolean handleGameEvent(ServerLevel pLevel, Holder<GameEvent> pGameEvent, GameEvent.Context pContext, Vec3 pPos) {
-            if(pGameEvent.is(GameEvent.BLOCK_PLACE) && Corruptable.canBeCorrupted(pContext.affectedState().getBlock(), pLevel.random)) {
+            if(pGameEvent.is(GameEvent.BLOCK_PLACE) && Corruptable.canBeCorrupted(pContext.affectedState(), pLevel.random)) {
                 Vec3 startPos = this.getListenerSource().getPosition(pLevel).get();
                 Vec3 dirNormal = new Vec3(pPos.x - startPos.x, pPos.y - startPos.y, pPos.z - startPos.z).normalize();
                 Optional<Block> corrupted = Corruptable.getCorruptedBlock(pContext.affectedState().getBlock(), pLevel.random);
@@ -85,7 +85,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
             if(pGameEvent.is(GameEvent.BLOCK_DESTROY) && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get()) && pContext.sourceEntity() instanceof Player player) {
                 Vec3 center = this.getListenerSource().getPosition(pLevel).get();
                 var radius = 2.5;
-                var projectileNumber = pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES) ? pLevel.random.nextInt(1) + 1 : pLevel.random.nextInt(5) + 1;
+                var projectileNumber = pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES) || pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES_BUSH)  ? pLevel.random.nextInt(1) + 1 : pLevel.random.nextInt(5) + 1;
                 Set<Vec3> placed = new HashSet<>();
                 
                 for(int i = 0; i < projectileNumber; i++) {

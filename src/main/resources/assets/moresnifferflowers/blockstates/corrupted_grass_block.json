@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "moresnifferflowers:block/corrupted_grass_block"
+      },
+      {
+        "model": "moresnifferflowers:block/corrupted_grass_block",
+        "y": 90
+      },
+      {
+        "model": "moresnifferflowers:block/corrupted_grass_block",
+        "y": 180
+      },
+      {
+        "model": "moresnifferflowers:block/corrupted_grass_block",
+        "y": 270
+      }
+    ]
+  }
+}

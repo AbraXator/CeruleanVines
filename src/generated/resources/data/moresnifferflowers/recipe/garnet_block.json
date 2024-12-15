@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    },
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    },
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    },
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    },
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    },
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    },
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    },
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    },
+    {
+      "item": "moresnifferflowers:garnet_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "moresnifferflowers:garnet_block"
+  }
+}

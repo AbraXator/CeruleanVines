@@ -130,7 +130,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
         }
     }
     
-    private void grow(Level level, BlockPos blockPos) {
+    public void grow(Level level, BlockPos blockPos) {
         if(level.getBlockEntity(blockPos) instanceof BondripiaBlockEntity entity) {
             makeGrowOnBonemeal(level, entity.center, level.getBlockState(entity.center));
             Direction.Plane.HORIZONTAL.forEach(direction ->

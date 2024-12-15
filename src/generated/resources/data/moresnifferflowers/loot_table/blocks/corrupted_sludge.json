@@ -32,11 +32,18 @@
               "type": "minecraft:item",
               "conditions": [
                 {
-                  "chance": 0.175,
-                  "condition": "minecraft:random_chance"
-                },
-                {
                   "condition": "minecraft:survives_explosion"
+                }
+              ],
+              "functions": [
+                {
+                  "add": false,
+                  "count": {
+                    "type": "minecraft:uniform",
+                    "max": 12.0,
+                    "min": 8.0
+                  },
+                  "function": "minecraft:set_count"
                 }
               ],
               "name": "moresnifferflowers:corrupted_slime_ball"

@@ -2,9 +2,12 @@ package net.abraxator.moresnifferflowers.blocks.xbush;
 
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModItems;
+import net.abraxator.moresnifferflowers.init.ModParticles;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,6 +21,22 @@ public class GarbushBlockLower extends AbstractXBushBlockBase {
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         return ModItems.GARBUSH_SEEDS.get().getDefaultInstance();
+    }
+
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        if(getAge(pState) == 7 && pRandom.nextInt(100) < 10 && isLower(pState)) {
+            pLevel.addAlwaysVisibleParticle(
+                    ModParticles.GARBUSH.get(),
+                    true,
+                    (double)pPos.getX() + 0.5 + pRandom.nextDouble() / 3.0 * (double)(pRandom.nextBoolean() ? 1 : -1),
+                    (double)pPos.getY() + pRandom.nextDouble() + pRandom.nextDouble(),
+                    (double)pPos.getZ() + 0.5 + pRandom.nextDouble() / 3.0 * (double)(pRandom.nextBoolean() ? 1 : -1),
+                    0.0,
+                    0.07,
+                    0.0
+            );
+        }
     }
 
     @Override

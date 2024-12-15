@@ -3,9 +3,9 @@
 	"render_type": "cutout",
      "ambientocclusion": false,
 	"textures": {
-		"0": "moresnifferflowers:block/vivicus_sapling_0c",
-		"1": "moresnifferflowers:block/vivicus_sapling_1",
-		"particle": "moresnifferflowers:block/vivicus_sapling_0c"
+		"0": "moresnifferflowers:block/vivicus_sapling_0",
+		"1": "moresnifferflowers:block/vivicus_sapling_1_c",
+		"particle": "moresnifferflowers:block/vivicus_sapling_0"
 	},
 	"elements": [
 		{

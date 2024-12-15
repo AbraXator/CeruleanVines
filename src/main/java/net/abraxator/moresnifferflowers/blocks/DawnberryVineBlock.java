@@ -90,7 +90,7 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if(pStack.is(Items.SHEARS) && !(getAge(pState) >= 4) && !pState.getValue(ModStateProperties.SHEARED)) {
             return shearAction(pState, pLevel, pPos, pPlayer, pHand, pStack);
-        } else if(pStack.is(Items.BONE_MEAL)) {
+        } else if(pStack.is(Items.BONE_MEAL) && (getAge(pState) < 4)) {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         }
         
@@ -127,7 +127,7 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private InteractionResult dropAgeThreeLoot(BlockState blockState, Level level, BlockPos pos, Player player) {
+    protected InteractionResult dropAgeThreeLoot(BlockState blockState, Level level, BlockPos pos, Player player) {
         final ItemStack DAWNBERRY = new ItemStack(ModItems.DAWNBERRY.get());
         popResource(level, pos, DAWNBERRY);
         level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);

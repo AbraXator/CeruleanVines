@@ -17,4 +17,5 @@ public class ModStateProperties {
     public static final IntegerProperty LAYER = BlockStateProperties.LAYERS;
     public static final BooleanProperty CENTER = BooleanProperty.create("center");
     public static final BooleanProperty EMPTY = BooleanProperty.create("empty");
+    public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 8);
 }

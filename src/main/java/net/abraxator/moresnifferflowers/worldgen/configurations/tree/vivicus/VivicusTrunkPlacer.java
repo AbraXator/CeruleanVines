@@ -43,22 +43,22 @@ public class VivicusTrunkPlacer extends TrunkPlacer {
         Map<BlockPos, BlockPos> blocks = new LinkedHashMap<>();
         int lastLogHeight = pFreeTreeHeight - ((int) Mth.randomBetween(pRandom, 2, 3));
         BlockPos.MutableBlockPos mainTrunk = pPos.mutable();
-        for(int i = 0; i < pFreeTreeHeight; i++) {
+        for(int i = 0; i < (pFreeTreeHeight); i++) {
             this.placeLog(pLevel, pBlockSetter, pRandom, mainTrunk, pConfig);
             
             if (i == 0) {
                 for(Direction direction : Direction.Plane.HORIZONTAL) {
                     int outerHeight = pRandom.nextInt(3);;
                     int cornerHeight = outerHeight + (pRandom.nextInt(2) - 1);
-                    int innerHeight = Math.min(outerHeight + pRandom.nextIntBetweenInclusive(3, 5), pFreeTreeHeight - 2);
+                    int innerHeight = Math.min(outerHeight + pRandom.nextIntBetweenInclusive(5, 7), pFreeTreeHeight - 1);
                     if(pRandom.nextDouble() <= 0.90D) {
                         BlockPos blockPosInner = pPos.relative(direction);
                         for(int j = 0; j < innerHeight; j++) {
                             this.placeLog(pLevel, pBlockSetter, pRandom, blockPosInner.above(j), pConfig);
                         }
-                        
+
                         if(pRandom.nextDouble() <= 0.8D) {
-                            ret.add(new FoliagePlacer.FoliageAttachment(blockPosInner.above(innerHeight), 0, false));
+                            ret.add(new FoliagePlacer.FoliageAttachment(blockPosInner.above(innerHeight), 4, false));
                         }
 
                         if(pRandom.nextDouble() <= 0.90D) {

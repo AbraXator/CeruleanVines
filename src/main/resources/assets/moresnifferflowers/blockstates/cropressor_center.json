@@ -1,19 +1,399 @@
 {
-  "variants": {
-    "facing=east": {
-      "model": "moresnifferflowers:block/cropressor_center"
+  "multipart": [
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_center"
+      }
     },
-    "facing=north": {
-      "model": "moresnifferflowers:block/cropressor_center",
-      "y": 270
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_center",
+        "y": 90
+      }
     },
-    "facing=west": {
-      "model": "moresnifferflowers:block/cropressor_center",
-      "y": 180
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_center",
+        "y": 180
+      }
     },
-    "facing=south": {
-      "model": "moresnifferflowers:block/cropressor_center",
-      "y": 90
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_center",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "fullness": "0",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar0",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "0",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar0",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "0",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar0",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "0",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar0",
+        "y": 270
+      }
+    },
+        {
+      "when": {
+        "fullness": "1",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar1",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "1",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "1",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "1",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar1",
+        "y": 270
+      }
+    },
+        {
+      "when": {
+        "fullness": "2",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar2",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "2",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "2",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "2",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar2",
+        "y": 270
+      }
+    },
+        {
+      "when": {
+        "fullness": "3",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar3",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "3",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar3",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "3",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar3",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "3",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar3",
+        "y": 270
+      }
+    },
+        {
+      "when": {
+        "fullness": "4",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar4",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "4",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar4",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "4",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar4",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "4",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar4",
+        "y": 270
+      }
+    },
+        {
+      "when": {
+        "fullness": "5",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar5",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "5",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar5",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "5",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar5",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "5",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar5",
+        "y": 270
+      }
+    },
+        {
+      "when": {
+        "fullness": "6",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar6",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "6",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar6",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "6",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar6",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "6",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar6",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "fullness": "7",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar7",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "7",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar7",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "7",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar7",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "7",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar7",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "fullness": "8",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar8",
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "fullness": "8",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar8",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "fullness": "8",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar8",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "fullness": "8",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_bar8",
+        "y": 270
+      }
     }
-  }
+  ]
 }

@@ -3,6 +3,7 @@ package net.abraxator.moresnifferflowers.blocks.cropressor;
 import com.mojang.serialization.MapCodec;
 import net.abraxator.moresnifferflowers.blockentities.CropressorBlockEntity;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -73,7 +74,7 @@ public class CropressorBlockBase extends HorizontalDirectionalBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING);
+        pBuilder.add(FACING, ModStateProperties.FULLNESS);
     }
 
     private Direction getNeighbourDirection(Part part, Direction direction) {

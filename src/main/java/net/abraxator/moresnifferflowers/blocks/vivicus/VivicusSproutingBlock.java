@@ -3,17 +3,23 @@ package net.abraxator.moresnifferflowers.blocks.vivicus;
 import net.abraxator.moresnifferflowers.blocks.ColorableVivicusBlock;
 import net.abraxator.moresnifferflowers.blocks.ModCropBlock;
 import net.abraxator.moresnifferflowers.entities.BoblingEntity;
+import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+
+import static net.abraxator.moresnifferflowers.init.ModStateProperties.FLIPPED;
 
 public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCropBlock, ColorableVivicusBlock {
     public VivicusSproutingBlock(Properties p_54422_) {
@@ -48,7 +54,21 @@ public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCrop
             pLevel.removeBlock(pPos, false);
         }
     }
-    
+
+    @Override
+    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        net.neoforged.neoforge.common.util.TriState soilDecision = level.getBlockState(pos.above()).canSustainPlant(level, pos.above(), Direction.DOWN, state);
+        if (!soilDecision.isDefault()) return soilDecision.isTrue();
+        return level.getBlockState(pos.above()).is(ModBlocks.VIVICUS_LEAVES.get());
+    }
+
+    @Override
+    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+        return pFacing == Direction.UP && !pState.canSurvive(pLevel, pCurrentPos)
+                ? Blocks.AIR.defaultBlockState()
+                : super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
+    }
+
     @Override
     protected void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         super.randomTick(pState, pLevel, pPos, pRandom);

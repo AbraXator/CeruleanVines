@@ -1,3 +1,6 @@
 {
-  "parent": "moresnifferflowers:block/corrupted_leaves_bush"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "moresnifferflowers:item/corrupted_leaves_bush"
+  }
 }
