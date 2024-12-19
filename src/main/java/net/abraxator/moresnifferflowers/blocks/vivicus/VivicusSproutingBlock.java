@@ -41,7 +41,7 @@ public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCrop
 
     @Override
     protected boolean isRandomlyTicking(BlockState pState) {
-        return super.isRandomlyTicking(pState);
+        return super.isRandomlyTicking(pState) || !isMaxAge(pState);
     }
 
     public void grow(BlockState pState, Level pLevel, BlockPos pPos) {
@@ -71,10 +71,11 @@ public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCrop
 
     @Override
     protected void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        super.randomTick(pState, pLevel, pPos, pRandom);
         if(pRandom.nextDouble() <= 0.5D) {
             grow(pState, pLevel, pPos);
         }
+        
+        super.randomTick(pState, pLevel, pPos, pRandom);
     }
 
     @Override

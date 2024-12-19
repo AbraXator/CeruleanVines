@@ -43,8 +43,12 @@ public class ModDataMapsProvider extends DataMapProvider {
         corruptables.add(Blocks.GRASS_BLOCK.builtInRegistryHolder(), new Corruptable(ModBlocks.CORRUPTED_GRASS_BLOCK.get()), false);
         corruptables.add(Blocks.DIRT.builtInRegistryHolder(), new Corruptable(Blocks.COARSE_DIRT), false);
         corruptables.add(BlockTags.LOGS, new Corruptable(ModBlocks.DECAYED_LOG.get()), false);
+        corruptables.remove(ModBlocks.CORRUPTED_LOG);
+        corruptables.remove(ModBlocks.CORRUPTED_WOOD);
+        corruptables.remove(ModBlocks.STRIPPED_CORRUPTED_LOG);
+        corruptables.remove(ModBlocks.STRIPPED_CORRUPTED_WOOD);
         corruptables.add(BlockTags.LEAVES, new Corruptable(Blocks.AIR), false);
-
-
+        corruptables.remove(ModBlocks.CORRUPTED_LEAVES);
+        corruptables.remove(ModBlocks.CORRUPTED_LEAVES_BUSH);
     }
 }

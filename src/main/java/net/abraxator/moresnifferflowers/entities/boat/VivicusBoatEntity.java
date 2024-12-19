@@ -5,6 +5,7 @@ import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.init.ModEntityTypes;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -63,5 +64,17 @@ public class VivicusBoatEntity extends ModBoatEntity implements ColorableVivicus
         }
         
         return super.interact(pPlayer, pHand);
+    }
+
+    @Override
+    protected void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.putInt("Color", this.getColor().getId());
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.setColor(Dye.colorFromId(pCompound.getInt("Color")));
     }
 }

@@ -1,4 +1,4 @@
-package net.abraxator.moresnifferflowers.blocks;
+package net.abraxator.moresnifferflowers.blocks.corrupted;
 
 import net.abraxator.moresnifferflowers.entities.CorruptedProjectile;
 import net.minecraft.core.BlockPos;
@@ -11,17 +11,14 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -78,6 +75,21 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
 
     public static boolean isFree(BlockState pState) {
         return pState.isAir() || pState.is(BlockTags.FIRE) || pState.liquid() || pState.canBeReplaced();
+    }
+
+    @Override
+    protected boolean isRandomlyTicking(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        int layers = state.getValue(LAYERS);
+        if(layers == 1) {
+            level.destroyBlock(pos, false);
+        } else {
+            level.setBlock(pos, state.setValue(LAYERS, layers - 1), 3);
+        }
     }
 
     @Override

@@ -35,6 +35,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.openjdk.nashorn.internal.ir.ReturnNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.management.loading.PrivateClassLoader;
 import java.util.Objects;
@@ -46,11 +48,12 @@ public class BoblingEntity extends PathfinderMob {
     private static final EntityDataAccessor<Boolean> DATA_RUNNING = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Optional<BlockPos>> DATA_WANTED_POS = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<Boolean> DATA_PLANTING = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final Logger log = LoggerFactory.getLogger(BoblingEntity.class);
     private BoblingAttackPlayerGoal attackPlayerGoal;
     private BoblingAvoidPlayerGoal<Player> avoidPlayerGoal;
     public AnimationState plantingAnimationState = new AnimationState();
     private int plantingProgress = 0;
-    private static final int MAX_PLANTING_PROGRESS = 26;
+    private static final int MAX_PLANTING_PROGRESS = 35;
 
     public BoblingEntity(EntityType<? extends PathfinderMob> entityType, Level level, Type type) {
         super(entityType, level);
@@ -145,7 +148,7 @@ public class BoblingEntity extends PathfinderMob {
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
         //this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8F));
-        //this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 
@@ -208,10 +211,9 @@ public class BoblingEntity extends PathfinderMob {
         
         if (id == 103) {
             this.plantingAnimationState.start(this.tickCount);
-            this.plantingAnimationState.startIfStopped(this.tickCount);
         }
         if (id == 104) {
-            this.plantingAnimationState.ifStarted(AnimationState::stop);
+            this.plantingAnimationState.stop();
         }
     }
 

@@ -15,7 +15,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.*;
+import java.util.List;
 
 public class JarOfBonmeelItem extends Item {
     public JarOfBonmeelItem(Properties pProperties) {

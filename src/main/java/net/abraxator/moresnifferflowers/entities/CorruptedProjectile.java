@@ -100,7 +100,7 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         if(Corruptable.canBeCorrupted(state.getBlock(), random)) {
             Optional<Block> optional = Corruptable.getCorruptedBlock(state.getBlock(), this.random);
             optional.ifPresent(block -> {
-                if (level.getBlockState(blockPos).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.Corruptable corruptable && level instanceof ServerLevel serverLevel) {
+                if (level.getBlockState(blockPos).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.corrupted.Corruptable corruptable && level instanceof ServerLevel serverLevel) {
                     corruptable.onCorrupt(serverLevel, blockPos, level.getBlockState(blockPos), block);
                 } else {
                     level.setBlockAndUpdate(blockPos, block.withPropertiesOf(state));

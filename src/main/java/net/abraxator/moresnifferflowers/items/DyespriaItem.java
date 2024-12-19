@@ -2,7 +2,6 @@ package net.abraxator.moresnifferflowers.items;
 
 import com.google.common.collect.Maps;
 import net.abraxator.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
-import net.abraxator.moresnifferflowers.blocks.Corruptable;
 import net.abraxator.moresnifferflowers.components.Colorable;
 import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.components.DyespriaMode;
@@ -19,7 +18,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
@@ -65,11 +63,11 @@ public class DyespriaItem extends BlockItem implements Colorable {
         ItemStack stack = pContext.getItemInHand();
         Dye dye = Dye.getDyeFromStack(stack);
 
-        if (pContext.getHand() != InteractionHand.MAIN_HAND || dye.isEmpty()) {
+        if (pContext.getHand() != InteractionHand.MAIN_HAND) {
             return InteractionResult.PASS;
         }
 
-        if (checkDyedBlock(blockState) || blockState.getBlock() instanceof Colorable) {
+        if (checkDyedBlock(blockState) || blockState.getBlock() instanceof Colorable && !dye.isEmpty()) {
             DyespriaMode dyespriaMode = stack.getOrDefault(ModDataComponents.DYESPRIA_MODE, DyespriaMode.SINGLE);
             DyespriaMode.DyespriaSelector dyespriaSelector = new DyespriaMode.DyespriaSelector(blockPos, blockState, getMatchTag(blockState), level, pContext.getClickedFace());
             Set<BlockPos> set = dyespriaMode.getSelector().apply(dyespriaSelector);

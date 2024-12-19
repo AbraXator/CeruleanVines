@@ -1,6 +1,5 @@
 package net.abraxator.moresnifferflowers.blockentities;
 
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import net.abraxator.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockBase;
 import net.abraxator.moresnifferflowers.client.gui.menu.RebrewingStandMenu;
@@ -32,7 +31,6 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import oshi.util.tuples.Pair;
 
-import java.security.PublicKey;
 import java.util.*;
 import java.util.function.Predicate;
 

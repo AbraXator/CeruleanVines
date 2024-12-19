@@ -2,6 +2,7 @@ package net.abraxator.moresnifferflowers.blocks;
 
 import com.mojang.serialization.MapCodec;
 import net.abraxator.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
+import net.abraxator.moresnifferflowers.blocks.corrupted.Corruptable;
 import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.init.*;
 import net.minecraft.core.BlockPos;

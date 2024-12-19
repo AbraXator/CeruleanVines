@@ -61,8 +61,7 @@ public record Corruptable(List<Pair<Block, Integer>> list) {
                 }
             }
         }
-        
-        MoreSnifferFlowers.LOGGER.error("No block selected for corruption, probably missing entry");
+
         return Optional.empty();
     }
     

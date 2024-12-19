@@ -1,4 +1,4 @@
-package net.abraxator.moresnifferflowers.blocks;
+package net.abraxator.moresnifferflowers.blocks.corrupted;
 
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.minecraft.core.BlockPos;

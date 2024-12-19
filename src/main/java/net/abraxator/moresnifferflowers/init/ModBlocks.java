@@ -2,6 +2,9 @@ package net.abraxator.moresnifferflowers.init;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.blocks.*;
+import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedLeavesBlock;
+import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedSlimeLayerBlock;
+import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedSludgeBlock;
 import net.abraxator.moresnifferflowers.blocks.xbush.AmbushBlockLower;
 import net.abraxator.moresnifferflowers.blocks.xbush.AmbushBlockUpper;
 import net.abraxator.moresnifferflowers.blocks.cropressor.CropressorBlockBase;

@@ -1,4 +1,12 @@
 {
+  "remove": [
+    "moresnifferflowers:corrupted_log",
+    "moresnifferflowers:corrupted_wood",
+    "moresnifferflowers:stripped_corrupted_log",
+    "moresnifferflowers:stripped_corrupted_wood",
+    "moresnifferflowers:corrupted_leaves",
+    "moresnifferflowers:corrupted_leaves_bush"
+  ],
   "values": {
     "#minecraft:leaves": {
       "value": [

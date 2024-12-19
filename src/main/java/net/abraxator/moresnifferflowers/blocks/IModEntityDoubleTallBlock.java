@@ -1,6 +1,5 @@
 package net.abraxator.moresnifferflowers.blocks;
 
-import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 

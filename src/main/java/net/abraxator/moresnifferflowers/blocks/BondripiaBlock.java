@@ -89,7 +89,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
         if(!isMaxAge(pState)) {
             grow(pLevel, pPos);
         } else if (pRandom.nextDouble() <= 0.33D && pLevel.getBlockEntity(pPos) instanceof BondripiaBlockEntity entity) {
-            for (BlockPos blockPos : BlockPos.betweenClosed(entity.center.north().east(), entity.center.south().west())) {
+            for (BlockPos blockPos : BlockPos.betweenClosed(entity.center.below().north().east(), entity.center.below().south().west())) {
                 BlockPos currentPos = blockPos;
 
                 for (int i = 0; i < 10; i++) {
@@ -120,8 +120,8 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
         }
     }
     
-    private void fillCauldron(Level level, BlockPos blockPos, BlockState blockState) {
-        BlockState blockstate = ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
+    public void fillCauldron(Level level, BlockPos blockPos, BlockState blockState) {
+        BlockState blockstate = blockState.is(ModBlocks.ACIDRIPIA) ? ModBlocks.ACID_FILLED_CAULDRON.get().defaultBlockState() : ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
         int fluidLevel = blockState.getOptionalValue(LayeredCauldronBlock.LEVEL).orElse(0);
         if(fluidLevel < 3) {
             level.setBlockAndUpdate(blockPos, blockstate.setValue(LayeredCauldronBlock.LEVEL, fluidLevel + 1));

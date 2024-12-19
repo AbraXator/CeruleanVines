@@ -1,7 +1,7 @@
 package net.abraxator.moresnifferflowers.blocks.xbush;
 
 import net.abraxator.moresnifferflowers.blockentities.XbushBlockEntity;
-import net.abraxator.moresnifferflowers.blocks.Corruptable;
+import net.abraxator.moresnifferflowers.blocks.corrupted.Corruptable;
 import net.abraxator.moresnifferflowers.blocks.ModCropBlock;
 import net.abraxator.moresnifferflowers.blocks.ModEntityDoubleTallBlock;
 import net.abraxator.moresnifferflowers.init.ModParticles;
