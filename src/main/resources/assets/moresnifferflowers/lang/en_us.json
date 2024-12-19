@@ -156,7 +156,10 @@
 	"tooltip.amber_shard.usage": "Can be used as an armor trim material",
 	"tooltip.dyespria_seeds": "Shear to hide dye",
 	"tooltip.bondripia_seeds": "Plantable underneath an area of 5 blocks in a + shape",
-	"bottle_of_extraction.tooltip.usage": "Drink to extract current effects into a bottle",
+	"tooltip.bottle_of_extraction.usage": "Drink to extract current effects into a bottle",
+	"tooltip.acid_jar": "Ungrows organic blocks",
+	"tooltip.extracted_bottle.obtain": "Obtainable using Bottle o' Extraction",
+
 
 	"advancements.more_sniffer_flowers.dyespria_plant": "Colorful plants",
 	"advancements.more_sniffer_flowers.dyespria_plant.desc": "Place the Dyespria!!!",
@@ -223,8 +226,6 @@
 
 	"effect.moresnifferflowers.extracted": "Extracted",
 	
-	"tooltip.extracted_bottle.obtain": "Obtainable using Bottle o' Extraction",
-
 	"death.attack.moresnifferflowersveggies": "%s has eaten their veggies",
 
 	"moresnifferflowers.creative_tab": "More Sniffer Flowers",

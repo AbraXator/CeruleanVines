@@ -64,7 +64,7 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
     public void stepOn(Level pLevel, BlockPos pPos, BlockState pState, Entity pEntity) {
         double d0 = Math.abs(pEntity.getDeltaMovement().y);
         if (d0 < 0.1 && !pEntity.isSteppingCarefully()) {
-            double d1 = (double) 1 / pState.getValue(LAYERS) + d0 * 0.2;
+            double d1 = (double) 1 / (pState.getValue(LAYERS)+1) + d0 * 0.2;
             pEntity.setDeltaMovement(pEntity.getDeltaMovement().multiply(d1, 1.0, d1));
         }
     }

@@ -24,7 +24,7 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionRecipe> {
     private final Component localizedName;
     
     public CorruptionCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(MoreSnifferFlowers.loc("textures/gui/container/corrupting_jei.png"), 0, 0, 176, 84);
+        this.background = helper.createDrawable(MoreSnifferFlowers.loc("textures/gui/container/corrupting_jei.png"), 0, 0, 120, 40);
         this.icon = helper.createDrawableItemStack(ModItems.CORRUPTED_SLIME_BALL.get().getDefaultInstance());
         this.localizedName = Component.translatableWithFallback("gui.moresnifferflowers.corrupting_category", "Corrupting");
     }
@@ -51,8 +51,8 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CorruptionRecipe recipe, IFocusGroup iFocusGroup) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 55, 34).addItemStack(recipe.source());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 105, 34).addItemStack(recipe.corrupted())
+        builder.addSlot(RecipeIngredientRole.INPUT, 10, 15).addItemStack(recipe.source());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 92, 15).addItemStack(recipe.corrupted())
                 .addTooltipCallback((recipeSlotView, tooltip) -> {
                     if (recipe.corrupted().is(Blocks.AIR.asItem())) {
                         tooltip.add(Component.literal("Air").withStyle(ChatFormatting.WHITE));
@@ -65,8 +65,14 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionRecipe> {
         Minecraft minecraft = Minecraft.getInstance();
         String text = "Chance: " + recipe.chance() + "%";
         int width = minecraft.font.width(text);
-        int x = getWidth() - 53 - width;
-        int y = 23;
+        int x = getWidth() - 30 - width;
+        int y = 0;
+//        guiGraphics.drawString(minecraft.font, text, x, y+1, 0x231a2e, false);
+//        guiGraphics.drawString(minecraft.font, text, x, y-1, 0x231a2e, false);
+//        guiGraphics.drawString(minecraft.font, text, x-1, y, 0x231a2e, false);
+//        guiGraphics.drawString(minecraft.font, text, x+1, y, 0x231a2e, false);
+
         guiGraphics.drawString(minecraft.font, text, x, y, 0x714a5f, false);
+
     }
 }
