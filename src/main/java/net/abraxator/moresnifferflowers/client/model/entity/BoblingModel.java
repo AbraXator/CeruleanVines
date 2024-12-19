@@ -66,15 +66,20 @@ public class BoblingModel<T extends BoblingEntity> extends HierarchicalModel<T> 
 
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
-
+	
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		this.root().getAllParts().forEach(ModelPart::resetPose);
+		this.head.xRot = headPitch * (float) (Math.PI / 180.0);
+		this.head.yRot = netHeadYaw * (float) (Math.PI / 180.0);
+		
 		this.right_feet.xRot = Mth.cos(limbSwing * 0.8F + (float) Math.PI) * 1.4F * limbSwingAmount;
 		this.left_feet.xRot = Mth.cos(limbSwing * 0.8F) * 1.4F * limbSwingAmount;
 		this.torso_upper.zRot = Mth.cos(limbSwing * 0.6662F) * 0.1F * limbSwingAmount;
 		this.head.zRot = Mth.cos(limbSwing * 0.6662F) * 0.2F * limbSwingAmount;
 		
 		this.animate(entity.plantingAnimationState, BoblingAnimations.PLANT, ageInTicks);
+		this.animate(entity.idleAnimationState, BoblingAnimations.IDLE, ageInTicks);
 	}
 
 	@Override

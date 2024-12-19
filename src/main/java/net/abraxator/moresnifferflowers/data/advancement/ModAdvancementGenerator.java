@@ -8,6 +8,7 @@ import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.critereon.EntityHurtPlayerTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
@@ -107,6 +108,36 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 )
                 .addCriterion("has_rebrewed_potion", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ModTags.ModItemTags.REBREWED_POTIONS).build()))
                 .save(saver, MoreSnifferFlowers.loc("rebrew").toString());
+
+        var bobling = Advancement.Builder.advancement()
+                .parent(root)
+                .display(
+                        ModItems.CORRUPTED_BOBLING_CORE.get(),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling", "Fight back!"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back the tree madness"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("has_rebrewed_potion", ModAdvancementCritters.boblingAttack())
+                .save(saver, MoreSnifferFlowers.loc("bobling").toString());
+        
+        Advancement.Builder.advancement()
+                .parent(bobling)
+                .display(
+                        ModItems.CORRUPTED_SLIME_BALL.get(),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption", "Evil Blocks"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption.desc", "Corrupt blocks around you, to make them evil"),
+                        null,
+                        AdvancementType.TASK,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("has_rebrewed_potion", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ModItems.CORRUPTED_SLIME_BALL).build()))
+                .save(saver, MoreSnifferFlowers.loc("corruption").toString());
     }
 
     private String id(String name) {

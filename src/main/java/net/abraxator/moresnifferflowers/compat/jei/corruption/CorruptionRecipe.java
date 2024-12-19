@@ -1,19 +1,16 @@
 package net.abraxator.moresnifferflowers.compat.jei.corruption;
 
 import com.mojang.datafixers.util.Pair;
-import mezz.jei.api.recipe.transfer.IRecipeTransferManager;
 import net.abraxator.moresnifferflowers.data.datamaps.Corruptable;
 import net.abraxator.moresnifferflowers.data.datamaps.ModDataMaps;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModItems;
-import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
-import javax.lang.model.util.ElementScanner6;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

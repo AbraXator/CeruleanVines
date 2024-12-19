@@ -3,7 +3,6 @@ package net.abraxator.moresnifferflowers.entities;
 import io.netty.buffer.ByteBuf;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAttackPlayerGoal;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAvoidPlayerGoal;
-import net.abraxator.moresnifferflowers.entities.goals.BoblingGiantCropGoal;
 import net.abraxator.moresnifferflowers.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -16,11 +15,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.ByIdMap;
+import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -28,19 +27,15 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import org.openjdk.nashorn.internal.ir.ReturnNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.management.loading.PrivateClassLoader;
-import java.util.Objects;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.IntFunction;
 
 public class BoblingEntity extends PathfinderMob {
@@ -48,10 +43,15 @@ public class BoblingEntity extends PathfinderMob {
     private static final EntityDataAccessor<Boolean> DATA_RUNNING = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Optional<BlockPos>> DATA_WANTED_POS = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<Boolean> DATA_PLANTING = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final Logger log = LoggerFactory.getLogger(BoblingEntity.class);
+    
     private BoblingAttackPlayerGoal attackPlayerGoal;
     private BoblingAvoidPlayerGoal<Player> avoidPlayerGoal;
+    
+    private int idleAnimationTimeout = 0;
+    public AnimationState idleAnimationState = new AnimationState();
     public AnimationState plantingAnimationState = new AnimationState();
+    
+    private boolean finalizePlanting = false;
     private int plantingProgress = 0;
     private static final int MAX_PLANTING_PROGRESS = 35;
 
@@ -82,7 +82,7 @@ public class BoblingEntity extends PathfinderMob {
 
     public void setRunning(boolean running) {
         this.entityData.set(DATA_RUNNING, running);
-        this.updateRunningGoals();
+        if(running) this.updateRunningGoals();
     }
     
     @Nullable
@@ -155,11 +155,21 @@ public class BoblingEntity extends PathfinderMob {
     @Override
     protected void actuallyHurt(DamageSource pDamageSource, float pDamageAmount) {
         super.actuallyHurt(pDamageSource, pDamageAmount);
-        if (!this.isRunning()) {
+        if (this.isRunning()) {
+            var r = 2.5;
+            var checkR = 1.5;
+            Set<Vec3> set = new HashSet<>();
+
+            for (double theta = 0; theta <= Mth.TWO_PI * 3; theta += Mth.TWO_PI / random.nextIntBetweenInclusive(2, 5)) {
+                generateProjectile(set, r, theta + this.level().random.nextDouble(), checkR);
+            }
+        }
+        
+        if (!this.isRunning() && pDamageSource.is(DamageTypes.PLAYER_ATTACK)) {
             this.setRunning(true);
         }
     }
-
+    
     @Override
     protected int calculateFallDamage(float pFallDistance, float pDamageMultiplier) {
         if (this.tickCount <= 60) return 0;
@@ -169,52 +179,73 @@ public class BoblingEntity extends PathfinderMob {
     @Override
     public void tick() {
         super.tick();
-
+        
         if (this.isPlanting()) {
             this.plantingProgress++;
             if (plantingProgress >= MAX_PLANTING_PROGRESS) {
-                var blockPos = BlockPos.containing(this.position()).relative(this.getDirection());
-                this.level().setBlockAndUpdate(blockPos, ModBlocks.CORRUPTED_SAPLING.get().defaultBlockState());
-                this.level().broadcastEntityEvent(this, (byte) 104);
-                this.discard();
+                this.finalizePlanting = true;
+                this.setPlanting(false);
             }
+        }
+        
+        if(this.level().isClientSide) {
+            this.setupAnimationStates();
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        
+        if (canPlant()) {
+            this.plantingProgress = 0;
+            this.setPlanting(true);
+            this.removeFreeWill();
+            this.setYRot(this.getDirection().toYRot());
+        }
+
+        if(this.finalizePlanting && this.isAlive()) {
+            var blockPos = BlockPos.containing(this.position()).relative(this.getDirection());
+            this.level().setBlockAndUpdate(blockPos, ModBlocks.CORRUPTED_SAPLING.get().defaultBlockState());
+            this.discard();
+        }
+    }
+    
+    private boolean canPlant() {
+        return
+                this.isRunning() && 
+                this.isAlive() && 
+                !this.isPlanting() && 
+                this.getWantedPos() != null && 
+                this.position().closerThan(getWantedPos().getCenter(), 0.75F);
+    }
+
+    private void setupAnimationStates() {
+        if (this.idleAnimationTimeout <= 0) {
+            this.idleAnimationTimeout = 40;
+            this.idleAnimationState.start(this.tickCount);
+        } else {
+            --this.idleAnimationTimeout;
+        }
+
+        if(this.isPlanting()) {
+            this.idleAnimationState.stop();
+            if(!this.plantingAnimationState.isStarted()) {
+                this.plantingAnimationState.start(this.tickCount);
+            }
+        } else {
+            this.plantingAnimationState.stop();
         }
     }
 
     public void updateRunningGoals() {
         if (this.avoidPlayerGoal == null) {
-            this.avoidPlayerGoal = new BoblingAvoidPlayerGoal<>(this, Player.class, 16.0F, 1.3F, 1.8F);
+            this.avoidPlayerGoal = new BoblingAvoidPlayerGoal<>(this, Player.class, 16.0F, 1.0F, 1.3F);
         }
 
-        if (this.isRunning()) {
-            if (this.attackPlayerGoal != null) this.goalSelector.removeGoal(this.attackPlayerGoal);
+        if (this.attackPlayerGoal != null) this.goalSelector.removeGoal(this.attackPlayerGoal);
 
-            this.goalSelector.addGoal(1, this.avoidPlayerGoal);
-        }
-    }
-    
-    @Override
-    public void aiStep() {
-        super.aiStep();
-
-        if (this.isRunning() && this.isAlive() && !this.isPlanting() && this.getWantedPos() != null && AABB.ofSize(getWantedPos().getCenter(), 2.0D, 2.0D, 2.0D).contains(this.position())) {
-            this.setYRot(this.getDirection().toYRot());
-            this.level().broadcastEntityEvent(this, (byte) 103);
-            this.setPlanting(true);
-            this.removeFreeWill();
-        }
-    }
-
-    @Override
-    public void handleEntityEvent(byte id) {
-        super.handleEntityEvent(id);
-        
-        if (id == 103) {
-            this.plantingAnimationState.start(this.tickCount);
-        }
-        if (id == 104) {
-            this.plantingAnimationState.stop();
-        }
+        this.goalSelector.addGoal(2, this.avoidPlayerGoal);
     }
 
     @Override
@@ -223,9 +254,6 @@ public class BoblingEntity extends PathfinderMob {
         
         if (itemStack.is(ModItems.VIVICUS_ANTIDOTE) && this.getBoblingType() == Type.CORRUPTED) {
             this.setBoblingType(Type.CURED);
-            
-            this.goalSelector.addGoal(3, new TemptGoal(this, 0.9F, stack ->
-                    stack.is(ModItems.JAR_OF_BONMEEL), false));
             
             if (this.attackPlayerGoal != null) {
                 this.goalSelector.removeGoal(this.attackPlayerGoal);
@@ -255,7 +283,34 @@ public class BoblingEntity extends PathfinderMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10.0).add(Attributes.MOVEMENT_SPEED, 0.25F).add(Attributes.ATTACK_DAMAGE, 3.0);
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 10.0)
+                .add(Attributes.MOVEMENT_SPEED, 0.25F)
+                .add(Attributes.ATTACK_DAMAGE, 3.0);
+    }
+
+
+    private void generateProjectile(Set<Vec3> set, double r, double theta, double checkR) {
+        var x = this.getX() + r * Mth.cos((float) theta);
+        var yx = this.getY() + r * Mth.sin((float) theta);
+        var yz = this.getY() + r * Mth.cos((float) theta);
+        var z = this.getZ() + r * Mth.sin((float) theta);
+
+        createAndAddProjectile(set, checkR, new Vec3(x, yo, z));
+        createAndAddProjectile(set, checkR, new Vec3(x, yx, zo));
+        createAndAddProjectile(set, checkR, new Vec3(xo, yz, z));
+    }
+
+    private void createAndAddProjectile(Set<Vec3> set, double checkR, Vec3 vec3) {
+        AABB aabb = AABB.ofSize(vec3, checkR, checkR, checkR);
+        if (set.stream().noneMatch(aabb::contains)) {
+            CorruptedProjectile projectile = new CorruptedProjectile(this.level());
+            projectile.setPos(vec3);
+            Vec3 dir = new Vec3(projectile.getX() - this.getX(), projectile.getY() - this.getY(), projectile.getZ() - this.getZ()).normalize();
+            projectile.setDeltaMovement(dir);
+            this.level().addFreshEntity(projectile);
+            set.add(vec3);
+        }
     }
 
     public enum Type implements StringRepresentable {
