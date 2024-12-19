@@ -25,7 +25,10 @@ public record CorruptionRecipe(ItemStack source, ItemStack corrupted, int chance
         for(Map.Entry<ResourceKey<Block>, Corruptable> entry : BuiltInRegistries.BLOCK.getDataMap(ModDataMaps.CORRUPTABLE).entrySet()) {
             Item source = BuiltInRegistries.BLOCK.get(entry.getKey()).asItem();
             for(Pair<Block, Integer> pair : entry.getValue().list()) {
-                recipes.add(new CorruptionRecipe(source.getDefaultInstance(), pair.getFirst().asItem().getDefaultInstance(), pair.getSecond()));
+                int amount = entry.getValue().list().size();
+                int weight = pair.getSecond();
+                int percentage = (weight / amount) * 100;
+                recipes.add(new CorruptionRecipe(source.getDefaultInstance(), pair.getFirst().asItem().getDefaultInstance(), percentage));
             }
         }
         

@@ -147,8 +147,8 @@ public class BoblingEntity extends PathfinderMob {
 
 
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        //this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8F));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
     }
 

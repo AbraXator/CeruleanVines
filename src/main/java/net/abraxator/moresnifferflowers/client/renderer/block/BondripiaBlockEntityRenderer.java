@@ -30,7 +30,7 @@ public class BondripiaBlockEntityRenderer<T extends BondripiaBlockEntity> implem
         if(pBlockEntity.getBlockState().getValue(ModStateProperties.CENTER) && pBlockEntity.getBlockState().getValue(ModStateProperties.AGE_2) >= 2) {
             pPoseStack.translate(0.5, 1.5, 0.5);
             pPoseStack.mulPose(Axis.XP.rotationDegrees(180));
-            this.model.render(pPoseStack, TEXTURE.buffer(pBufferSource, location -> RenderType.cutout()), pPackedLight, pPackedOverlay);
+            this.model.render(pPoseStack, TEXTURE.buffer(pBufferSource, RenderType::entityCutout), pPackedLight, pPackedOverlay);
         }
     }
 
