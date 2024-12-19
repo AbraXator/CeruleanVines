@@ -273,16 +273,17 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
 
         add(ModBlocks.BOBLING_SACK.get(), noDrop());
         add(ModBlocks.CORRUPTED_SLIME_LAYER.get(),
-                p_344229_ -> LootTable.lootTable()
+                block -> LootTable.lootTable()
                         .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1.0F))
                                         .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS))
                                         .add(AlternativesEntry.alternatives(
                                                 SnowLayerBlock.LAYERS.getPossibleValues(),
                                                 p_252097_ -> LootItem.lootTableItem(ModItems.CORRUPTED_SLIME_BALL.get()).when(
-                                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(p_344229_)
+                                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
                                                                 .setProperties(
-                                                                        StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, p_252097_.intValue())
-                                                                )).apply(SetItemCountFunction.setCount(ConstantValue.exactly((float)p_252097_.intValue())))
+                                                                        StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, p_252097_)
+                                                                )).apply(SetItemCountFunction.setCount(UniformGenerator.between(0F,(float) p_252097_)))
                                                 )
 
                                         )

@@ -133,7 +133,7 @@ public class CorruptedGrassBlock extends SpreadingSnowyDirtBlock implements Bone
             level.setBlockAndUpdate(pos, Blocks.COARSE_DIRT.defaultBlockState());
         } else {
             if (!level.isAreaLoaded(pos, 3)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
-            if (level.getMaxLocalRawBrightness(pos.above()) <=7 ) {
+            if (level.getMaxLocalRawBrightness(pos.above()) <=6 ) {
                 BlockState blockstate = this.defaultBlockState();
 
                 for (int i = 0; i < 4; i++) {

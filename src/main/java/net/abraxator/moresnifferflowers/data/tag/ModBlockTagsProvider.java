@@ -27,7 +27,9 @@ public class ModBlockTagsProvider extends IntrinsicHolderTagsProvider<Block> {
 
         this.tag(BlockTags.SWORD_EFFICIENT).add(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.AMBUSH_BOTTOM.get(), ModBlocks.AMBUSH_TOP.get(), ModBlocks.CAULORFLOWER.get(), ModBlocks.BONMEELIA.get(),
                 ModBlocks.GIANT_CARROT.get(), ModBlocks.GIANT_POTATO.get(), ModBlocks.GIANT_NETHERWART.get(), ModBlocks.GIANT_BEETROOT.get(), ModBlocks.GIANT_WHEAT.get());
-        this.tag(BlockTags.MINEABLE_WITH_HOE).add(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.AMBUSH_BOTTOM.get(), ModBlocks.AMBUSH_TOP.get(), ModBlocks.BONMEELIA.get(), ModBlocks.GIANT_CARROT.get(), ModBlocks.GIANT_POTATO.get(), ModBlocks.GIANT_NETHERWART.get(), ModBlocks.GIANT_BEETROOT.get(), ModBlocks.GIANT_WHEAT.get(), ModBlocks.CAULORFLOWER.get());
+        this.tag(BlockTags.MINEABLE_WITH_HOE).add(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.AMBUSH_BOTTOM.get(), ModBlocks.AMBUSH_TOP.get(), ModBlocks.BONMEELIA.get(), ModBlocks.GIANT_CARROT.get(),
+                ModBlocks.GIANT_POTATO.get(), ModBlocks.GIANT_NETHERWART.get(), ModBlocks.GIANT_BEETROOT.get(), ModBlocks.GIANT_WHEAT.get(), ModBlocks.CAULORFLOWER.get(),
+                ModBlocks.CORRUPTED_LEAVES.get(), ModBlocks.CORRUPTED_LEAVES_BUSH.get(), ModBlocks.VIVICUS_LEAVES.get(), ModBlocks.VIVICUS_LEAVES_SPROUT.get());
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.GIANT_CARROT.get(), ModBlocks.GIANT_POTATO.get(), ModBlocks.GIANT_NETHERWART.get(), ModBlocks.GIANT_BEETROOT.get(), ModBlocks.GIANT_WHEAT.get(), ModBlocks.CAULORFLOWER.get());
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.CORRUPTED_SLUDGE.get(), ModBlocks.CORRUPTED_SLIME_LAYER.get(), ModBlocks.CORRUPTED_GRASS_BLOCK.get());
 

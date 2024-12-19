@@ -1,4 +1,4 @@
-// 1.21	2024-12-14T14:07:39.1281006	Loot Tables
+// 1.21	2024-12-17T21:16:47.8532748	Loot Tables
 d4911378e2a6a51e1f4b1222b049c50f33028309 data/moresnifferflowers/loot_table/blocks/acidripia.json
 16882dced81963aacd1b4d32ed8e0ca33a618998 data/moresnifferflowers/loot_table/blocks/acid_filled_cauldron.json
 867be0e1c64c89c59a6ef95f1d02bf10cf067d66 data/moresnifferflowers/loot_table/blocks/amber_block.json
@@ -33,7 +33,7 @@ efc2305b6f1816d2b2c74d844ab78a6d63455514 data/moresnifferflowers/loot_table/bloc
 1d20bda5685c173ad768e1e0398215c0f1e15a85 data/moresnifferflowers/loot_table/blocks/corrupted_sapling.json
 718f5240a18e949e727f6033cc82170ac52821df data/moresnifferflowers/loot_table/blocks/corrupted_sign.json
 33ba6963686398803b799d8478d9c049b7bbc1b9 data/moresnifferflowers/loot_table/blocks/corrupted_slab.json
-607f2cb88955a18e775920b2c034a63f1330a97c data/moresnifferflowers/loot_table/blocks/corrupted_slime_layer.json
+6c4cd8e3ac6bc68ffa0e21bd24aa0c59550f62dc data/moresnifferflowers/loot_table/blocks/corrupted_slime_layer.json
 a9bef67f49c81d45eacef69ba4648c051eca88c9 data/moresnifferflowers/loot_table/blocks/corrupted_sludge.json
 72caea192eac6e8af5cf22a417733aca587b9416 data/moresnifferflowers/loot_table/blocks/corrupted_stairs.json
 f816913790bc9944785ed0f6e985c5158b0ddaa7 data/moresnifferflowers/loot_table/blocks/corrupted_trapdoor.json

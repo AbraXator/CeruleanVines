@@ -4,7 +4,7 @@
 	"render_type": "cutout",
 	"textures": {
 		"1": "moresnifferflowers:block/dawnberry_vine_stage_3_e",
-		"2": "moresnifferflowers:block/dawnberry_vine_stage_3_n"
+		"2": "moresnifferflowers:block/dawnberry_vine_stage_3_f"
 	},
 	"elements": [
 		{

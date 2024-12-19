@@ -26,8 +26,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.CORRUPTED_CHEST_BOAT.get());
         basicItem(ModItems.VIVICUS_BOAT.get());
         basicItem(ModItems.VIVICUS_CHEST_BOAT.get());
-        
-        var modelBuilder = withExistingParent(ModItems.BOBLING_SPAWN_EGG.getId().getPath(), MoreSnifferFlowers.loc("item/cropressor_normal"));
+
         /*for(int i = 1; i <= ModItemProperties.COPRESSOR_ANIMATION_FRAMES; i++) {
             withExistingParent(ModItems.CROPRESSOR.getId().getPath() + "_animation_" + i, MoreSnifferFlowers.loc("item/cropressor_animation_" + i / ModItemProperties.FRAME_TIME));
             
