@@ -1,0 +1,28 @@
+{
+  "parent": "moresnifferflowers:root",
+  "criteria": {
+    "has_rebrewed_potion": {
+      "trigger": "moresnifferflowers:bobling_attack"
+    }
+  },
+  "display": {
+    "description": {
+      "fallback": "Fight back the tree madness",
+      "translate": "advancements.more_sniffer_flowers.bobling.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "moresnifferflowers:corrupted_bobling_core"
+    },
+    "title": {
+      "fallback": "Fight back!",
+      "translate": "advancements.more_sniffer_flowers.bobling"
+    }
+  },
+  "requirements": [
+    [
+      "has_rebrewed_potion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
