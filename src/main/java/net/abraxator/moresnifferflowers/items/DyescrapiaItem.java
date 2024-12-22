@@ -48,7 +48,7 @@ public class DyescrapiaItem extends BlockItem {
         var result = super.useOn(useOnCtx);
 
         if (level.getBlockEntity(blockPos.above()) instanceof DyespriaPlantBlockEntity entity) {
-            entity.dye = Dye.getDyeFromStack(stack);
+            entity.dye = Dye.getDyeFromDyespria(stack);
             entity.setChanged();
         }
 

@@ -28,7 +28,7 @@ public interface ColorableVivicusBlock extends Colorable {
         }
         
         var stack = player.getMainHandItem();
-        Dye dye = Dye.getDyeFromStack(stack);
+        Dye dye = Dye.getDyeFromDyespria(stack);
         RandomSource randomSource = level.random;
 
         if(blockState.getValue(getColorProperty()).equals(dye.color()) || dye.isEmpty()) {

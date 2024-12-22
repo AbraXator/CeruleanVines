@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -44,6 +45,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
         BlockPos blockPos = pContext.getClickedPos();
         BlockState blockState = level.getBlockState(blockPos);
         ItemStack stack = pContext.getItemInHand();
-        Dye dye = Dye.getDyeFromStack(stack);
+        Dye dye = Dye.getDyeFromDyespria(stack);
 
         if (pContext.getHand() != InteractionHand.MAIN_HAND) {
             return InteractionResult.PASS;
@@ -74,7 +76,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
             set.stream().sorted(new EntityDistanceComparator(blockPos)).forEach(blockPos1 -> {
                 var state = level.getBlockState(blockPos1);
 
-                if(!Dye.getDyeFromStack(stack).isEmpty()) {
+                if(!Dye.getDyeFromDyespria(stack).isEmpty()) {
                     colorOne(stack, level, blockPos1, state);
                 }
             });
@@ -96,7 +98,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
         var result = super.useOn(useOnCtx);
 
         if (level.getBlockEntity(blockPos.above()) instanceof DyespriaPlantBlockEntity entity) {
-            entity.dye = Dye.getDyeFromStack(stack);
+            entity.dye = Dye.getDyeFromDyespria(stack);
             entity.setChanged();
         }
 
@@ -111,7 +113,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
     }
 
     public boolean colorOne(ItemStack stack, Level level, BlockPos blockPos, BlockState blockState) {
-        Dye dye = Dye.getDyeFromStack(stack);
+        Dye dye = Dye.getDyeFromDyespria(stack);
         
         if (!canDye(blockState, dye)) {
             return false;
@@ -133,13 +135,66 @@ public class DyespriaItem extends BlockItem implements Colorable {
         
         return false;
     }
-    
-    private void finishColoring(Dye dye, Level level, ItemStack stack, BlockPos blockPos) {
-        ItemStack itemStack = Dye.stackFromDye(new Dye(dye.color(), dye.amount() - level.getRandom().nextIntBetweenInclusive(0, 1)));
-        Dye.setDyeToDyeHolderStack(stack, itemStack, itemStack.getCount());
+
+    @Override
+    public boolean isBarVisible(ItemStack stack) {
+        return getDyespriaUses(stack) < 4;
+    }
+
+    @Override
+    public int getBarColor(ItemStack stack) {
+        int lowColor = 0x771819;
+        int highColor = 0x179529;
+        int input = getDyespriaUses(stack);
+        int maxInput= 4;
+
+        int lowRed = (lowColor >> 16) & 0xFF;
+        int lowGreen = (lowColor >> 8) & 0xFF;
+        int lowBlue = lowColor & 0xFF;
+
+        int highRed = (highColor >> 16) & 0xFF;
+        int highGreen = (highColor >> 8) & 0xFF;
+        int highBlue = highColor & 0xFF;
+
+        float[] lowHSB =  Color.RGBtoHSB(lowRed, lowGreen, lowBlue, null);
+        float[] highHSB =  Color.RGBtoHSB(highRed, highGreen, highBlue, null);
+
+
+        float finalHue = (lowHSB[0] * (Math.abs(input - maxInput)) + highHSB[0] * input) / maxInput;
+
+        return Mth.hsvToRgb(finalHue, 1.0F, 1.0F);
+    }
+
+    @Override
+    public int getBarWidth(ItemStack stack) {
+        return Math.round(getDyespriaUses(stack) * 13.0F / 4);
+    }
+
+    public void finishColoring(Dye dye, Level level, ItemStack dyespria, BlockPos blockPos) {
+        int uses = getDyespriaUses(dyespria) - 1;
+        int dyeCount;
+        
+        if(uses <= 0) {
+            dyeCount = dye.amount() - 1;
+            setDyespriaUses(dyespria, 4);
+        } else {
+            dyeCount = dye.amount();
+            setDyespriaUses(dyespria, uses);
+        }
+        
+        ItemStack itemStack = Dye.stackFromDye(new Dye(dye.color(), dyeCount));
+        Dye.setDyeToDyeHolderStack(dyespria, itemStack, itemStack.getCount(), getDyespriaUses(dyespria));
         if (level.isClientSide) {
             particles(level.getRandom(), level, dye, blockPos);
         }
+    }
+    
+    public static int getDyespriaUses(ItemStack stack) {
+        return stack.getOrDefault(ModDataComponents.DYESPRIA_USES, 4);
+    }
+    
+    public static void setDyespriaUses(ItemStack stack, int uses) {
+        stack.set(ModDataComponents.DYESPRIA_USES, uses);
     }
     
     private boolean canDye(BlockState blockState, Dye dye) {
@@ -191,7 +246,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
                 pAccess.set(remove(pStack));
                 playRemoveOneSound(pPlayer);
             } else {
-                ItemStack itemStack = add(pStack, Dye.getDyeFromStack(pStack), pOther);
+                ItemStack itemStack = add(pStack, Dye.getDyeFromDyespria(pStack), pOther);
                 pAccess.set(itemStack);
                 if(itemStack.isEmpty()) {
                     this.playInsertSound(pPlayer);
@@ -208,10 +263,12 @@ public class DyespriaItem extends BlockItem implements Colorable {
     }
 
     private ItemStack remove(ItemStack pStack) {
-        Dye dye = Dye.getDyeFromStack(pStack);
+        var dye = Dye.getDyeFromDyespria(pStack);
+        int uses = getDyespriaUses(pStack);
+        
         if(!dye.isEmpty()) {
             Dye.setDyeColorToStack(pStack, DyeColor.WHITE, 0);
-            return Dye.stackFromDye(dye);
+            return Dye.stackFromDye(new Dye(dye.color(), dye.amount() - (uses == 4 ? 0 : 1)));
         } else {
             return ItemStack.EMPTY;
         }
@@ -220,7 +277,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
     @Override
     public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
-        Dye dye = Dye.getDyeFromStack(pStack);
+        Dye dye = Dye.getDyeFromDyespria(pStack);
         Component usage = Component.translatableWithFallback("tooltip.dyespria.usage", "Right click with dye to insert \nRight click caulorflower to repaint \nSneak to apply to the whole column \n").withStyle(ChatFormatting.GOLD);
         var usageComponents = Arrays.stream(usage.getString().split("\n", -1))
                 .filter(s -> !s.isEmpty())

@@ -16,8 +16,14 @@ public class AgeableMobMixin extends PathfinderMob {
 
     @ModifyVariable(method = "aiStep", at = @At(value = "STORE"), ordinal = 0)
     public int moresniffeflowers$aiStep(int x) {
-        if(this.getType() == EntityType.SNIFFER && x > 0) {
-            return x + 1;
-        } else return x;
+        if(this.getType() == EntityType.SNIFFER) {
+            if (x < 0) {
+                return x + 1;
+            } else if (x > 0) {
+                return x;
+            }
+        } 
+        
+        return x;
     }
 }
