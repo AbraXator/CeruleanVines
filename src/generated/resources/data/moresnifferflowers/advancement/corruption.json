@@ -1,0 +1,35 @@
+{
+  "parent": "moresnifferflowers:bobling",
+  "criteria": {
+    "has_rebrewed_potion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "moresnifferflowers:corrupted_slime_ball"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "fallback": "Corrupt block around you!",
+      "translate": "advancements.more_sniffer_flowers.corruption.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "moresnifferflowers:corrupted_slime_ball"
+    },
+    "title": {
+      "fallback": "Coruption Consumes",
+      "translate": "advancements.more_sniffer_flowers.corruption"
+    }
+  },
+  "requirements": [
+    [
+      "has_rebrewed_potion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
