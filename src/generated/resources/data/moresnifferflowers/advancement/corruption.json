@@ -14,7 +14,7 @@
   },
   "display": {
     "description": {
-      "fallback": "Corrupt block around you!",
+      "fallback": "Corrupt blocks around you, to make them evil",
       "translate": "advancements.more_sniffer_flowers.corruption.desc"
     },
     "icon": {
@@ -22,7 +22,7 @@
       "id": "moresnifferflowers:corrupted_slime_ball"
     },
     "title": {
-      "fallback": "Coruption Consumes",
+      "fallback": "Evil Blocks",
       "translate": "advancements.more_sniffer_flowers.corruption"
     }
   },

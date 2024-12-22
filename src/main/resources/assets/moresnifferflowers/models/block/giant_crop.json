@@ -1,4 +1,5 @@
 {
+	"parent": "block/cube_all",
 	"render_type": "cutout",
 	"ambientocclusion": false,
 	"textures": {
