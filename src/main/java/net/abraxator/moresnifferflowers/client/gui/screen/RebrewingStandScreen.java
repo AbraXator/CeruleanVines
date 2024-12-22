@@ -43,8 +43,8 @@ public class RebrewingStandScreen extends AbstractContainerScreen<RebrewingStand
         guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
         if(menu.getCost() <= 16) {
             var cost = String.valueOf(menu.getCost());
-            var color = Minecraft.getInstance().getResourceManager().listPacks().anyMatch(packResources -> packResources.packId().equals("more_sniffer_flowers_boring")) ? 0x00373737 : 0x00933c4d;
-            var colorOutline = Minecraft.getInstance().getResourceManager().listPacks().anyMatch(packResources -> packResources.packId().equals("more_sniffer_flowers_boring")) ? 0x006d294a : 0x005e224f;
+            var color = Minecraft.getInstance().getResourceManager().listPacks().anyMatch(packResources -> packResources.packId().equals("more_sniffer_flowers_boring")) ? 0x00c6c6c6 : 0x00933c4d;
+            var colorOutline = Minecraft.getInstance().getResourceManager().listPacks().anyMatch(packResources -> packResources.packId().equals("more_sniffer_flowers_boring")) ? 0x00373737 : 0x005e224f;
             drawCost(guiGraphics, cost, x, y, colorOutline, -1, 0);
             drawCost(guiGraphics, cost, x, y, colorOutline, +1, 0);
             drawCost(guiGraphics, cost, x, y, colorOutline, 0, -1);
