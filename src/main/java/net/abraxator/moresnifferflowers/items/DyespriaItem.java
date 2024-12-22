@@ -143,9 +143,9 @@ public class DyespriaItem extends BlockItem implements Colorable {
 
     @Override
     public int getBarColor(ItemStack stack) {
-        int lowColor = 0x771819;
+        int lowColor = 0x8c1111;
         int highColor = 0x179529;
-        int input = getDyespriaUses(stack);
+        int input = getDyespriaUses(stack)-1;
         int maxInput= 4;
 
         int lowRed = (lowColor >> 16) & 0xFF;
@@ -160,7 +160,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
         float[] highHSB =  Color.RGBtoHSB(highRed, highGreen, highBlue, null);
 
 
-        float finalHue = (lowHSB[0] * (Math.abs(input - maxInput)) + highHSB[0] * input) / maxInput;
+        float finalHue = ((lowHSB[0] * (Math.abs(input - maxInput))) + (highHSB[0] * input)) / maxInput;
 
         return Mth.hsvToRgb(finalHue, 1.0F, 1.0F);
     }
