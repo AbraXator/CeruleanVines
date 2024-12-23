@@ -13,6 +13,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import org.apache.logging.log4j.core.pattern.ThreadIdPatternConverter;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -64,11 +66,16 @@ public class CropressorBlockEntity extends ModBlockEntity {
                 Vec3 blockPos = getBlockPos().relative(getBlockState().getValue(CropressorBlockBase.FACING).getOpposite()).getCenter();
                 ItemEntity entity = new ItemEntity(level, blockPos.x, blockPos.y + 0.5, blockPos.z, result);
                 Crop crop = Crop.fromItem(currentCrop.getItem());
+                
+                if(crop == null) {
+                    return;
+                }
+                
                 level.playSound(null, worldPosition, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                 level.addFreshEntity(entity);
                 cropCount[crop.ordinal()] = 0;
                 currentCrop = ItemStack.EMPTY;
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
+                updateFullness(0, crop);
                 level.gameEvent(GameEvent.BLOCK_CHANGE, getBlockPos(), GameEvent.Context.of(getBlockState()));
                 setChanged();
                 progress = 0;
@@ -77,26 +84,38 @@ public class CropressorBlockEntity extends ModBlockEntity {
     }
 
     public boolean canInteract() {
-        return 0 >= progress || currentCrop.getCount() >= INV_SIZE;
+        return progress <= 0;
     }
 
-    public ItemStack addItem(ItemStack pStack, Level level) {
+    public ItemStack addItem(ItemStack pStack) {
         Crop crop = Crop.fromItem(pStack.getItem());
-        if(Crop.canAddCrop(cropCount, crop)) {
+        if (Crop.canAddCrop(cropCount, crop)) {
             int index = crop.ordinal();
-            this.cropCount[index]++;
-            this.currentCrop = new ItemStack(crop.item, this.cropCount[index]);
-            pStack.shrink(1);
-            int fullness = Mth.ceil((float) this.cropCount[index] / 2);
-            var pos = getBlockPos().relative(getBlockState().getValue(HorizontalDirectionalBlock.FACING));
-            level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(ModStateProperties.FULLNESS, fullness));
-            level.setBlockAndUpdate(pos, level.getBlockState(pos).setValue(ModStateProperties.FULLNESS, fullness));
-            return pStack;
+            
+            int currentCount = this.cropCount[index];
+            int maxAddable = 16 - currentCount;
+            int itemsToAdd = Math.min(pStack.getCount(), maxAddable);
+
+            if (itemsToAdd > 0) {
+                this.cropCount[index] += itemsToAdd;
+                this.currentCrop = new ItemStack(crop.item, this.cropCount[index]);
+                
+                pStack.shrink(itemsToAdd);
+                
+                int fullness = Mth.ceil((float) this.cropCount[index] / 2);
+                updateFullness(fullness, crop);
+            }
         }
-        
+
         return pStack;
     }
 
+    private void updateFullness(int fullness, Crop crop) {
+        var pos = getBlockPos().relative(getBlockState().getValue(HorizontalDirectionalBlock.FACING));
+        level.setBlockAndUpdate(getBlockPos(), getBlockState().setValue(ModStateProperties.FULLNESS, fullness));
+        level.setBlockAndUpdate(pos, level.getBlockState(pos).setValue(ModStateProperties.FULLNESS, fullness).setValue(ModStateProperties.CROP, crop));
+    }
+    
     @Override
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.saveAdditional(pTag, pRegistries);
@@ -127,17 +146,21 @@ public class CropressorBlockEntity extends ModBlockEntity {
         return compoundtag;
     }
     
-    public static enum Crop {
-        CARROT(Items.CARROT),
-        POTATO(Items.POTATO),
-        WHEAT(Items.WHEAT),
-        NETHERWART(Items.NETHER_WART),
-        BEETROOT(Items.BEETROOT);
+    public static enum Crop implements StringRepresentable {
+        CARROT("carrot", Items.CARROT, 0xe67022),
+        POTATO("potato", Items.POTATO, 0xce933a),
+        WHEAT("wheat", Items.WHEAT, 0xcdb159),
+        NETHERWART("netherwart", Items.NETHER_WART, 0x730408),
+        BEETROOT("beetroot", Items.BEETROOT, 0xa4272c);
         
+        String name;
         public Item item;
+        public int tint;
         
-        Crop(Item item) {
+        Crop(String name, Item item, int tint) {
+            this.name = name;
             this.item = item;
+            this.tint = tint;
         }
         
         public static boolean canAddCrop(int[] cropCount, Crop crop) {
@@ -154,6 +177,11 @@ public class CropressorBlockEntity extends ModBlockEntity {
                     .filter(crops -> crops.item == item)
                     .findFirst()
                     .orElse(null);
+        }
+
+        @Override
+        public String getSerializedName() {
+            return this.name;
         }
     }
 }

@@ -121,7 +121,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         true,
                         false
                 )
-                .addCriterion("has_rebrewed_potion", ModAdvancementCritters.boblingAttack())
+                .addCriterion("bobling_attacked", ModAdvancementCritters.boblingAttack())
                 .save(saver, MoreSnifferFlowers.loc("bobling").toString());
         
         Advancement.Builder.advancement()
@@ -136,7 +136,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         true,
                         false
                 )
-                .addCriterion("has_rebrewed_potion", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ModItems.CORRUPTED_SLIME_BALL).build()))
+                .addCriterion("has_corrupted_slime_ball", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ModItems.CORRUPTED_SLIME_BALL).build()))
                 .save(saver, MoreSnifferFlowers.loc("corruption").toString());
     }
 

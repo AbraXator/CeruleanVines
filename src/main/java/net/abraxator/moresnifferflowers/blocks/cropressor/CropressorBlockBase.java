@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -74,7 +75,7 @@ public class CropressorBlockBase extends HorizontalDirectionalBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, ModStateProperties.FULLNESS);
+        pBuilder.add(FACING, ModStateProperties.FULLNESS, ModStateProperties.CROP);
     }
 
     private Direction getNeighbourDirection(Part part, Direction direction) {
@@ -126,11 +127,10 @@ public class CropressorBlockBase extends HorizontalDirectionalBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        ENTITY_POS = PART == Part.OUT ? pPos : getEntityPos(pLevel, pPos);
+        ENTITY_POS = PART == Part.OUT ? pPos : getEntityPos(pLevel, pPos, PART);
         if(pLevel.getBlockEntity(ENTITY_POS) instanceof CropressorBlockEntity entity) {
-            boolean a = entity.canInteract();
-            if (!pLevel.isClientSide && a && pPlayer.getMainHandItem().is(ModTags.ModItemTags.CROPRESSABLE_CROPS)) {
-                entity.addItem(pPlayer.getMainHandItem(), pLevel);
+            if (!pLevel.isClientSide && entity.canInteract() && pPlayer.getMainHandItem().is(ModTags.ModItemTags.CROPRESSABLE_CROPS)) {
+                entity.addItem(pPlayer.getMainHandItem());
 
                 return ItemInteractionResult.SUCCESS;
             }
@@ -139,8 +139,8 @@ public class CropressorBlockBase extends HorizontalDirectionalBlock {
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
     
-    private BlockPos getEntityPos(Level level, BlockPos blockPos) {
-        if(PART == Part.OUT) {
+    public static BlockPos getEntityPos(BlockAndTintGetter level, BlockPos blockPos, Part part) {
+        if(part == Part.OUT) {
             return blockPos;
         }
 

@@ -138,7 +138,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        return getDyespriaUses(stack) < 4;
+        return !Dye.getDyeFromDyespria(stack).isEmpty();
     }
 
     @Override

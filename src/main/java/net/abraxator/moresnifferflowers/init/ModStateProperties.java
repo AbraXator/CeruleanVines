@@ -1,5 +1,6 @@
 package net.abraxator.moresnifferflowers.init;
 
+import net.abraxator.moresnifferflowers.blockentities.CropressorBlockEntity;
 import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.properties.*;
@@ -18,4 +19,5 @@ public class ModStateProperties {
     public static final BooleanProperty CENTER = BooleanProperty.create("center");
     public static final BooleanProperty EMPTY = BooleanProperty.create("empty");
     public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 8);
+    public static final EnumProperty<CropressorBlockEntity.Crop> CROP = EnumProperty.create("crop", CropressorBlockEntity.Crop.class);
 }

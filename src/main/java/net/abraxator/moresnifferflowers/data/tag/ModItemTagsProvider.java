@@ -50,6 +50,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         this.tag(ItemTags.WOODEN_TRAPDOORS).add(ModBlocks.CORRUPTED_TRAPDOOR.get().asItem(), ModBlocks.VIVICUS_TRAPDOOR.get().asItem());
         this.tag(ItemTags.PLANKS).add(ModBlocks.CORRUPTED_PLANKS.get().asItem(), ModBlocks.VIVICUS_PLANKS.get().asItem());
         this.tag(ItemTags.SAPLINGS).add(ModBlocks.CORRUPTED_SAPLING.get().asItem(), ModBlocks.VIVICUS_SAPLING.get().asItem());
+        
+        this.tag(ItemTags.SNIFFER_FOOD).add(ModItems.DAWNBERRY.asItem());
     }
 
     private Item item(DeferredBlock<Block> object) {
