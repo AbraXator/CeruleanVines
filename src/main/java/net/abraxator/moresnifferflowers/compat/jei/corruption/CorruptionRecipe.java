@@ -18,14 +18,17 @@ import java.util.Map;
 public record CorruptionRecipe(ItemStack source, ItemStack corrupted, int chance) {
     public static List<CorruptionRecipe> createRecipes() {
         List<CorruptionRecipe> recipes = new ArrayList<>();
-        
+
         for(Map.Entry<ResourceKey<Block>, Corruptable> entry : BuiltInRegistries.BLOCK.getDataMap(ModDataMaps.CORRUPTABLE).entrySet()) {
             Item source = BuiltInRegistries.BLOCK.get(entry.getKey()).asItem();
+            int totalWeight = 0;
             for(Pair<Block, Integer> pair : entry.getValue().list()) {
-                int amount = entry.getValue().list().size();
+                totalWeight = totalWeight + pair.getSecond();
+            }
+            for(Pair<Block, Integer> pair : entry.getValue().list()) {
                 int weight = pair.getSecond();
-                int percentage = (weight / amount) * 100;
-                recipes.add(new CorruptionRecipe(source.getDefaultInstance(), pair.getFirst().asItem().getDefaultInstance(), percentage));
+                float percentage = ((float) weight /totalWeight) * 100;
+                recipes.add(new CorruptionRecipe(source.getDefaultInstance(), pair.getFirst().asItem().getDefaultInstance(), (int) percentage));
             }
         }
         
