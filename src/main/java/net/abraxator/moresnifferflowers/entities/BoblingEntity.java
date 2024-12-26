@@ -1,6 +1,7 @@
 package net.abraxator.moresnifferflowers.entities;
 
 import io.netty.buffer.ByteBuf;
+import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAttackPlayerGoal;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAvoidPlayerGoal;
 import net.abraxator.moresnifferflowers.init.*;
@@ -195,6 +196,17 @@ public class BoblingEntity extends PathfinderMob {
 
     @Override
     public void aiStep() {
+        for (WrappedGoal wrappedGoal : goalSelector.getAvailableGoals()) {
+            if(wrappedGoal == null) {
+                MoreSnifferFlowers.LOGGER.error("NULL");
+            }
+        }
+        for (WrappedGoal wrappedGoal : targetSelector.getAvailableGoals()) {
+            if(wrappedGoal == null) {
+                MoreSnifferFlowers.LOGGER.error("NULL");
+            }
+        }
+        
         super.aiStep();
         
         if (canPlant()) {
@@ -243,9 +255,13 @@ public class BoblingEntity extends PathfinderMob {
             this.avoidPlayerGoal = new BoblingAvoidPlayerGoal<>(this, Player.class, 16.0F, 1.0F, 1.3F);
         }
 
-        if (this.attackPlayerGoal != null) this.goalSelector.removeGoal(this.attackPlayerGoal);
-
-        this.goalSelector.addGoal(2, this.avoidPlayerGoal);
+        if (this.attackPlayerGoal != null && goalSelector.getAvailableGoals().stream().anyMatch(wrappedGoal -> wrappedGoal.getGoal() == attackPlayerGoal)) {
+            this.goalSelector.removeGoal(this.attackPlayerGoal);
+        }
+        
+        if(goalSelector.getAvailableGoals().stream().noneMatch(wrappedGoal -> wrappedGoal.getGoal() == avoidPlayerGoal)) {
+            this.goalSelector.addGoal(2, this.avoidPlayerGoal);
+        }
     }
 
     @Override

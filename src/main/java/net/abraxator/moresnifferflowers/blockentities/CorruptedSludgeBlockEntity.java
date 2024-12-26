@@ -48,10 +48,12 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
          
         if(this.usesLeft <= 0) {
             CorruptedSludgeListener.shootProjectiles(this.getBlockPos().getCenter(), this.level.random.nextIntBetweenInclusive(8, 16), this.level);
-            this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(ModStateProperties.USES_4, 0));
+            this.level.destroyBlock(this.getBlockPos(), true);
+            
+            return;
         }
         
-        if(this.usesLeft % stateChange == 0) {
+        if(this.usesLeft % stateChange == 0 && this.getBlockState().getValue(ModStateProperties.USES_4) - 1 != -1) {
             this.level.setBlockAndUpdate(this.getBlockPos(), this.getBlockState().setValue(ModStateProperties.USES_4, this.getBlockState().getValue(ModStateProperties.USES_4) - 1));
         }
     }
