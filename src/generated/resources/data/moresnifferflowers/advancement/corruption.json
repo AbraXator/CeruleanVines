@@ -1,7 +1,7 @@
 {
   "parent": "moresnifferflowers:bobling",
   "criteria": {
-    "has_rebrewed_potion": {
+    "has_corrupted_slime_ball": {
       "conditions": {
         "items": [
           {
@@ -28,7 +28,7 @@
   },
   "requirements": [
     [
-      "has_rebrewed_potion"
+      "has_corrupted_slime_ball"
     ]
   ],
   "sends_telemetry_event": true

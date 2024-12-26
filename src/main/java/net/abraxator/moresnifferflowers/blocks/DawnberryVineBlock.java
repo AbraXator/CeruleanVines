@@ -114,10 +114,8 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
     private InteractionResult dropMaxAgeLoot(BlockState blockState, Level level, BlockPos pos, Player player) {
         RandomSource randomSource = level.getRandom();
         final ItemStack DAWNBERRY = new ItemStack(evil ? ModItems.GLOOMBERRY.get() : ModItems.DAWNBERRY.get(), randomSource.nextIntBetweenInclusive(1, 2));
-        final ItemStack SEEDS = new ItemStack(evil ? ModItems.GLOOMBERRY_VINE_SEEDS.get() : ModItems.DAWNBERRY_VINE_SEEDS.get(), randomSource.nextIntBetweenInclusive(0, 1));
 
         popResource(level, pos, DAWNBERRY);
-        popResource(level, pos, SEEDS);
         level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         BlockState state = blockState.setValue(AGE, 2);
         level.setBlock(pos, state, 2);
@@ -126,7 +124,9 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
     }
 
     protected InteractionResult dropAgeThreeLoot(BlockState blockState, Level level, BlockPos pos, Player player) {
-        final ItemStack DAWNBERRY = new ItemStack(ModItems.DAWNBERRY.get());
+        RandomSource randomSource = level.getRandom();
+        final ItemStack DAWNBERRY = new ItemStack(evil ? ModItems.GLOOMBERRY.get() : ModItems.DAWNBERRY.get(), randomSource.nextIntBetweenInclusive(1, 2));
+        
         popResource(level, pos, DAWNBERRY);
         level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
         BlockState state = blockState.setValue(AGE, 2);

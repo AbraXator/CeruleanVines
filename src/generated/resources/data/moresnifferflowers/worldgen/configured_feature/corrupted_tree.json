@@ -10,7 +10,10 @@
           "source": {
             "type": "minecraft:simple_state_provider",
             "state": {
-              "Name": "moresnifferflowers:corrupted_sludge"
+              "Name": "moresnifferflowers:corrupted_sludge",
+              "Properties": {
+                "uses": "3"
+              }
             }
           },
           "values": {
@@ -22,9 +25,9 @@
         "directions": [
           "down"
         ],
-        "exclusion_radius_xz": 4,
-        "exclusion_radius_y": 3,
-        "probability": 0.09,
+        "exclusion_radius_xz": 2,
+        "exclusion_radius_y": 0,
+        "probability": 0.2,
         "required_empty_blocks": 6
       }
     ],
@@ -77,7 +80,7 @@
     },
     "trunk_placer": {
       "type": "moresnifferflowers:corrupted_trunk_placer",
-      "base_height": 15,
+      "base_height": 6,
       "height_rand_a": 1,
       "height_rand_b": 1
     },

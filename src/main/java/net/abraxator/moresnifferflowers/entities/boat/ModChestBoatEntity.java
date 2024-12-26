@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import org.openjdk.nashorn.api.tree.ForInLoopTree;
 
 public class ModChestBoatEntity extends ChestBoat {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE = SynchedEntityData.defineId(ModChestBoatEntity.class, EntityDataSerializers.INT);
@@ -33,7 +34,7 @@ public class ModChestBoatEntity extends ChestBoat {
             case VIVICUS -> ModItems.VIVICUS_CHEST_BOAT.get();
         };
     }
-
+    
     public void setVariant(ModBoatEntity.Type pVariant) {
         this.entityData.set(DATA_ID_TYPE, pVariant.ordinal());
     }

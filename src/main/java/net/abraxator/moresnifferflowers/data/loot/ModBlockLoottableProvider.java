@@ -46,16 +46,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
-        add(ModBlocks.DAWNBERRY_VINE.get(), LootTable.lootTable()
-                .withPool(LootPool.lootPool().add(this.applyExplosionDecay(ModItems.DAWNBERRY_VINE_SEEDS.get(), LootItem.lootTableItem(ModItems.DAWNBERRY_VINE_SEEDS.get()).apply(Direction.values(), (p_251536_) ->
-                        SetItemCountFunction.setCount(ConstantValue.exactly(1.0F), true)
-                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.DAWNBERRY_VINE.get())
-                                        .setProperties(StatePropertiesPredicate.Builder.properties()
-                                                .hasProperty(MultifaceBlock.getFaceProperty(p_251536_), true)))).apply(SetItemCountFunction.setCount(ConstantValue.exactly(-1.0F), true)))))
-                .withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModBlocks.DAWNBERRY_VINE.get()))
-                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.DAWNBERRY_VINE.get())
-                                .setProperties(StatePropertiesPredicate.Builder.properties()
-                                        .hasProperty(DawnberryVineBlock.AGE, 4)))));
+        add(ModBlocks.DAWNBERRY_VINE.get(), noDrop());
         dropSelf(ModBlocks.GLOOMBERRY_VINE.get());
 
         add(ModBlocks.AMBER_BLOCK.get(), LootTable.lootTable()
@@ -162,7 +153,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         add(ModBlocks.GARBUSH_TOP.get(), noDrop());
         dropSelf(ModBlocks.GARBUSH_BOTTOM.get());
 
-        dropSelf(ModBlocks.CAULORFLOWER.get());
+        add(ModBlocks.CAULORFLOWER.get(), noDrop());
 
         add(ModBlocks.GIANT_CARROT.get(), giantCropLoot(Items.CARROT, ModItems.CROPRESSED_CARROT.get(), Items.AIR, ModItems.BELT_PIECE.get(), ModItems.CAROTENE_ARMOR_TRIM_SMITHING_TEMPLATE.get()));
         add(ModBlocks.GIANT_POTATO.get(), giantCropLoot(Items.POTATO, ModItems.CROPRESSED_POTATO.get(), Items.AIR, ModItems.TUBE_PIECE.get(), ModItems.TATER_ARMOR_TRIM_SMITHING_TEMPLATE.get()));

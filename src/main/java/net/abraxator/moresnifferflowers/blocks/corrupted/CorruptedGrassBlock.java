@@ -1,4 +1,4 @@
-package net.abraxator.moresnifferflowers.blocks;
+package net.abraxator.moresnifferflowers.blocks.corrupted;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;

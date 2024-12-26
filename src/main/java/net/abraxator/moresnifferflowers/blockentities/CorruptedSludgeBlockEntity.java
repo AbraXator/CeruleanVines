@@ -100,7 +100,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 entity = entity1;
             } else return false;
             
-            if(entity.usesLeft <= 0) {
+            if(entity.usesLeft <= 0 || entity.getBlockState().getValue(ModStateProperties.CURED)) {
                 return false;
             }
             

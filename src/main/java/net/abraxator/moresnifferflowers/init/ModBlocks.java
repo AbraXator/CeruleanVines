@@ -2,6 +2,7 @@ package net.abraxator.moresnifferflowers.init;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.blocks.*;
+import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedGrassBlock;
 import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedLeavesBlock;
 import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedSlimeLayerBlock;
 import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedSludgeBlock;

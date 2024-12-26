@@ -59,7 +59,7 @@ public class ModConfiguredFeatures {
                                         .add(ModBlocks.CORRUPTED_LOG.get().defaultBlockState(), 10)
                                         .add(ModBlocks.STRIPPED_CORRUPTED_LOG.get().defaultBlockState(), 4)
                         ),
-                        new CorruptedTrunkPlacer(15, 1, 1),
+                        new CorruptedTrunkPlacer(6, 1, 1),
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
                                         .add(ModBlocks.CORRUPTED_LEAVES.get().defaultBlockState(), 10)
@@ -72,9 +72,9 @@ public class ModConfiguredFeatures {
                         .decorators(
                                 List.of(
                                         new AttachedToLeavesDecorator(
-                                                0.09F,
-                                                4,
-                                                3,
+                                                0.2F,
+                                                2,
+                                                0,
                                                 new RandomizedIntStateProvider(
                                                         BlockStateProvider.simple(
                                                                 ModBlocks.CORRUPTED_SLUDGE.get().defaultBlockState()

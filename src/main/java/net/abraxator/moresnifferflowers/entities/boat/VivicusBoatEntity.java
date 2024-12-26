@@ -2,14 +2,17 @@ package net.abraxator.moresnifferflowers.entities.boat;
 
 import net.abraxator.moresnifferflowers.blocks.ColorableVivicusBlock;
 import net.abraxator.moresnifferflowers.components.Dye;
+import net.abraxator.moresnifferflowers.init.ModAdvancementCritters;
 import net.abraxator.moresnifferflowers.init.ModEntityTypes;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.abraxator.moresnifferflowers.items.DyespriaItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.QuartPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -65,7 +68,11 @@ public class VivicusBoatEntity extends ModBoatEntity implements ColorableVivicus
             this.setColor(dye.color());
             var stack = Dye.stackFromDye(new Dye(dye.color(), dyeCount));
             Dye.setDyeToDyeHolderStack(dyespria, stack, stack.getCount());
-
+            
+            if(pPlayer instanceof ServerPlayer player) {
+                ModAdvancementCritters.DYE_BOAT.trigger(player);
+            }
+            
             if(this.level().isClientSide) {
                 particles(this.random, this.level(), dye, BlockPos.containing(this.position()));
             }

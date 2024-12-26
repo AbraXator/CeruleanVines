@@ -22,4 +22,5 @@ public class ModStateProperties {
     public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 8);
     public static final EnumProperty<CropressorBlockEntity.Crop> CROP = EnumProperty.create("crop", CropressorBlockEntity.Crop.class);
     public static final IntegerProperty USES_4 = IntegerProperty.create("uses", 0, 3);
+    public static final BooleanProperty CURED = BooleanProperty.create("cured");
 }

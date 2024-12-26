@@ -3,6 +3,7 @@ package net.abraxator.moresnifferflowers.blocks;
 import com.google.common.collect.Maps;
 import net.abraxator.moresnifferflowers.components.Colorable;
 import net.abraxator.moresnifferflowers.components.Dye;
+import net.abraxator.moresnifferflowers.init.ModItems;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -45,14 +46,14 @@ public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCr
                 .setValue(FACING, Direction.NORTH)
                 .setValue(FLIPPED, true)
                 .setValue(getAgeProperty(), 0)
-                .setValue(getColorProperties().getA(), DyeColor.WHITE)
-                .setValue(getColorProperties().getB(), true));
+                .setValue(getColorAndEmptyProperties().getA(), DyeColor.WHITE)
+                .setValue(getColorAndEmptyProperties().getB(), true));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
-        pBuilder.add(FACING, FLIPPED, getAgeProperty(), getColorProperties().getA(), getColorProperties().getB());
+        pBuilder.add(FACING, FLIPPED, getAgeProperty(), getColorAndEmptyProperties().getA(), getColorAndEmptyProperties().getB());
     }
 
     @Override
@@ -124,8 +125,8 @@ public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCr
                     pLevel.setBlockAndUpdate(highestPos, this.defaultBlockState()
                             .setValue(FLIPPED, highestPos.getY() % 2 == 0)
                             .setValue(FACING, stateBelow.getValue(FACING))
-                            .setValue(getColorProperties().getA(), stateBelow.getValue(getColorProperties().getA()))
-                            .setValue(getColorProperties().getB(), stateBelow.getValue(getColorProperties().getB())));
+                            .setValue(getColorAndEmptyProperties().getA(), stateBelow.getValue(getColorAndEmptyProperties().getA()))
+                            .setValue(getColorAndEmptyProperties().getB(), stateBelow.getValue(getColorAndEmptyProperties().getB())));
                 } else {
                     makeGrowOnBonemeal(pLevel, posBelow, stateBelow);
                 }
@@ -188,13 +189,29 @@ public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCr
     }
 
     @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if(newState.is(this)) {
+            return;
+        }
+
+        var stateBelow = level.getBlockState(pos.below());
+        if(!stateBelow.is(this) && !stateBelow.is(Blocks.AIR)) {
+            popResource(level, pos, new ItemStack(ModItems.CAULORFLOWER_SEEDS.get()));
+        }
+        
+        if(!isColorEmpty(state) && isMaxAge(state)) {
+            popResource(level, pos, Dye.stackFromDye(new Dye(state.getValue(COLOR), 1)));
+        }
+    }
+
+    @Override
     public IntegerProperty getAgeProperty() {
         return AGE_2;
     }
 
     @Override
     public void colorBlock(Level level, BlockPos blockPos, BlockState blockState, Dye dye) {
-        Colorable.super.colorBlock(level, blockPos, blockState.setValue(getColorProperties().getB(), false), dye);
+        Colorable.super.colorBlock(level, blockPos, blockState.setValue(getColorAndEmptyProperties().getB(), false), dye);
     }
 
     @Override

@@ -1,7 +1,7 @@
 {
   "parent": "moresnifferflowers:root",
   "criteria": {
-    "has_rebrewed_potion": {
+    "bobling_attacked": {
       "trigger": "moresnifferflowers:bobling_attack"
     }
   },
@@ -21,7 +21,7 @@
   },
   "requirements": [
     [
-      "has_rebrewed_potion"
+      "bobling_attacked"
     ]
   ],
   "sends_telemetry_event": true

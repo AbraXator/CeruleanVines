@@ -2,7 +2,6 @@ package net.abraxator.moresnifferflowers.components;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.DyeColor;
@@ -28,7 +27,7 @@ public interface Colorable {
         return null;
     }
     
-    default Pair<EnumProperty<DyeColor>, BooleanProperty> getColorProperties() {
+    default Pair<EnumProperty<DyeColor>, BooleanProperty> getColorAndEmptyProperties() {
         return new Pair<>(COLOR, EMPTY);
     }
         
@@ -40,22 +39,22 @@ public interface Colorable {
         DyeColor dyeColor = DyeColor.WHITE;
         boolean empty = true;
         
-        if (blockState.hasProperty(getColorProperties().getA())) {
-            dyeColor = blockState.getValue(getColorProperties().getA());
+        if (blockState.hasProperty(getColorAndEmptyProperties().getA())) {
+            dyeColor = blockState.getValue(getColorAndEmptyProperties().getA());
         }
-        if (blockState.hasProperty(getColorProperties().getB())) {
-            empty = blockState.getValue(getColorProperties().getB());
+        if (blockState.hasProperty(getColorAndEmptyProperties().getB())) {
+            empty = blockState.getValue(getColorAndEmptyProperties().getB());
         }
         
         return new Dye(dyeColor, !empty ? 1 : 0);
     }
     
     default void colorBlock(Level level, BlockPos blockPos, BlockState blockState, Dye dye) {
-        level.setBlockAndUpdate(blockPos, blockState.setValue(getColorProperties().getA(), dye.color()));
+        level.setBlockAndUpdate(blockPos, blockState.setValue(getColorAndEmptyProperties().getA(), dye.color()));
     } 
     
     default boolean isColorEmpty(BlockState blockState) {
-        return blockState.getValue(getColorProperties().getB());
+        return blockState.getValue(getColorAndEmptyProperties().getB());
     }
     
     default ItemStack add(@Nullable ItemStack dyespria, Dye dyeInside, ItemStack dyeToInsert) {

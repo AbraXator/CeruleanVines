@@ -13,12 +13,12 @@ import org.jetbrains.annotations.Nullable;
 public class CorruptedSludgeBlock extends Block implements ModEntityBlock {
     public CorruptedSludgeBlock(Properties p_49795_) {
         super(p_49795_);
-        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.USES_4, 3));
+        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.USES_4, 3).setValue(ModStateProperties.CURED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ModStateProperties.USES_4);
+        builder.add(ModStateProperties.USES_4, ModStateProperties.CURED);
     }
 
     @Nullable
