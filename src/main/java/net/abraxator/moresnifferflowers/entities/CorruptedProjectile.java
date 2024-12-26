@@ -22,7 +22,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 import java.util.Optional;
 
@@ -54,7 +53,6 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         for (int i = 0; i < 16; i++) {
             this.level().broadcastEntityEvent(this, (byte) 3);
         }
-        this.discard();
     }
 
     @Override
@@ -73,33 +71,36 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
             entity.hurt(this.damageSources().thrown(this, this.getOwner()), 0.0F);
             livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 2));
         }
+        this.discard();
     }
 
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
         super.onHitBlock(pResult);
-        if(checkState(this.level().getBlockState(pResult.getBlockPos()))) {
-            var pos = pResult.getBlockPos();
-            var state = this.level().getBlockState(pos);
+        var hitPos = pResult.getBlockPos();
+        
+        if(checkState(this.level().getBlockState(hitPos))) {
+            var state = this.level().getBlockState(hitPos);
             var layer = state.getValue(ModStateProperties.LAYER);
             this.level().setBlockAndUpdate(
-                    pos,
+                    hitPos,
                     ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, layer + 1));
         } else if (checkState(this.level().getBlockState(pResult.getBlockPos().above()))) {
-            var pos = pResult.getBlockPos().above();
-            var state = this.level().getBlockState(pos);
+            var posAbove = hitPos.above();
+            var state = this.level().getBlockState(posAbove);
             var layer = state.getValue(ModStateProperties.LAYER);
             this.level().setBlockAndUpdate(
-                    pos,
+                    posAbove,
                     ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, layer + 1));
         } else {
-            if(!transformBlock(this.level(), pResult.getBlockPos().above())) {
-                transformBlock(this.level(), pResult.getBlockPos());
+            if(!transformBlock(this.level(), pResult.getBlockPos())) {
+                transformBlock(this.level(), pResult.getBlockPos().above());
                 this.level().setBlockAndUpdate(
                         pResult.getBlockPos().relative(pResult.getDirection()),
                         ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, 1));
             }
         }
+        this.discard();
     }
     
     private boolean transformBlock(Level level, BlockPos blockPos) {
@@ -109,8 +110,8 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         if(Corruptable.canBeCorrupted(state.getBlock(), random)) {
             Optional<Block> optional = Corruptable.getCorruptedBlock(state.getBlock(), this.random);
             optional.ifPresent(block -> {
-                if (level.getBlockState(blockPos).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.corrupted.Corruptable corruptable && level instanceof ServerLevel serverLevel) {
-                    corruptable.onCorrupt(serverLevel, blockPos, level.getBlockState(blockPos), block);
+                if (level.getBlockState(blockPos).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.Corruptable corruptable) {
+                    corruptable.onCorrupt(level, blockPos, level.getBlockState(blockPos), block);
                 } else {
                     level.setBlockAndUpdate(blockPos, block.withPropertiesOf(state));
                 }

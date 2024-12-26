@@ -128,7 +128,7 @@ public class CropressorBlockEntity extends ModBlockEntity {
     @Override
     protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.loadAdditional(pTag, pRegistries);
-        cropCount = pTag.getIntArray("crop:count");
+        cropCount = pTag.getIntArray("crop_count");
         currentCrop = ItemStack.parseOptional(pRegistries, pTag.getCompound("content"));
         progress = pTag.getInt("progress");
         result = ItemStack.parseOptional(pRegistries, pTag.getCompound("result"));

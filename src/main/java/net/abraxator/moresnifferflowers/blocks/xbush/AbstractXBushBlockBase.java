@@ -1,7 +1,7 @@
 package net.abraxator.moresnifferflowers.blocks.xbush;
 
 import net.abraxator.moresnifferflowers.blockentities.XbushBlockEntity;
-import net.abraxator.moresnifferflowers.blocks.corrupted.Corruptable;
+import net.abraxator.moresnifferflowers.blocks.Corruptable;
 import net.abraxator.moresnifferflowers.blocks.ModCropBlock;
 import net.abraxator.moresnifferflowers.blocks.ModEntityDoubleTallBlock;
 import net.abraxator.moresnifferflowers.init.ModParticles;
@@ -190,12 +190,12 @@ public abstract class AbstractXBushBlockBase extends ModEntityDoubleTallBlock im
     }
 
     @Override
-    public void onCorrupt(ServerLevel level, BlockPos pos, BlockState oldState, Block corruptedBlock) {
+    public void onCorrupt(Level level, BlockPos pos, BlockState oldState, Block corruptedBlock) {
         var lowerHalf = getLowerHalf(level, pos, oldState);
         lowerHalf.ifPresent(posAndState -> {
             level.setBlockAndUpdate(posAndState.blockPos(), corruptedBlock.withPropertiesOf(oldState));
-            getCorruptedBlock(getUpperBlock(), level.random).ifPresent(block ->
-                    level.setBlockAndUpdate(posAndState.blockPos().above(), block.withPropertiesOf(level.getBlockState(posAndState.blockPos().above()))));
+            /*getCorruptedBlock(getUpperBlock(), level.random).ifPresent(block ->
+                    level.setBlockAndUpdate(posAndState.blockPos().above(), block.withPropertiesOf(level.getBlockState(posAndState.blockPos().above()))));*/
         });
     }
 

@@ -2,7 +2,6 @@ package net.abraxator.moresnifferflowers.blocks;
 
 import com.mojang.serialization.MapCodec;
 import net.abraxator.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
-import net.abraxator.moresnifferflowers.blocks.corrupted.Corruptable;
 import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.init.*;
 import net.minecraft.core.BlockPos;
@@ -139,7 +138,7 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
 
 
     @Override
-    public void onCorrupt(ServerLevel level, BlockPos pos, BlockState oldState, Block corruptedBlock) {
+    public void onCorrupt(Level level, BlockPos pos, BlockState oldState, Block corruptedBlock) {
         if(level.getBlockEntity(pos) instanceof DyespriaPlantBlockEntity entity && isMaxAge(oldState)) {
             var dye = new ItemStack(DyeItem.byColor(entity.dye.color()), entity.dye.amount());
 

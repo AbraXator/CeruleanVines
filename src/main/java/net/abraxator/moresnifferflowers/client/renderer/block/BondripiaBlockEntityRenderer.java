@@ -1,10 +1,12 @@
 package net.abraxator.moresnifferflowers.client.renderer.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.blockentities.BondripiaBlockEntity;
 import net.abraxator.moresnifferflowers.client.model.ModModelLayerLocations;
+import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -19,7 +21,8 @@ import net.minecraft.world.phys.Vec3;
 
 public class BondripiaBlockEntityRenderer<T extends BondripiaBlockEntity> implements BlockEntityRenderer<T> {
     private ModelPart model;
-    private static final Material TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, MoreSnifferFlowers.loc("block/bondripia"));
+    private static final Material BONDRIPIA_TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, MoreSnifferFlowers.loc("block/bondripia"));
+    private static final Material ACID_DRIPIATEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, MoreSnifferFlowers.loc("block/acidripia"));
 
     public BondripiaBlockEntityRenderer(BlockEntityRendererProvider.Context pContext) {
         this.model = pContext.bakeLayer(ModModelLayerLocations.BONDRIPIA);
@@ -30,7 +33,8 @@ public class BondripiaBlockEntityRenderer<T extends BondripiaBlockEntity> implem
         if(pBlockEntity.getBlockState().getValue(ModStateProperties.CENTER) && pBlockEntity.getBlockState().getValue(ModStateProperties.AGE_2) >= 2) {
             pPoseStack.translate(0.5, 1.5, 0.5);
             pPoseStack.mulPose(Axis.XP.rotationDegrees(180));
-            this.model.render(pPoseStack, TEXTURE.buffer(pBufferSource, RenderType::entityCutout), pPackedLight, pPackedOverlay);
+            Material material = pBlockEntity.getBlockState().is(ModBlocks.ACIDRIPIA) ? ACID_DRIPIATEXTURE : BONDRIPIA_TEXTURE;
+            this.model.render(pPoseStack, material.buffer(pBufferSource, RenderType::entityCutout), pPackedLight, pPackedOverlay);
         }
     }
 

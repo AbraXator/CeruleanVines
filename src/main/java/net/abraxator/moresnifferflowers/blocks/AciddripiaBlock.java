@@ -1,7 +1,10 @@
 package net.abraxator.moresnifferflowers.blocks;
 
 import net.abraxator.moresnifferflowers.blockentities.BondripiaBlockEntity;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -17,14 +20,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class AciddripiaBlock extends BondripiaBlock {
     public AciddripiaBlock(Properties p_49795_) {
         super(p_49795_);
     }
-
+    
     @Override
     protected void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if(!isMaxAge(pState)) {
@@ -51,12 +57,24 @@ public class AciddripiaBlock extends BondripiaBlock {
                     if(state.is(BlockTags.LEAVES)) {
                         pLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
                     } else if (pLevel.getBlockState(blockPos).getBlock() instanceof AbstractCauldronBlock) {
-                        fillCauldron(pLevel, blockPos, pLevel.getBlockState(blockPos));
+                        fillCauldron(pLevel, blockPos, this.defaultBlockState());
                     }
                     
                     blockPos = blockPos.below();
                 }
             }
+        }
+    }
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        List<BlockPos> list = new ArrayList<>(Direction.Plane.HORIZONTAL.stream().map(pos::relative).toList());
+        list.add(pos);
+        var vec3 = Util.getRandom(list, random).getCenter();
+        var y = random.nextInt(10);
+        
+        if(level.isClientSide) {
+            level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0xaeff5c).toVector3f(), 1), vec3.x, vec3.y + y, vec3.z, 0.0D, 0.0D, 0.0D);
         }
     }
 
