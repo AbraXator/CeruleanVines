@@ -24,6 +24,14 @@
         }
       ]
     },
+    "minecraft:deepslate": {
+      "value": [
+        {
+          "block": "minecraft:blackstone",
+          "weight": 100
+        }
+      ]
+    },
     "minecraft:dirt": {
       "value": [
         {
@@ -36,6 +44,14 @@
       "value": [
         {
           "block": "moresnifferflowers:corrupted_grass_block",
+          "weight": 100
+        }
+      ]
+    },
+    "minecraft:stone": {
+      "value": [
+        {
+          "block": "minecraft:netherrack",
           "weight": 100
         }
       ]

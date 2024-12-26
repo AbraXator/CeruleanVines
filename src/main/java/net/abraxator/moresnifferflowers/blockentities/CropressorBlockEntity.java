@@ -147,11 +147,11 @@ public class CropressorBlockEntity extends ModBlockEntity {
     }
     
     public static enum Crop implements StringRepresentable {
-        CARROT("carrot", Items.CARROT, 0xe67022),
-        POTATO("potato", Items.POTATO, 0xce933a),
-        WHEAT("wheat", Items.WHEAT, 0xcdb159),
-        NETHERWART("netherwart", Items.NETHER_WART, 0x730408),
-        BEETROOT("beetroot", Items.BEETROOT, 0xa4272c);
+        CARROT("carrot", Items.CARROT, 0xffa135),
+        POTATO("potato", Items.POTATO, 0xb88c4c),
+        WHEAT("wheat", Items.WHEAT, 0xfff35e),
+        NETHERWART("netherwart", Items.NETHER_WART, 0x9e392b),
+        BEETROOT("beetroot", Items.BEETROOT, 0xc36866);
         
         String name;
         public Item item;

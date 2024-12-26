@@ -160,6 +160,7 @@
 	"tooltip.bottle_of_extraction.usage": "Drink to extract current effects into a bottle",
 	"tooltip.acid_jar": "Ungrows organic blocks",
 	"tooltip.extracted_bottle.obtain": "Obtainable using Bottle o' Extraction",
+	"tooltip.wip": "WIP",
 
 
 	"advancements.more_sniffer_flowers.dyespria_plant": "Colorful plants",

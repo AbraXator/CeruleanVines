@@ -42,6 +42,8 @@ public class ModDataMapsProvider extends DataMapProvider {
         var corruptables = this.builder(ModDataMaps.CORRUPTABLE);
         corruptables.add(Blocks.GRASS_BLOCK.builtInRegistryHolder(), new Corruptable(ModBlocks.CORRUPTED_GRASS_BLOCK.get()), false);
         corruptables.add(Blocks.DIRT.builtInRegistryHolder(), new Corruptable(Blocks.COARSE_DIRT), false);
+        corruptables.add(Blocks.STONE.builtInRegistryHolder(), new Corruptable(Blocks.NETHERRACK), false);
+        corruptables.add(Blocks.DEEPSLATE.builtInRegistryHolder(), new Corruptable(Blocks.BLACKSTONE), false);
         corruptables.add(BlockTags.LOGS, new Corruptable(ModBlocks.DECAYED_LOG.get()), false);
         corruptables.remove(ModBlocks.CORRUPTED_LOG);
         corruptables.remove(ModBlocks.CORRUPTED_WOOD);
