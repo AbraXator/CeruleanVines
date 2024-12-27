@@ -12,6 +12,7 @@
             "state": {
               "Name": "moresnifferflowers:corrupted_sludge",
               "Properties": {
+                "cured": "false",
                 "uses": "3"
               }
             }

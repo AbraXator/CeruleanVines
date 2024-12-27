@@ -118,7 +118,6 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(50))
                         .add(LootItem.lootTableItem(Items.NETHERITE_SCRAP).setWeight(50))
                         //RARE
-                        .add(LootItem.lootTableItem(Items.SNORT_POTTERY_SHERD).setWeight(25))
                         .add(LootItem.lootTableItem(Items.IRON_BLOCK).setWeight(25))
                         .add(LootItem.lootTableItem(Items.TOTEM_OF_UNDYING).setWeight(25))
                         .add(LootItem.lootTableItem(ModBlocks.CORRUPTED_SAPLING.get()).setWeight(25))

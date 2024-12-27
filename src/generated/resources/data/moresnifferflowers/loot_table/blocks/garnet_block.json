@@ -148,11 +148,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:snort_pottery_sherd",
-          "weight": 25
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:iron_block",
           "weight": 25
         },
