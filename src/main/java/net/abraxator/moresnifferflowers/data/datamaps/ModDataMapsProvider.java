@@ -46,6 +46,7 @@ public class ModDataMapsProvider extends DataMapProvider {
         corruptables.add(Blocks.DEEPSLATE.builtInRegistryHolder(), new Corruptable(Blocks.BLACKSTONE), false);
         corruptables.add(BlockTags.LOGS, new Corruptable(ModBlocks.DECAYED_LOG.get()), false);
         corruptables.remove(ModBlocks.CORRUPTED_LOG);
+        corruptables.remove(ModBlocks.DECAYED_LOG);
         corruptables.remove(ModBlocks.CORRUPTED_WOOD);
         corruptables.remove(ModBlocks.STRIPPED_CORRUPTED_LOG);
         corruptables.remove(ModBlocks.STRIPPED_CORRUPTED_WOOD);

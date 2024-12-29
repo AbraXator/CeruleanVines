@@ -26,10 +26,10 @@
         "directions": [
           "down"
         ],
-        "exclusion_radius_xz": 2,
-        "exclusion_radius_y": 0,
-        "probability": 0.2,
-        "required_empty_blocks": 6
+        "exclusion_radius_xz": 5,
+        "exclusion_radius_y": 3,
+        "probability": 0.4,
+        "required_empty_blocks": 4
       }
     ],
     "dirt_provider": {

@@ -72,9 +72,9 @@ public class ModConfiguredFeatures {
                         .decorators(
                                 List.of(
                                         new AttachedToLeavesDecorator(
-                                                0.2F,
-                                                2,
-                                                0,
+                                                0.4F,
+                                                5,
+                                                3,
                                                 new RandomizedIntStateProvider(
                                                         BlockStateProvider.simple(
                                                                 ModBlocks.CORRUPTED_SLUDGE.get().defaultBlockState()
@@ -82,7 +82,7 @@ public class ModConfiguredFeatures {
                                                         MangrovePropaguleBlock.AGE,
                                                         UniformInt.of(0, 4)
                                                 ),
-                                                6,
+                                                4,
                                                 List.of(Direction.DOWN)
                                         )
                                 )

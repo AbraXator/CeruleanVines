@@ -1,6 +1,7 @@
 {
   "remove": [
     "moresnifferflowers:corrupted_log",
+    "moresnifferflowers:decayed_log",
     "moresnifferflowers:corrupted_wood",
     "moresnifferflowers:stripped_corrupted_log",
     "moresnifferflowers:stripped_corrupted_wood",
