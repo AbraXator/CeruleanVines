@@ -30,6 +30,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.RandomSpreadFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
@@ -57,16 +58,16 @@ public class ModConfiguredFeatures {
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
                                         .add(ModBlocks.CORRUPTED_LOG.get().defaultBlockState(), 10)
-                                        .add(ModBlocks.STRIPPED_CORRUPTED_LOG.get().defaultBlockState(), 4)
+                                        .add(ModBlocks.STRIPPED_CORRUPTED_LOG.get().defaultBlockState(), 2)
                         ),
-                        new CorruptedTrunkPlacer(6, 1, 1),
+                        new CorruptedTrunkPlacer(6, 1, 4),
                         new WeightedStateProvider(
                                 SimpleWeightedRandomList.<BlockState>builder()
                                         .add(ModBlocks.CORRUPTED_LEAVES.get().defaultBlockState(), 10)
                                         .add(ModBlocks.CORRUPTED_LEAVES_BUSH.get().defaultBlockState(), 2)
                         ),
-                        new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 2),
-                        //new RandomSpreadFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), UniformInt.of(2, 3), 20),
+                        //new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 2),
+                        new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), 2),
                         new TwoLayersFeatureSize(2, 0, 2)
                 )
                         .decorators(

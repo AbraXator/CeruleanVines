@@ -9,8 +9,7 @@
     "SpriteResourceLoaderMixin",
     "AgeableMobMixin",
     "SnifferEggMixin",
-    "ThrownPotionMixin",
-    "FoliagePlacerMixin"
+    "ThrownPotionMixin"
   ],
   "client": [
     "SpriteResourceLoaderMixin$PalettedPermutationsAccessor"

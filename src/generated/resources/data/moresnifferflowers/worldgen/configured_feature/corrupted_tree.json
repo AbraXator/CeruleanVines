@@ -41,7 +41,7 @@
     "foliage_placer": {
       "type": "minecraft:fancy_foliage_placer",
       "height": 2,
-      "offset": 2,
+      "offset": 1,
       "radius": 2
     },
     "foliage_provider": {
@@ -83,7 +83,7 @@
       "type": "moresnifferflowers:corrupted_trunk_placer",
       "base_height": 6,
       "height_rand_a": 1,
-      "height_rand_b": 1
+      "height_rand_b": 4
     },
     "trunk_provider": {
       "type": "minecraft:weighted_state_provider",
@@ -104,7 +104,7 @@
               "axis": "y"
             }
           },
-          "weight": 4
+          "weight": 2
         }
       ]
     }
