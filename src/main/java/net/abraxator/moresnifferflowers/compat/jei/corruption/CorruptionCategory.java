@@ -40,6 +40,11 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionJEIRecipe> 
     }
 
     @Override
+    public IDrawable getBackground() {
+        return null;
+    }
+
+    @Override
     public @Nullable IDrawable getIcon() {
         return icon;
     }
@@ -48,7 +53,7 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionJEIRecipe> 
     public void setRecipe(IRecipeLayoutBuilder builder, CorruptionJEIRecipe recipe, IFocusGroup iFocusGroup) {
         builder.addSlot(RecipeIngredientRole.INPUT, 10, 15).addItemStack(recipe.source());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 92, 15).addItemStack(recipe.corrupted())
-                .addRichTooltipCallback((recipeSlotView, tooltip) -> {
+                .addTooltipCallback((recipeSlotView, tooltip) -> {
                     if (recipe.corrupted().is(Blocks.AIR.asItem())) {
                         tooltip.add(Component.literal("Air").withStyle(ChatFormatting.WHITE));
                     }
