@@ -38,9 +38,12 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
             .max(Integer::compare)
             .orElse(0);
 
-    public BonmeeliaBlock(Properties pProperties) {
+    private final boolean wilted;
+    
+    public BonmeeliaBlock(Properties pProperties, boolean wilted) {
         super(pProperties);
         registerDefaultState(this.defaultBlockState().setValue(HAS_BOTTLE, false).setValue(SHOW_HINT, false).setValue(AGE, 0).setValue(HAS_JAR, false));
+        this.wilted = wilted;
     }
 
     @Override
@@ -91,7 +94,7 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
 
     private InteractionResult takeJarOfBonmeel(Level level, BlockPos blockPos, BlockState blockState, Player player) {
         level.setBlock(blockPos, blockState.setValue(AGE, 0).setValue(HAS_BOTTLE, false), 3);
-        popResource(level, blockPos, ModItems.JAR_OF_BONMEEL.get().getDefaultInstance());
+        popResource(level, blockPos, wilted ? ModItems.JAR_OF_ACID.get().getDefaultInstance() : ModItems.JAR_OF_BONMEEL.get().getDefaultInstance());
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
@@ -116,7 +119,7 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
             pLevel.setBlockAndUpdate(pPos, pState
                     .setValue(AGE, getAge(pState) + 1)
                     .setValue(HAS_JAR, (getAge(pState) + 1) == MAX_AGE && pState.getValue(HAS_BOTTLE)));
-            var particle = new DustParticleOptions(Vec3.fromRGB24(11162034).toVector3f(), 1F);
+            var particle = new DustParticleOptions(wilted ? Vec3.fromRGB24(0xaeff5c).toVector3f() : Vec3.fromRGB24(0xAA51B2).toVector3f(), 1F);
             if(getAge(pState) >= 3) {
                 for (int i = 0; i <= pRandom.nextIntBetweenInclusive(5, 10); i++) {
                     pLevel.sendParticles(

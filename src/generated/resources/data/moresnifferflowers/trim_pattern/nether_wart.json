@@ -1,8 +1,0 @@
-{
-  "asset_id": "moresnifferflowers:nether_wart",
-  "decal": false,
-  "description": {
-    "translate": "trim_pattern.moresnifferflowers.nether_wart"
-  },
-  "template_item": "moresnifferflowers:nether_wart_armor_trim_smithing_template"
-}

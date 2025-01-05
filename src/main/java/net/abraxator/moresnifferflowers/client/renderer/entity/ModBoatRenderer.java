@@ -29,7 +29,7 @@ import org.joml.Quaternionf;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static net.abraxator.moresnifferflowers.client.ClientEvents.hexToRGB;
+import static net.abraxator.moresnifferflowers.client.ModColorHandler.hexToRGB;
 
 public class ModBoatRenderer extends BoatRenderer {
     private final Map<ModBoatEntity.Type, Pair<ResourceLocation, ListModel<Boat>>> boatResources;

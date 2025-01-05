@@ -1,0 +1,32 @@
+{
+  "parent": "moresnifferflowers:root",
+  "criteria": {
+    "bobling_attacked": {
+      "conditions": {},
+      "trigger": "moresnifferflowers:bobling_attack"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Fight back the tree madness",
+      "translate": "advancements.more_sniffer_flowers.bobling.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:corrupted_bobling_core"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "Fight back!",
+      "translate": "advancements.more_sniffer_flowers.bobling"
+    }
+  },
+  "requirements": [
+    [
+      "bobling_attacked"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

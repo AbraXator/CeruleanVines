@@ -1,0 +1,38 @@
+{
+  "parent": "moresnifferflowers:root",
+  "criteria": {
+    "has_rebrewed_potion": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "moresnifferflowers:rebrewed_potions"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Rebrew an Extracted Potion",
+      "translate": "advancements.more_sniffer_flowers.rebrew.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:rebrewing_stand"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "Local Rebrewery",
+      "translate": "advancements.more_sniffer_flowers.rebrew"
+    }
+  },
+  "requirements": [
+    [
+      "has_rebrewed_potion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

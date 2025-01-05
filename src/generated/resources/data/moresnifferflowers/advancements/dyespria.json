@@ -1,0 +1,30 @@
+{
+  "parent": "moresnifferflowers:dyespria_plant",
+  "criteria": {
+    "used_dyespria": {
+      "conditions": {},
+      "trigger": "moresnifferflowers:used_dyespria"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.more_sniffer_flowers.dyespria.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:caulorflower_seeds"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.more_sniffer_flowers.dyespria"
+    }
+  },
+  "requirements": [
+    [
+      "used_dyespria"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

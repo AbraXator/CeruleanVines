@@ -27,6 +27,7 @@ archivesBaseName = 'moresniffeflowers'
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+
 minecraft {
     //mappings channel: 'official', version: '1.20.1'
     mappings channel: 'parchment', version: '2023.09.03-1.20.1'

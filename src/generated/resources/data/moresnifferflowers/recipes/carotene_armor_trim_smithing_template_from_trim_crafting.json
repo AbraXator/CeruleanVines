@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:diamond"
+    },
+    "B": {
+      "item": "moresnifferflowers:carotene_armor_trim_smithing_template"
+    },
+    "C": {
+      "item": "moresnifferflowers:cropressed_carrot"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "ACA",
+    "AAA"
+  ],
+  "result": {
+    "count": 2,
+    "item": "moresnifferflowers:carotene_armor_trim_smithing_template"
+  },
+  "show_notification": true
+}

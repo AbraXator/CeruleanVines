@@ -1,0 +1,32 @@
+{
+  "parent": "moresnifferflowers:dyespria_plant",
+  "criteria": {
+    "dye_boat": {
+      "conditions": {},
+      "trigger": "moresnifferflowers:dye_boat"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Dye the vivicus boat any color, pretty unlikely to happen during actual gameplay",
+      "translate": "advancements.more_sniffer_flowers.dye_boat.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:vivicus_boat"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "Whatever colors your boat",
+      "translate": "advancements.more_sniffer_flowers.dye_boat"
+    }
+  },
+  "requirements": [
+    [
+      "dye_boat"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -30,7 +30,6 @@ public class MoreSnifferFlowers {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener((RegisterEvent e) -> ModAdvancementCritters.init());
 
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
@@ -49,16 +48,15 @@ public class MoreSnifferFlowers {
         ModTreeDecoratorTypes.DECORATORS.register(modEventBus);
         ModStructureTypes.STRUCTURE_PIECE.register(modEventBus);
         ModBannerPatterns.BANNER_PATTERNS.register(modEventBus);
-        ModEntityDataSerializers.SERIALIZERS.register(modEventBus);
         ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         
         ModPacketHandler.init();
     }
     
     private void commonSetup(final FMLCommonSetupEvent event) {
+        ModAdvancementCritters.init();
+        
         event.enqueueWork(() -> {
-
-
             AxeItem.STRIPPABLES = Maps.newHashMap(AxeItem.STRIPPABLES);
             AxeItem.STRIPPABLES.put(ModBlocks.CORRUPTED_LOG.get(), ModBlocks.STRIPPED_CORRUPTED_LOG.get());
             AxeItem.STRIPPABLES.put(ModBlocks.VIVICUS_LOG.get(), ModBlocks.STRIPPED_VIVICUS_LOG.get());

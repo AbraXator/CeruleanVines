@@ -1,0 +1,40 @@
+{
+  "parent": "moresnifferflowers:root",
+  "criteria": {
+    "has_ambush": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "moresnifferflowers:ambush_seeds"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Break an amber block to get whats inside (the \"great\" part not quaranteed)",
+      "translate": "advancements.more_sniffer_flowers.ambush.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:ambush_seeds"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "Ambushed by great loot",
+      "translate": "advancements.more_sniffer_flowers.ambush"
+    }
+  },
+  "requirements": [
+    [
+      "has_ambush"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

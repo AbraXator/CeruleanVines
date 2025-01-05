@@ -1,0 +1,30 @@
+{
+  "criteria": {
+    "has_advancement": {
+      "conditions": {},
+      "trigger": "moresnifferflowers:earn_sniffer_advancement"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "moresnifferflowers:textures/gui/grass_block_bg.png",
+    "description": {
+      "translate": "advancements.more_sniffer_flowers.any_seed.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:sniffer_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.more_sniffer_flowers.any_seed"
+    }
+  },
+  "requirements": [
+    [
+      "has_advancement"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

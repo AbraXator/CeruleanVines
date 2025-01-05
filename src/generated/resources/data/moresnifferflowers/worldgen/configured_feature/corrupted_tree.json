@@ -12,14 +12,17 @@
             "state": {
               "Name": "moresnifferflowers:corrupted_sludge",
               "Properties": {
+                "cured": "false",
                 "uses": "3"
               }
             }
           },
           "values": {
             "type": "minecraft:uniform",
-            "max_inclusive": 4,
-            "min_inclusive": 0
+            "value": {
+              "max_inclusive": 4,
+              "min_inclusive": 0
+            }
           }
         },
         "directions": [

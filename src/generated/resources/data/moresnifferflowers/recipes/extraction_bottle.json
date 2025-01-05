@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "B": {
+      "item": "minecraft:glass"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BAB",
+    " B "
+  ],
+  "result": {
+    "item": "moresnifferflowers:extraction_bottle"
+  },
+  "show_notification": true
+}

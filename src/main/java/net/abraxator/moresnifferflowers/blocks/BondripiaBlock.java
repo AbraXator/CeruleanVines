@@ -7,6 +7,7 @@ import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +22,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,7 +81,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
             list = list.subList(0, random.nextInt(6));
             list.forEach(blockPos -> {
                 var vec3 = blockPos.getCenter();
-                level.addParticle(ModParticles.BONDRIPIA.get(), vec3.x, vec3.y, vec3.z, 0, 0, 0);
+                level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0xAA51B2).toVector3f(), 1.0F), vec3.x, vec3.y - random.nextIntBetweenInclusive(0, 5), vec3.z, 0, -1.0F, 0);
             });
         }
     }
