@@ -1,12 +1,11 @@
 package net.abraxator.moresnifferflowers.worldgen.structures;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.abraxator.moresnifferflowers.worldgen.structures.ModStructureTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.WorldGenerationContext;
@@ -15,13 +14,15 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class SnowSnifferTemple extends Structure {
 
-    public static final Codec<SnowSnifferTemple> CODEC = RecordCodecBuilder.create(instance ->
+    // A custom codec that changes the size limit for our code_structure_sky_fan.json's config to not be capped at 7.
+    // With this, we can have a structure with a size limit up to 30 if we want to have extremely long branches of pieces in the structure.
+    public static final Codec<SnowSnifferTemple> CODEC = RecordCodecBuilder.<SnowSnifferTemple>mapCodec(instance ->
             instance.group(SnowSnifferTemple.settingsCodec(instance),
                     StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(structure -> structure.startJigsawName),
@@ -29,7 +30,7 @@ public class SnowSnifferTemple extends Structure {
                     HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight),
                     Heightmap.Types.CODEC.optionalFieldOf("project_start_to_heightmap").forGetter(structure -> structure.projectStartToHeightmap),
                     Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(structure -> structure.maxDistanceFromCenter)
-            ).apply(instance, SnowSnifferTemple::new));
+            ).apply(instance, SnowSnifferTemple::new)).codec();
 
     private final Holder<StructureTemplatePool> startPool;
     private final Optional<ResourceLocation> startJigsawName;
@@ -125,8 +126,7 @@ public class SnowSnifferTemple extends Structure {
                         // Here, blockpos's y value is 60 which means the structure spawn 60 blocks above terrain height.
                         // Set this to false for structure to be place only at the passed in blockpos's Y value instead.
                         // Definitely keep this false when placing structures in the nether as otherwise, heightmap placing will put the structure on the Bedrock roof.
-                        this.maxDistanceFromCenter // Maximum limit for how far pieces can spawn from center. You cannot set this bigger than 128 or else pieces gets cutoff.
-                        ); // Optional thing to control whether the structure will be waterlogged when replacing pre-existing water in the world.
+                        this.maxDistanceFromCenter); // Maximum limit for how far pieces can spawn from center. You cannot set this bigger than 128 or else pieces gets cutoff.
 
         /*
          * Note, you are always free to make your own JigsawPlacement class and implementation of how the structure
