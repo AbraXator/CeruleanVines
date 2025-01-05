@@ -2,7 +2,6 @@ package net.abraxator.moresnifferflowers.blockentities;
 
 import net.abraxator.moresnifferflowers.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.protocol.Packet;
@@ -38,7 +37,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
+    public CompoundTag getUpdateTag() {
         var tag = new CompoundTag();
         tag.putDouble("growProgress", growProgress);
         return tag;
@@ -51,8 +50,8 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
         pTag.putBoolean("canGrow", canGrow);
         pTag.putDouble("growProgress", growProgress);
         pTag.put("pos1", NbtUtils.writeBlockPos(this.pos1));
@@ -61,12 +60,12 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
         this.canGrow = pTag.getBoolean("canGrow");
         this.growProgress = pTag.getDouble("growProgress");
-        this.pos1 = NbtUtils.readBlockPos(pTag, "pos1").orElseGet(this::getBlockPos);
-        this.pos2 = NbtUtils.readBlockPos(pTag, "pos2").orElseGet(this::getBlockPos);
+        this.pos1 = NbtUtils.readBlockPos(pTag.getCompound("pos1"));
+        this.pos2 = NbtUtils.readBlockPos(pTag.getCompound("pos2"));
         this.state = pTag.getInt("state");
     }
 }

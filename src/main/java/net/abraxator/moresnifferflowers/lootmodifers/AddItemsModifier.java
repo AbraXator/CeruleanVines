@@ -2,12 +2,11 @@ package net.abraxator.moresnifferflowers.lootmodifers;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.mojang.serialization.codecs.SimpleMapCodec;
-import it.unimi.dsi.fastutil.chars.Char2ObjectFunction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
@@ -16,23 +15,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
-import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import net.neoforged.neoforge.common.loot.LootModifier;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.abego.treelayout.internal.util.java.util.ListUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class AddItemsModifier extends LootModifier {
-    public static final MapCodec<AddItemsModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> codecStart(instance)
-            .and(ExtraCodecs.nonEmptyList(BuiltInRegistries.ITEM.byNameCodec().listOf())
-                    .fieldOf("item").forGetter(o -> o.items)).apply(instance, AddItemsModifier::new));
-
+    public static final Supplier<Codec<AddItemsModifier>> CODEC = Suppliers.memoize(()
+            -> RecordCodecBuilder.create(inst -> codecStart(inst).and(ExtraCodecs.nonEmptyList(ForgeRegistries.ITEMS.getCodec().listOf())
+            .fieldOf("item").forGetter(m -> m.items)).apply(inst, AddItemsModifier::new)));
     public static final List<ResourceLocation> SNIFFERENT_ITEMS_LOC = List.of(snifferentLoc("spindlefern_seeds"), snifferentLoc("spineflower_seeds"), snifferentLoc("lumibulb_seeds"), snifferentLoc("sniffberry_seedling"), snifferentLoc("bloom_plant_nut"), snifferentLoc("globar_sapling"), snifferentLoc("club_moss_patch"), snifferentLoc("amber"));
     public static final List<ResourceLocation> HELLIONS_ITEMS_LOC = List.of(hellionsLoc("stone_pine_sapling"), hellionsLoc("fiddlefern"), hellionsLoc("ivy"));
-    public static final List<ResourceLocation> QUARK_ITEMS_LOC = List.of(ResourceLocation.fromNamespaceAndPath("quark", "ancient_sapling"));
+    public static final List<ResourceLocation> QUARK_ITEMS_LOC = List.of(new ResourceLocation("quark", "ancient_sapling"));
 
     private final List<Item> items;
 
@@ -50,7 +50,7 @@ public class AddItemsModifier extends LootModifier {
                 return generatedLoot;
             }
         }
-        
+
         generatedLoot.clear();
         generatedLoot.add(Items.PITCHER_POD.getDefaultInstance());
         generatedLoot.add(Items.TORCHFLOWER_SEEDS.getDefaultInstance());
@@ -60,7 +60,6 @@ public class AddItemsModifier extends LootModifier {
 
         items.forEach(item -> generatedLoot.add(item.getDefaultInstance()));
         newLoot.add(Util.getRandom(generatedLoot, context.getRandom()));
-
         return newLoot;
     }
 
@@ -68,8 +67,8 @@ public class AddItemsModifier extends LootModifier {
         List<ItemStack> itemList = new ArrayList<>();
 
         itemsLocList.forEach(resourceLocation -> {
-            var item = BuiltInRegistries.ITEM.get(resourceLocation);
-            if(!item.getDefaultInstance().is(Items.AIR)) {
+            var item = ForgeRegistries.ITEMS.getValue(resourceLocation);
+            if(item != null && !item.getDefaultInstance().is(Items.AIR)) {
                 itemList.add(item.getDefaultInstance());
             }
         });
@@ -82,15 +81,15 @@ public class AddItemsModifier extends LootModifier {
     }
 
     private static ResourceLocation snifferentLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath("snifferent", path);
+        return new ResourceLocation("snifferent", path);
     }
 
     private static ResourceLocation hellionsLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath("snifferplus", path);
+        return new ResourceLocation("snifferplus", path);
     }
 
     @Override
-    public MapCodec<? extends IGlobalLootModifier> codec() {
-        return CODEC;
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC.get();
     }
 }

@@ -6,34 +6,34 @@ import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.data.AdvancementProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
-public class ModAdvancementGenerator implements AdvancementProvider.AdvancementGenerator {
-    
+public class ModAdvancementGenerator implements ForgeAdvancementProvider.AdvancementGenerator {
+
     @Override
-    public void generate(HolderLookup.@NotNull Provider registries, @NotNull Consumer<AdvancementHolder> saver, @NotNull ExistingFileHelper existingFileHelper) {
+    public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
         var root = Advancement.Builder.advancement()
                 .display(
                         Items.SNIFFER_EGG.getDefaultInstance(),
                         Component.translatable("advancements.more_sniffer_flowers.any_seed"),
                         Component.translatable("advancements.more_sniffer_flowers.any_seed.desc"),
                         MoreSnifferFlowers.loc("textures/gui/grass_block_bg.png"),
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         false,
                         false)
                 .addCriterion("has_advancement", ModAdvancementCritters.getSnifferAdvancement())
-                .save(saver, MoreSnifferFlowers.loc("root").toString());
+                .save(consumer, MoreSnifferFlowers.loc("root").toString());
 
         var dyespria_plant = Advancement.Builder.advancement()
                 .parent(root)
@@ -42,12 +42,12 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatable("advancements.more_sniffer_flowers.dyespria_plant"),
                         Component.translatable("advancements.more_sniffer_flowers.dyespria_plant.desc"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false)
                 .addCriterion("planted_dyespria_plant", ModAdvancementCritters.placedDyespriaPlant())
-                .save(saver, MoreSnifferFlowers.loc("dyespria_plant").toString());
+                .save(consumer, MoreSnifferFlowers.loc("dyespria_plant").toString());
 
         Advancement.Builder.advancement()
                 .parent(dyespria_plant)
@@ -56,12 +56,12 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatable("advancements.more_sniffer_flowers.dyespria"),
                         Component.translatable("advancements.more_sniffer_flowers.dyespria.desc"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false)
                 .addCriterion("used_dyespria", ModAdvancementCritters.usedDyespria())
-                .save(saver, MoreSnifferFlowers.loc("dyespria").toString());
+                .save(consumer, MoreSnifferFlowers.loc("dyespria").toString());
 
         var bonmeel = Advancement.Builder.advancement()
                 .parent(root)
@@ -70,13 +70,13 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.bonmeel", "Let It Grow!"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.bonmeel.desc", "Enlarge your crops using the magic of Bonmeel"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("used_bonmeel", ModAdvancementCritters.usedBonmeel())
-                .save(saver, MoreSnifferFlowers.loc("bonmeel").toString());
+                .save(consumer, MoreSnifferFlowers.loc("bonmeel").toString());
 
         Advancement.Builder.advancement()
                 .parent(bonmeel)
@@ -85,13 +85,13 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.cropressor", "Compressing with extra steps"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.cropressor.desc", "Cropress any crop"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("has_cropressed_crop", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ModTags.ModItemTags.CROPRESSED_CROPS).build()))
-                .save(saver, MoreSnifferFlowers.loc("cropressor").toString());
+                .save(consumer, MoreSnifferFlowers.loc("cropressor").toString());
 
         Advancement.Builder.advancement()
                 .parent(root)
@@ -100,13 +100,13 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.rebrew", "Local Rebrewery"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.rebrew.desc", "Rebrew an Extracted Potion"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("has_rebrewed_potion", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ModTags.ModItemTags.REBREWED_POTIONS).build()))
-                .save(saver, MoreSnifferFlowers.loc("rebrew").toString());
+                .save(consumer, MoreSnifferFlowers.loc("rebrew").toString());
 
         var bobling = Advancement.Builder.advancement()
                 .parent(root)
@@ -115,14 +115,14 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling", "Fight back!"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back the tree madness"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("bobling_attacked", ModAdvancementCritters.boblingAttack())
-                .save(saver, MoreSnifferFlowers.loc("bobling").toString());
-        
+                .save(consumer, MoreSnifferFlowers.loc("bobling").toString());
+
         Advancement.Builder.advancement()
                 .parent(bobling)
                 .display(
@@ -130,13 +130,13 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption", "Evil Blocks"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption.desc", "Corrupt blocks around you, to make them evil"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
-                .addCriterion("has_corrupted_slime_ball", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ModItems.CORRUPTED_SLIME_BALL).build()))
-                .save(saver, MoreSnifferFlowers.loc("corruption").toString());
+                .addCriterion("has_corrupted_slime_ball", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(ModItems.CORRUPTED_SLIME_BALL.get()).build()))
+                .save(consumer, MoreSnifferFlowers.loc("corruption").toString());
 
         Advancement.Builder.advancement()
                 .parent(bobling)
@@ -145,14 +145,14 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.cure", "A bobling of Kindness"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.cure.desc", "Cure a vivicus sapling to get regular (kind) boblings"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
-                .addCriterion("used_antidote", 
-                        ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(ModItems.VIVICUS_ANTIDOTE)))
-                .save(saver, MoreSnifferFlowers.loc("cure").toString());
+                .addCriterion("used_antidote",
+                        ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(ModItems.VIVICUS_ANTIDOTE.get())))
+                .save(consumer, MoreSnifferFlowers.loc("cure").toString());
 
         var ambush = Advancement.Builder.advancement()
                 .parent(root)
@@ -161,13 +161,13 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.ambush", "Ambushed by great loot"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.ambush.desc", "Break an amber block to get whats inside (the \"great\" part not quaranteed)"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
-                .addCriterion("has_ambush", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AMBUSH_SEEDS))
-                .save(saver, MoreSnifferFlowers.loc("ambush").toString());
+                .addCriterion("has_ambush", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.AMBUSH_SEEDS.get()))
+                .save(consumer, MoreSnifferFlowers.loc("ambush").toString());
 
         Advancement.Builder.advancement()
                 .parent(ambush)
@@ -176,13 +176,13 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.garbuh", "Garbushed by garbush loot"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.garbush.desc", "Break a Garnet block, like amber but more violent"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
-                .addCriterion("has_garbush", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.GARBUSH_SEEDS))
-                .save(saver, MoreSnifferFlowers.loc("garbush").toString());
+                .addCriterion("has_garbush", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.GARBUSH_SEEDS.get()))
+                .save(consumer, MoreSnifferFlowers.loc("garbush").toString());
 
         Advancement.Builder.advancement()
                 .parent(dyespria_plant)
@@ -191,15 +191,15 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.dye_boat", "Whatever colors your boat"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.dye_boat.desc", "Dye the vivicus boat any color, pretty unlikely to happen during actual gameplay"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("dye_boat", ModAdvancementCritters.dyeBoat())
-                .save(saver, MoreSnifferFlowers.loc("dye_boat").toString());
+                .save(consumer, MoreSnifferFlowers.loc("dye_boat").toString());
     }
-
+    
     private String id(String name) {
         return "%s:%s".formatted(MoreSnifferFlowers.MOD_ID, name);
     }

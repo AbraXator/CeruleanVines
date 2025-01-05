@@ -7,25 +7,24 @@ import net.abraxator.moresnifferflowers.init.ModSoundEvents;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.recipes.CropressingRecipe;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
-import org.apache.logging.log4j.core.pattern.ThreadIdPatternConverter;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -37,7 +36,7 @@ public class CropressorBlockEntity extends ModBlockEntity {
     public int progress = 0;
     public final int MAX_PROGRESS = 100;
     private static final int INV_SIZE = 16;
-    private final RecipeManager.CachedCheck<SingleRecipeInput, CropressingRecipe> quickCheck = RecipeManager.createCheck(ModRecipeTypes.CROPRESSING.get());
+    private final RecipeManager.CachedCheck<Container, CropressingRecipe> quickCheck = RecipeManager.createCheck(ModRecipeTypes.CROPRESSING.get());
     private boolean sound = true;
 
     public CropressorBlockEntity(BlockPos pPos, BlockState pBlockState) {
@@ -46,11 +45,11 @@ public class CropressorBlockEntity extends ModBlockEntity {
 
     @Override
     public void tick(Level level) {
-        var recipeInput = new SingleRecipeInput(currentCrop);
+        var recipeInput = new SimpleContainer(currentCrop);
         var cropressingRecipeOptional = quickCheck.getRecipeFor(recipeInput, level);
         
         if(currentCrop.getCount() >= INV_SIZE && cropressingRecipeOptional.isPresent()) {
-            result = cropressingRecipeOptional.get().value().result();
+            result = cropressingRecipeOptional.get().result();
             progress++;
 
             if(sound) {
@@ -117,21 +116,21 @@ public class CropressorBlockEntity extends ModBlockEntity {
     }
     
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
         pTag.putIntArray("crop_count", cropCount);
-        pTag.put("content", currentCrop.saveOptional(pRegistries));
+        pTag.put("content", currentCrop.save(pTag));
         pTag.putInt("progress", progress);
-        pTag.put("result", currentCrop.saveOptional(pRegistries));
+        pTag.put("result", currentCrop.save(pTag));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
         cropCount = pTag.getIntArray("crop_count");
-        currentCrop = ItemStack.parseOptional(pRegistries, pTag.getCompound("content"));
+        currentCrop = ItemStack.of(pTag.getCompound("content"));
         progress = pTag.getInt("progress");
-        result = ItemStack.parseOptional(pRegistries, pTag.getCompound("result"));
+        result = ItemStack.of(pTag.getCompound("result"));
     }
 
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -139,9 +138,9 @@ public class CropressorBlockEntity extends ModBlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
+    public CompoundTag getUpdateTag() {
         CompoundTag compoundtag = new CompoundTag();
-        compoundtag.put("result", result.saveOptional(pRegistries));
+        compoundtag.put("result", result.save(compoundtag));
         compoundtag.putInt("progress", progress);
         return compoundtag;
     }

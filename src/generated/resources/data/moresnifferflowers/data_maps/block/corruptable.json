@@ -21,6 +21,10 @@
         {
           "block": "moresnifferflowers:decayed_log",
           "weight": 100
+        },
+        {
+          "block": "moresnifferflowers:decayed_log",
+          "weight": 100
         }
       ]
     },

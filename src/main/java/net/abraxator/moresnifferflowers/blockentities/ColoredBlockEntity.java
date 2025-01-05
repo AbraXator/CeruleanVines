@@ -58,24 +58,24 @@ public class ColoredBlockEntity extends ModBlockEntity implements Colorable {
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
         dye = Dye.EMPTY;
         this.dye = new Dye(DyeColor.byId(pTag.getInt("dyeId")), pTag.getInt("amount"));
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
         pTag.putInt("dyeId", dye.color().getId());
         pTag.putInt("amount", dye.amount());
     }
-
+    
     @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-        super.getUpdateTag(pRegistries);
-        CompoundTag tag = super.getUpdateTag(pRegistries);
-        saveAdditional(tag, pRegistries);
+    public CompoundTag getUpdateTag() {
+        super.getUpdateTag();
+        CompoundTag tag = super.getUpdateTag();
+        saveAdditional(tag);
         return tag;
     }
 

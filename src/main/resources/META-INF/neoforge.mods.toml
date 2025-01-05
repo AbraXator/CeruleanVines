@@ -11,16 +11,16 @@ logoFile="moresnifferflowers_logo.png"
 authors="AbraXator, Nikdo53"
 description='''Sniffer Flowers, but there's More of them and they actually do something'''
 [[mixins]]
-    config="more_sniffer_flowers.neoforge.mixins.json"
+    config="more_sniffer_flowers.mixins.json"
 [[dependencies.moresnifferflowers]]
-    modId="neoforge"
+    modId="forge"
     type="required"
-    versionRange="[20.6.60-beta,)"
+    versionRange="[47.3.0)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.moresnifferflowers]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21, 1.21.1]"
+    versionRange="1.20.1"
     ordering="NONE"
     side="BOTH"

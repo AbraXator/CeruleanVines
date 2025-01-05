@@ -2,6 +2,7 @@ package net.abraxator.moresnifferflowers.worldgen.configurations.tree.vivicus;
 
 import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import net.abraxator.moresnifferflowers.worldgen.configurations.ModConfiguredFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -11,23 +12,15 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nullable;
 
 public class VivicusTreeGrower {
-    private final String name;
-    private final ResourceKey<ConfiguredFeature<?, ?>> cured_tree;
-    private final ResourceKey<ConfiguredFeature<?, ?>> corrupted_tree;
-
-    public VivicusTreeGrower(String name, ResourceKey<ConfiguredFeature<?, ?>> cured_tree, ResourceKey<ConfiguredFeature<?, ?>> corrupted_tree) {
-        this.name = name;
-        this.cured_tree = cured_tree;
-        this.corrupted_tree = corrupted_tree;
-    }
-
     @Nullable
     private ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource pRandom, BlockState saplingState) {
-        return saplingState.getValue(ModStateProperties.VIVICUS_TYPE) == BoblingEntity.Type.CORRUPTED ? corrupted_tree : cured_tree;
+        return saplingState.getValue(ModStateProperties.VIVICUS_TYPE) == BoblingEntity.Type.CORRUPTED ? ModConfiguredFeatures.CORRUPTED_VIVICUS_TREE : ModConfiguredFeatures.CURED_VIVICUS_TREE;
     }
 
     public boolean growTree(ServerLevel pLevel, ChunkGenerator pChunkGenerator, BlockPos pPos, BlockState saplingState, RandomSource pRandom) {
@@ -39,7 +32,7 @@ public class VivicusTreeGrower {
                     .registryOrThrow(Registries.CONFIGURED_FEATURE)
                     .getHolder(resourcekey1)
                     .orElse(null);
-            var event = net.neoforged.neoforge.event.EventHooks.fireBlockGrowFeature(pLevel, pRandom, pPos, holder1);
+            var event = ForgeEventFactory.blockGrowFeature(pLevel, pRandom, pPos, holder1);
             holder1 = event.getFeature();
             if (event.isCanceled()) return false;
             if (holder1 == null) {

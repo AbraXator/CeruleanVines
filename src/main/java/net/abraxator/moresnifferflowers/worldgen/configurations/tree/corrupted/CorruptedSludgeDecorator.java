@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 public class CorruptedSludgeDecorator extends TreeDecorator {
-    public static final MapCodec<CorruptedSludgeDecorator> CODEC = RecordCodecBuilder.mapCodec(
+    public static final Codec<CorruptedSludgeDecorator> CODEC = RecordCodecBuilder.create(
             p_225996_ -> p_225996_.group(
                             Codec.floatRange(0.0F, 1.0F).fieldOf("probability").forGetter(p_226014_ -> p_226014_.probability),
                             Codec.intRange(0, 16).fieldOf("exclusion_radius_xz").forGetter(p_226012_ -> p_226012_.exclusionRadiusXZ),

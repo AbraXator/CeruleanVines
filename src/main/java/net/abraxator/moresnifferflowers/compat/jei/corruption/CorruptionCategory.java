@@ -17,8 +17,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.Nullable;
 
-public class CorruptionCategory implements IRecipeCategory<CorruptionRecipe> {
-    public static final RecipeType<CorruptionRecipe> CORRUPTING = RecipeType.create(MoreSnifferFlowers.MOD_ID, "corrupting", CorruptionRecipe.class);
+public class CorruptionCategory implements IRecipeCategory<CorruptionJEIRecipe> {
+    public static final RecipeType<CorruptionJEIRecipe> CORRUPTING = RecipeType.create(MoreSnifferFlowers.MOD_ID, "corrupting", CorruptionJEIRecipe.class);
     private final IDrawable background;
     private final IDrawable icon;
     private final Component localizedName;
@@ -30,7 +30,7 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionRecipe> {
     }
 
     @Override
-    public RecipeType<CorruptionRecipe> getRecipeType() {
+    public RecipeType<CorruptionJEIRecipe> getRecipeType() {
         return CORRUPTING;
     }
 
@@ -40,20 +40,15 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return background;
-    }
-
-    @Override
     public @Nullable IDrawable getIcon() {
         return icon;
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, CorruptionRecipe recipe, IFocusGroup iFocusGroup) {
+    public void setRecipe(IRecipeLayoutBuilder builder, CorruptionJEIRecipe recipe, IFocusGroup iFocusGroup) {
         builder.addSlot(RecipeIngredientRole.INPUT, 10, 15).addItemStack(recipe.source());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 92, 15).addItemStack(recipe.corrupted())
-                .addTooltipCallback((recipeSlotView, tooltip) -> {
+                .addRichTooltipCallback((recipeSlotView, tooltip) -> {
                     if (recipe.corrupted().is(Blocks.AIR.asItem())) {
                         tooltip.add(Component.literal("Air").withStyle(ChatFormatting.WHITE));
                     }
@@ -61,17 +56,14 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionRecipe> {
     }
 
     @Override
-    public void draw(CorruptionRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(CorruptionJEIRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft minecraft = Minecraft.getInstance();
         String text = "Chance: " + recipe.chance() + "%";
         int width = minecraft.font.width(text);
         int x = getWidth() - 30 - width;
         int y = 0;
-//        guiGraphics.drawString(minecraft.font, text, x, y+1, 0x231a2e, false);
-//        guiGraphics.drawString(minecraft.font, text, x, y-1, 0x231a2e, false);
-//        guiGraphics.drawString(minecraft.font, text, x-1, y, 0x231a2e, false);
-//        guiGraphics.drawString(minecraft.font, text, x+1, y, 0x231a2e, false);
 
+        background.draw(guiGraphics);
         guiGraphics.drawString(minecraft.font, text, x, y, 0x714a5f, false);
 
     }

@@ -1,7 +1,6 @@
 package net.abraxator.moresnifferflowers.client;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.blocks.ColorableVivicusBlock;
 import net.abraxator.moresnifferflowers.client.gui.screen.RebrewingStandScreen;
 import net.abraxator.moresnifferflowers.client.model.ModModelLayerLocations;
 import net.abraxator.moresnifferflowers.client.model.block.BondripiaModel;
@@ -16,47 +15,41 @@ import net.abraxator.moresnifferflowers.client.renderer.entity.BoblingRenderer;
 import net.abraxator.moresnifferflowers.client.renderer.entity.CorruptedProjectileRenderer;
 import net.abraxator.moresnifferflowers.client.renderer.entity.DragonflyRenderer;
 import net.abraxator.moresnifferflowers.client.renderer.entity.ModBoatRenderer;
-import net.abraxator.moresnifferflowers.components.Colorable;
 import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.init.*;
 import net.abraxator.moresnifferflowers.items.DyespriaItem;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.util.Mth;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.neoforged.neoforgespi.locating.IModFile;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.forgespi.language.IModFileInfo;
+import net.minecraftforge.forgespi.locating.IModFile;
 
-import java.awt.*;
-import java.util.Optional;
-
-@EventBusSubscriber(modid = MoreSnifferFlowers.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = MoreSnifferFlowers.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
         Sheets.addWoodType(ModWoodTypes.CORRUPTED);
         Sheets.addWoodType(ModWoodTypes.VIVICUS);
         ModItemProperties.register();
-    }
-    
-    @SubscribeEvent
-    public static void onRegisterMenuScreenEvent(RegisterMenuScreensEvent event) {
-        event.register(ModMenuTypes.REBREWING_STAND.get(), RebrewingStandScreen::new);
+        MenuScreens.register(ModMenuTypes.REBREWING_STAND.get(), RebrewingStandScreen::new);
     }
     
     @SubscribeEvent
@@ -112,7 +105,6 @@ public class ClientEvents {
         event.registerSpriteSet(ModParticles.AMBUSH.get(), AmbushParticle.Provider::new);
         event.registerSpriteSet(ModParticles.GARBUSH.get(), AmbushParticle.Provider::new);
         event.registerSpriteSet(ModParticles.GIANT_CROP.get(), GiantCropParticle.Provider::new);
-        event.registerSpriteSet(ModParticles.BONDRIPIA.get(), BondripiaParticle.BondripiaParticleProvider::new);
     }
 
     @SubscribeEvent
@@ -126,7 +118,7 @@ public class ClientEvents {
             }
         }, ModItems.DYESPRIA.get());
         event.register((pStack, pTintIndex) -> {
-            return pTintIndex > 0 ? -1 : pStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor();
+            return pTintIndex > 0 ? -1 : PotionUtils.getColor(pStack);
         }, ModItems.EXTRACTED_BOTTLE.get(), ModItems.REBREWED_POTION.get(), ModItems.REBREWED_SPLASH_POTION.get(), ModItems.REBREWED_LINGERING_POTION.get());
     }
 
@@ -134,50 +126,44 @@ public class ClientEvents {
     @SubscribeEvent
     public static void addPackFinders(AddPackFindersEvent event) {
         if(event.getPackType() == PackType.CLIENT_RESOURCES) {
-            IModFile iModFileInfo = ModList.get().getModFileById(MoreSnifferFlowers.MOD_ID).getFile();
-            event.addRepositorySource(pOnLoad -> {
-                String name = "more_sniffer_flowers_rtx";
-                var pack = Pack.readMetaAndCreate(
-                        new PackLocationInfo(name, Component.literal("More Sniffer Flowers RTX"), PackSource.BUILT_IN, Optional.empty()),
-                        new Pack.ResourcesSupplier() {
-                            @Override
-                            public PackResources openPrimary(PackLocationInfo pLocation) {
-                                return new PathPackResources(pLocation, iModFileInfo.findResource("resourcepacks/" + name));
-                            }
+            IModFileInfo iModFileInfo = ModList.get().getModFileById(MoreSnifferFlowers.MOD_ID);
+            if(iModFileInfo == null) {
+                MoreSnifferFlowers.LOGGER.error("Could not find More Sniffer Flowers mod file info; built-in resource packs will be missing!");
+            }
 
-                            @Override
-                            public PackResources openFull(PackLocationInfo pLocation, Pack.Metadata pMetadata) {
-                                return openPrimary(pLocation);
-                            }
-                        },
+            IModFile modFile = iModFileInfo.getFile();
+            event.addRepositorySource(pOnLoad -> {
+                Pack rtx = Pack.readMetaAndCreate(
+                        MoreSnifferFlowers.loc("more_sniffer_flowers_rtx").toString(),
+                        Component.literal("RTX More Sniffer Flowers"),
+                        false,
+                        pId -> new PathPackResources(pId, modFile.findResource("resourcepacks/more_sniffer_flowers_rtx"), true),
                         PackType.CLIENT_RESOURCES,
-                        new PackSelectionConfig(false, Pack.Position.TOP, false));
-                if(pack != null) {
-                    pOnLoad.accept(pack);
+                        Pack.Position.TOP,
+                        PackSource.BUILT_IN);
+                if(rtx != null) {
+                    pOnLoad.accept(rtx);
                 }
             });
 
             event.addRepositorySource(pOnLoad -> {
-                String name = "more_sniffer_flowers_boring";
-                    var pack = Pack.readMetaAndCreate(
-                            new PackLocationInfo(name, Component.literal("More Sniffer Flowers Boring"),  PackSource.BUILT_IN, Optional.empty()),
-                            new Pack.ResourcesSupplier() {
-                                @Override
-                                public PackResources openPrimary(PackLocationInfo packLocationInfo) {
-                                    return new PathPackResources(packLocationInfo, iModFileInfo.findResource("resourcepacks/" + name));
-                                }
 
-                                @Override
-                                public PackResources openFull(PackLocationInfo packLocationInfo, Pack.Metadata metadata) {
-                                    return openPrimary(packLocationInfo);
-                                }
-                            },
-                            PackType.CLIENT_RESOURCES,
-                            new PackSelectionConfig(false, Pack.Position.TOP, false));
-                    if(pack != null) {
-                        pOnLoad.accept(pack);
-                    }
+                Pack customStyleGUI = Pack.readMetaAndCreate(
+                        MoreSnifferFlowers.loc("more_sniffer_flowers_boring").toString(),
+                        Component.literal("Boring More Sniffer Flowers"),
+                        false,
+                        pId -> new PathPackResources(pId, modFile.findResource("resourcepacks/more_sniffer_flowers_boring"), true),
+                        PackType.CLIENT_RESOURCES,
+                        Pack.Position.TOP,
+                        PackSource.BUILT_IN);
+                if(customStyleGUI != null) {
+                    pOnLoad.accept(customStyleGUI);
+                }
             });
         }
+    }
+    
+    public static float[] hexToRGB(int hex) {
+        return new float[] {(hex >> 16) & 0xFF, (hex >> 8) & 0xFF, hex & 0xFF};
     }
 }

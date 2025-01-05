@@ -2,16 +2,15 @@ package net.abraxator.moresnifferflowers.data.loot;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.blocks.BonmeeliaBlock;
-import net.abraxator.moresnifferflowers.blocks.DawnberryVineBlock;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -19,7 +18,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -33,33 +31,31 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyC
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.fml.common.Mod;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ModBlockLoottableProvider extends BlockLootSubProvider {
-    public ModBlockLoottableProvider(HolderLookup.Provider provider) {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
+    public ModBlockLoottableProvider() {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
     }
 
     @Override
     protected void generate() {
-        HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         add(ModBlocks.DAWNBERRY_VINE.get(), noDrop());
         dropSelf(ModBlocks.GLOOMBERRY_VINE.get());
 
         add(ModBlocks.AMBER_BLOCK.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
-                        .when(hasSilkTouch())
+                        .when(HAS_SILK_TOUCH)
                         .add(LootItem.lootTableItem(ModBlocks.AMBER_BLOCK.get())))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .when(doesNotHaveSilkTouch())
+                        .when(HAS_NO_SILK_TOUCH)
                         .add(LootItem.lootTableItem(ModItems.AMBER_SHARD.get())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
-                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5F, 2))))
+                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5F, 2))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .when(doesNotHaveSilkTouch())
+                        .when(HAS_NO_SILK_TOUCH)
                         //COMMON
                         .add(LootItem.lootTableItem(Items.COAL).setWeight(100))
                         .add(LootItem.lootTableItem(Items.EMERALD).setWeight(100))
@@ -97,15 +93,15 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
 
         add(ModBlocks.GARNET_BLOCK.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
-                        .when(hasSilkTouch())
+                        .when(HAS_SILK_TOUCH)
                         .add(LootItem.lootTableItem(ModBlocks.GARNET_BLOCK.get())))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .when(doesNotHaveSilkTouch())
+                        .when(HAS_NO_SILK_TOUCH)
                         .add(LootItem.lootTableItem(ModItems.GARNET_SHARD.get())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
-                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(registrylookup.getOrThrow(Enchantments.FORTUNE), 0.5F, 2))))
+                                .apply(ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.5F, 2))))
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .when(doesNotHaveSilkTouch())
+                        .when(HAS_NO_SILK_TOUCH)
                         //COMMON
                         .add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(100))
                         .add(LootItem.lootTableItem(Items.EMERALD).setWeight(100))
@@ -128,8 +124,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(Items.SNIFFER_EGG).setWeight(12))
                         .add(LootItem.lootTableItem(Items.WITHER_SKELETON_SKULL).setWeight(12))
                         .add(LootItem.lootTableItem(Items.NETHERITE_INGOT).setWeight(12))
-                        .add(LootItem.lootTableItem(Items.DIAMOND_BLOCK).setWeight(12))
-                        .add(LootItem.lootTableItem(Items.HEAVY_CORE).setWeight(12))));
+                        .add(LootItem.lootTableItem(Items.DIAMOND_BLOCK).setWeight(12))));
 
         dropSelf(ModBlocks.BOBLING_HEAD.get());
 
@@ -232,7 +227,7 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.CORRUPTED_SAPLING.get());
         add(ModBlocks.CORRUPTED_SLUDGE.get(), block -> this.createSilkTouchDispatchTable(
                 block, this.applyExplosionCondition(
-                        block, LootItem.lootTableItem(ModItems.CORRUPTED_SLIME_BALL)
+                        block, LootItem.lootTableItem(ModItems.CORRUPTED_SLIME_BALL.get())
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 12.0F)))
                 )
         ));
@@ -285,15 +280,15 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
         dropPottedContents(ModBlocks.POTTED_CORRUPTED_SAPLING.get());
         dropPottedContents(ModBlocks.POTTED_VIVICUS_SAPLING.get());
         
-        dropOther(ModBlocks.CORRUPTED_SIGN.get(), ModItems.CORRUPTED_SIGN);
-        dropOther(ModBlocks.CORRUPTED_WALL_SIGN.get(), ModItems.CORRUPTED_SIGN);
-        dropOther(ModBlocks.CORRUPTED_HANGING_SIGN.get(), ModItems.CORRUPTED_HANGING_SIGN);
-        dropOther(ModBlocks.CORRUPTED_WALL_HANGING_SIGN.get(), ModItems.CORRUPTED_HANGING_SIGN);
+        dropOther(ModBlocks.CORRUPTED_SIGN.get(), ModItems.CORRUPTED_SIGN.get());
+        dropOther(ModBlocks.CORRUPTED_WALL_SIGN.get(), ModItems.CORRUPTED_SIGN.get());
+        dropOther(ModBlocks.CORRUPTED_HANGING_SIGN.get(), ModItems.CORRUPTED_HANGING_SIGN.get());
+        dropOther(ModBlocks.CORRUPTED_WALL_HANGING_SIGN.get(), ModItems.CORRUPTED_HANGING_SIGN.get());
         
-        dropOther(ModBlocks.VIVICUS_SIGN.get(), ModItems.VIVICUS_SIGN);
-        dropOther(ModBlocks.VIVICUS_WALL_SIGN.get(), ModItems.VIVICUS_SIGN);
-        dropOther(ModBlocks.VIVICUS_HANGING_SIGN.get(), ModItems.VIVICUS_HANGING_SIGN);
-        dropOther(ModBlocks.VIVICUS_WALL_HANGING_SIGN.get(), ModItems.VIVICUS_HANGING_SIGN);
+        dropOther(ModBlocks.VIVICUS_SIGN.get(), ModItems.VIVICUS_SIGN.get());
+        dropOther(ModBlocks.VIVICUS_WALL_SIGN.get(), ModItems.VIVICUS_SIGN.get());
+        dropOther(ModBlocks.VIVICUS_HANGING_SIGN.get(), ModItems.VIVICUS_HANGING_SIGN.get());
+        dropOther(ModBlocks.VIVICUS_WALL_HANGING_SIGN.get(), ModItems.VIVICUS_HANGING_SIGN.get());
 
         add(ModBlocks.BONMEEL_FILLED_CAULDRON.get(), createSingleItemTable(Blocks.CAULDRON));
         add(ModBlocks.ACID_FILLED_CAULDRON.get(), createSingleItemTable(Blocks.CAULDRON));

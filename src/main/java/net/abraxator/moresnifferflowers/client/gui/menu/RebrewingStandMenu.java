@@ -4,8 +4,6 @@ import net.abraxator.moresnifferflowers.init.ModItems;
 import net.abraxator.moresnifferflowers.init.ModMenuTypes;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -17,8 +15,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.PotionUtils;
 
 public class RebrewingStandMenu extends AbstractContainerMenu {
     private final Container rebrewingStand;
@@ -27,7 +24,7 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
     public RebrewingStandMenu(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(6), new SimpleContainerData(3));
     }
-    
+
     public RebrewingStandMenu(int id, Inventory playerInv, Container rebrewingStandContainer, ContainerData rebrewingStandContainerData) {
         super(ModMenuTypes.REBREWING_STAND.get(), id);
         checkContainerSize(rebrewingStandContainer, 6);
@@ -40,7 +37,7 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
         this.addSlot(new PotionSlot(rebrewingStandContainer, 3, 56, 51));
         this.addSlot(new PotionSlot(rebrewingStandContainer, 4, 79, 58));
         this.addSlot(new PotionSlot(rebrewingStandContainer, 5, 102, 51));
-        
+
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
                 this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
@@ -50,7 +47,7 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
         for(int k = 0; k < 9; ++k) {
             this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
         }
-        
+
         addDataSlots(rebrewingStandContainerData);
     }
 
@@ -62,7 +59,7 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             movedStack = itemstack1.copy();
             if ((pIndex < 0 || pIndex > 5)) {
-                if (FuelSlot.mayPlaceItem(movedStack)) {
+                if (RebrewingStandMenu.FuelSlot.mayPlaceItem(movedStack)) {
                     if (this.moveItemStackTo(itemstack1, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -121,25 +118,25 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
     public int getFuel() {
         return this.rebrewingStandData.get(1);
     }
-    
+
     public int getCost() {
         return this.rebrewingStandData.get(2);
     }
-    
+
     @Override
     public boolean stillValid(Player pPlayer) {
         return this.rebrewingStand.stillValid(pPlayer);
     }
-    
+
     static class FuelSlot extends Slot {
         public FuelSlot(Container pContainer, int pSlot, int pX, int pY) {
             super(pContainer, pSlot, pX, pY);
         }
-            
+
         public static boolean mayPlaceItem(ItemStack itemStack) {
             return itemStack.is(ModItems.CROPRESSED_NETHERWART.get());
         }
-        
+
         @Override
         public boolean mayPlace(ItemStack pStack) {
             return mayPlaceItem(pStack);
@@ -170,7 +167,7 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
             return 1;
         }
     }
-    
+
     static class IngredientSlot extends Slot {
         public IngredientSlot(Container pContainer, int pSlot, int pX, int pY) {
             super(pContainer, pSlot, pX, pY);
@@ -196,7 +193,7 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
         }
 
         public static boolean mayPlaceItem(ItemStack itemStack) {
-            return itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).is(Potions.WATER);
+            return itemStack.getOrCreateTag().getString("Potion").equals("minecraft:water");
         }
 
         @Override
@@ -205,11 +202,9 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
         }
 
         public void onTake(Player pPlayer, ItemStack pStack) {
+            Potion potion = PotionUtils.getPotion(pStack);
             if (pPlayer instanceof ServerPlayer && pStack.is(ModTags.ModItemTags.REBREWED_POTIONS)) {
-                var potion = pStack.get(DataComponents.POTION_CONTENTS).potion();
-                potion.ifPresent(potionHolder -> {
-                    CriteriaTriggers.BREWED_POTION.trigger((ServerPlayer)pPlayer, potionHolder);
-                });
+                CriteriaTriggers.BREWED_POTION.trigger((ServerPlayer)pPlayer, potion);
             }
 
             super.onTake(pPlayer, pStack);

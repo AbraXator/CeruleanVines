@@ -1,124 +1,98 @@
-/*buildscript {
+buildscript {
     dependencies {
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
-}*/
+}
 
 plugins {
+    id 'eclipse'
     id 'maven-publish'
-    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
-    id 'net.neoforged.gradle.userdev' version '7.0.171'
-    //id 'org.spongepowered.gradle' version '0.7-SNAPSHOT'
+    id 'net.minecraftforge.gradle' version '6.0.+'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+repositories {
+    maven {
+        url 'https://cursemaven.com'
+    }
+    mavenCentral()
+    maven { url "https://maven.blamejared.com/" }
+    maven { url "https://modmaven.dev" }
 }
 
 group = 'net.abraxator.moresnifferflowers'
-archivesBaseName = 'moresnifferflowers'
-mod_id='moresnifferflowers'
+archivesBaseName = 'moresniffeflowers'
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-        url "https://cursemaven.com"
-    }
-    maven { url = "https://api.modrinth.com/maven" }
-    maven { url = "https://maven.blamejared.com/" }
-    maven { url = "https://modmaven.dev" }
-    maven {
-        name 'Shedaniel\'s Maven' //REI
-        url "https://maven.shedaniel.me"
-    }
-    maven {
-        name = "TerraformersMC" //EMI
-        url = "https://maven.terraformersmc.com/"
-    }
-}
-
-base {
-    archivesName = 'MoreSnifferFlowers-'+minecraft_version+'-neo'
-}
-
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-tasks.withType(JavaCompile).configureEach {
-    options.release = 21
-}
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-
 minecraft {
-    accessTransformers {
-        file('src/main/resources/META-INF/accesstransformer.cfg')
+    //mappings channel: 'official', version: '1.20.1'
+    mappings channel: 'parchment', version: '2023.09.03-1.20.1'
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'moresnifferflowers'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods {
+                more_sniffer_flowers {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {}
+        server {}
+        gameTestServer {}
+
+        data {
+            workingDirectory project.file('run')
+            args '--mod', 'moresnifferflowers', '--all',
+                    '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/')
+        }
     }
 }
 
-runs {
-    // applies to all the run configs below
-    configureEach {
-        // Recommended logging data for a userdev environment
-        // The markers can be added/remove as needed separated by commas.
-        // "SCAN": For mods scan.
-        // "REGISTRIES": For firing of registry events.
-        // "REGISTRYDUMP": For getting the contents of all registries.
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-
-        // Recommended logging level for the console
-        // You can set various levels here.
-        // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-        systemProperty 'forge.logging.console.level', 'debug'
-
-        modSource project.sourceSets.main
-    }
-
-    client {
-        // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-        systemProperty 'forge.enabledGameTestNamespaces', mod_id
-    }
-
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', mod_id
-    }
-
-    // This run config launches GameTestServer and runs all registered gametests, then exits.
-    // By default, the server will crash when no gametests are provided.
-    // The gametest system is also enabled by default for other run configs under the /test command.
-    gameTestServer {
-        systemProperty 'forge.enabledGameTestNamespaces', mod_id
-    }
-
-    data {
-        // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-        // workingDirectory project.file('run-data')
-
-        // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-        arguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-    }
-}
-
+// Include resources generated by data generators.
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    //implementation "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
-    compileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-    compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
-    compileOnly("curse.maven:rightclickharvest-452834:5427523")
-    //implementation("me.shedaniel.cloth:cloth-config-neoforge:${cloth_version}")
-    //implementation("dev.architectury:architectury-neoforge:${architectury_version}")
-    implementation("net.neoforged:neoforge:${neoforge_version}")
+    //jei
+    implementation fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+    
+    //mixin
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    
+    //quark
+    compileOnly("curse.maven:Quark-${quark_id}:${quark_version}")
+    
+    //right click harvest
+    compileOnly("curse.maven:RightClickHarvest-${RCH_id}:${RCH_version}")
+    
+    //minecraft
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 }
- 
-/*mixin {
+
+mixin {
     add sourceSets.main, 'more_sniffer_flowers.mixins.refmap.json'
     config 'more_sniffer_flowers.mixins.json'
     debug.verbose = true
     debug.export = true
-}*/
+}
 
 final manifestAttributes = [
-        'Specification-Title'   : 'More Sniffer Flowers',
+        'Specification-Title'   : 'moresnifferflowers',
         'Specification-Vendor'  : 'AbraXator',
-        'Specification-Version' : project.version,
+        'Specification-Version' : '1',
         'Implementation-Title'  : project.name,
         'Implementation-Version': project.jar.archiveVersion,
         'Implementation-Vendor' : 'AbraXator'
@@ -126,7 +100,7 @@ final manifestAttributes = [
 
 jar {
     manifest.attributes(manifestAttributes)
-    //finalizedBy('reobfJar')
+    finalizedBy('reobfJar')
 }
 
 tasks.withType(JavaCompile).configureEach {

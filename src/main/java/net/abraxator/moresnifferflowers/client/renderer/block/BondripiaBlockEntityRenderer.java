@@ -33,7 +33,7 @@ public class BondripiaBlockEntityRenderer<T extends BondripiaBlockEntity> implem
         if(pBlockEntity.getBlockState().getValue(ModStateProperties.CENTER) && pBlockEntity.getBlockState().getValue(ModStateProperties.AGE_2) >= 2) {
             pPoseStack.translate(0.5, 1.5, 0.5);
             pPoseStack.mulPose(Axis.XP.rotationDegrees(180));
-            Material material = pBlockEntity.getBlockState().is(ModBlocks.ACIDRIPIA) ? ACID_DRIPIATEXTURE : BONDRIPIA_TEXTURE;
+            Material material = pBlockEntity.getBlockState().is(ModBlocks.ACIDRIPIA.get()) ? ACID_DRIPIATEXTURE : BONDRIPIA_TEXTURE;
             this.model.render(pPoseStack, material.buffer(pBufferSource, RenderType::entityCutout), pPackedLight, pPackedOverlay);
         }
     }
@@ -50,10 +50,5 @@ public class BondripiaBlockEntityRenderer<T extends BondripiaBlockEntity> implem
 
     public boolean shouldRender(T pBlockEntity, Vec3 pCameraPos) {
         return true;
-    }
-
-    @Override
-    public AABB getRenderBoundingBox(T blockEntity) {
-        return AABB.INFINITE;
     }
 }

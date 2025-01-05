@@ -1,10 +1,6 @@
 package net.abraxator.moresnifferflowers.blocks;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.init.ModItems;
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -13,7 +9,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,9 +33,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBlock, ModCropBlock {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_4;
     public static final BooleanProperty IS_SHEARED = BooleanProperty.create("is_sheared");
-    public static final MapCodec<DawnberryVineBlock> CODEC = RecordCodecBuilder.mapCodec(p_304392_ -> 
-            p_304392_.group(propertiesCodec(), Codec.BOOL.fieldOf("evil").forGetter(DawnberryVineBlock::isEvil))
-                    .apply(p_304392_, DawnberryVineBlock::new));
 
     private final MultifaceSpreader spreader = new MultifaceSpreader(this);
     private final boolean evil;
@@ -50,11 +42,6 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
         this.registerDefaultState(this.defaultBlockState().setValue(AGE, 0).setValue(IS_SHEARED, Boolean.FALSE));
 
         this.evil = evil;
-    }
-
-    @Override
-    protected MapCodec<? extends MultifaceBlock> codec() {
-        return CODEC;
     }
 
     @Override
@@ -85,19 +72,10 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if(pStack.is(Items.SHEARS) && !(getAge(pState) >= 4) && !pState.getValue(ModStateProperties.SHEARED)) {
-            return shearAction(pState, pLevel, pPos, pPlayer, pHand, pStack);
-        } else if(pStack.is(Items.BONE_MEAL) && (getAge(pState) < 4)) {
-            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
-        }
-        
-        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (this.isMaxAge(pState)) {
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if(!isMaxAge(pState) && pPlayer.getItemInHand(pHand).is(Items.BONE_MEAL)) {
+            return InteractionResult.PASS;
+        } else if (this.isMaxAge(pState)) {
             return dropMaxAgeLoot(pState, pLevel, pPos, pPlayer);
         } else if (pState.getValue(AGE) == 3) {
             return dropAgeThreeLoot(pState, pLevel, pPos, pPlayer);
@@ -105,10 +83,10 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
 
         return InteractionResult.PASS;
     }
-
-    private ItemInteractionResult shearAction(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
+    
+    private InteractionResult shearAction(BlockState blockState, Level level, BlockPos pos, Player player, InteractionHand hand, ItemStack stack) {
         shear(player, level, pos, blockState, hand);
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private InteractionResult dropMaxAgeLoot(BlockState blockState, Level level, BlockPos pos, Player player) {
@@ -149,7 +127,7 @@ public class DawnberryVineBlock extends MultifaceBlock implements BonemealableBl
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         return !isMaxAge(pState);
     }
 

@@ -16,14 +16,14 @@ public class BondripiaBlockEntity extends ModBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
         pTag.put("center", NbtUtils.writeBlockPos(this.center));
     }
-
+    
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        this.center = NbtUtils.readBlockPos(pTag, "center").orElseGet(this::getBlockPos);
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
+        this.center = NbtUtils.readBlockPos(pTag.getCompound("center"));
     }
 }

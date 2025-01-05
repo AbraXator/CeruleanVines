@@ -9,9 +9,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -41,14 +43,14 @@ public class GiantCropItem extends BlockItem {
         var level = pContext.getLevel();
         var aabb = AABB.ofSize(pContext.getClickedPos().above(2).getCenter(), 2, 2, 2);
         var ret = BlockPos.betweenClosedStream(aabb)
-                .allMatch(blockPos -> level.getBlockState(blockPos).isEmpty());
+                .allMatch(blockPos -> level.getBlockState(blockPos).isAir());
         
         return ret;
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         
         pTooltipComponents.add(Component.literal("CREATIVE ONLY").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
     }

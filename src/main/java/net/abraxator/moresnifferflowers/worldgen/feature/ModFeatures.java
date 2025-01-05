@@ -1,15 +1,15 @@
 package net.abraxator.moresnifferflowers.worldgen.feature;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES = 
-            DeferredRegister.create(BuiltInRegistries.FEATURE, MoreSnifferFlowers.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.FEATURES, MoreSnifferFlowers.MOD_ID);
     
-    public static final DeferredHolder<Feature<?>, VivicusTreeFeature> VIVICUS_TREE = FEATURES.register("vivicus_tree", () -> new VivicusTreeFeature(TreeConfiguration.CODEC));
+    public static final RegistryObject<Feature<TreeConfiguration>> VIVICUS_TREE = FEATURES.register("vivicus_tree", () -> new VivicusTreeFeature(TreeConfiguration.CODEC));
 }

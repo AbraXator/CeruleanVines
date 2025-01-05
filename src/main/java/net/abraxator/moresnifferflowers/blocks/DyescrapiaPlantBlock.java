@@ -16,18 +16,16 @@ public class DyescrapiaPlantBlock extends Block {
     }
 
     @Override
-    protected BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
         return !pState.canSurvive(pLevel, pCurrentPos)
                 ? Blocks.AIR.defaultBlockState()
                 : super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
     }
 
     @Override
-    protected boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         BlockPos blockpos = pPos.below();
         BlockState belowBlockState = pLevel.getBlockState(blockpos);
-        net.neoforged.neoforge.common.util.TriState soilDecision = belowBlockState.canSustainPlant(pLevel, blockpos, Direction.UP, pState);
-        if (!soilDecision.isDefault()) return soilDecision.isTrue();
         return this.mayPlaceOn(belowBlockState);
     }
     

@@ -1,35 +1,39 @@
 package net.abraxator.moresnifferflowers.networking;
 
-import io.netty.buffer.ByteBuf;
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.components.DyespriaMode;
 import net.abraxator.moresnifferflowers.items.DyespriaItem;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.NetworkEvent;
 
-public record DyespriaDisplayModeChangePacket(int dyespriaModeId) implements IMSFPacket {
-    public static final CustomPacketPayload.Type<DyespriaDisplayModeChangePacket> TYPE = new CustomPacketPayload.Type<>(MoreSnifferFlowers.loc("display_dyespria_mode_change"));
-    public static final StreamCodec<ByteBuf, DyespriaDisplayModeChangePacket> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.INT, DyespriaDisplayModeChangePacket::dyespriaModeId,
-            DyespriaDisplayModeChangePacket::new
-    );
-    
-    @Override
-    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+import java.util.function.Supplier;
+
+public record DyespriaDisplayModeChangePacket(int dyespriaModeId) {
+    public DyespriaDisplayModeChangePacket(FriendlyByteBuf buf) {
+        this(buf.readByte());
     }
     
-    @Override
-    public void handle(IPayloadContext context) {
-        context.enqueueWork(() -> {
-            context.player().displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(dyespriaModeId)), true);
-        });
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeByte(dyespriaModeId());
+    }
+    
+    public class Handler {
+        public static void handle(DyespriaDisplayModeChangePacket packet, Supplier<NetworkEvent.Context> context) {
+            context.get().enqueueWork(() -> {
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handlePacket(packet, context));
+            });
+            context.get().setPacketHandled(true);
+        }
+        
+        public static boolean handlePacket(DyespriaDisplayModeChangePacket packet, Supplier<NetworkEvent.Context> context) {
+            NetworkEvent.Context ctx = context.get();
+            ctx.enqueueWork(() -> {
+                ctx.getSender().displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(packet.dyespriaModeId)), true);
+            });
+
+            ctx.setPacketHandled(true);
+            return true;
+        }   
     }
 }

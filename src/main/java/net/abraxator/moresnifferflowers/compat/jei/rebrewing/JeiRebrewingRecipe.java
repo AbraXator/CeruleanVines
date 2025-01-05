@@ -1,18 +1,15 @@
 package net.abraxator.moresnifferflowers.compat.jei.rebrewing;
 
 import net.abraxator.moresnifferflowers.init.ModItems;
-import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public record JeiRebrewingRecipe(ItemStack extractedPotion, ItemStack rebrewedPotion, ItemStack ingredient) {
     public static List<JeiRebrewingRecipe> createRecipes() {
@@ -23,27 +20,26 @@ public record JeiRebrewingRecipe(ItemStack extractedPotion, ItemStack rebrewedPo
                 Items.GUNPOWDER.getDefaultInstance(),
                 Items.DRAGON_BREATH.getDefaultInstance()
         );
+        List<MobEffect> mobEffects = new ArrayList<>(ForgeRegistries.MOB_EFFECTS.getValues());
 
         for (ItemStack item : ingredients) {
-            BuiltInRegistries.MOB_EFFECT.stream().forEach(effect -> {
+            for (MobEffect effect : mobEffects) {
                 int duration = item.is(Items.REDSTONE) ? 12000 : 6000;
                 int amplifier = item.is(Items.GLOWSTONE_DUST) ? 2 : 1;
 
-                List<MobEffectInstance> extractedEffect = List.of(new MobEffectInstance(Holder.direct(effect), 1200, 0));
-                List<MobEffectInstance> rebrewedEffect = List.of(new MobEffectInstance(Holder.direct(effect), 1200 + duration, amplifier));
-                PotionContents extractedPotionContents = new PotionContents(Optional.of(Potions.WATER), Optional.of(PotionContents.getColor(extractedEffect)), extractedEffect);
-                PotionContents rebrewedPotionContents = new PotionContents(Optional.of(Potions.WATER), Optional.of(PotionContents.getColor(rebrewedEffect)), rebrewedEffect);
-                
+                MobEffectInstance extractedEffect = new MobEffectInstance(effect, 1200, 0);
+                MobEffectInstance rebrewedEffect = new MobEffectInstance(effect, 1200 + duration, amplifier);
+
                 ItemStack extractedPotion = ModItems.EXTRACTED_BOTTLE.get().getDefaultInstance();
                 var rebrewedPotion = item.is(Items.GUNPOWDER) ? ModItems.REBREWED_SPLASH_POTION.get().getDefaultInstance() :
                         item.is(Items.DRAGON_BREATH) ? ModItems.REBREWED_LINGERING_POTION.get().getDefaultInstance() :
                                 ModItems.REBREWED_POTION.get().getDefaultInstance();
-                
-                extractedPotion.set(DataComponents.POTION_CONTENTS, extractedPotionContents);
-                rebrewedPotion.set(DataComponents.POTION_CONTENTS, rebrewedPotionContents);
+
+                PotionUtils.setCustomEffects(extractedPotion, List.of(extractedEffect));
+                PotionUtils.setCustomEffects(rebrewedPotion, List.of(rebrewedEffect));
 
                 ret.add(new JeiRebrewingRecipe(extractedPotion, rebrewedPotion, item));
-            });
+            }
         }
         return ret;
     }

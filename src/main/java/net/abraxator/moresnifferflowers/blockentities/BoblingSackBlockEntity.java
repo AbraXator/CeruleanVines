@@ -18,16 +18,16 @@ public class BoblingSackBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        pTag.putInt("inv_size", this.inventory.size());
-        ContainerHelper.saveAllItems(pTag, this.inventory, pRegistries);
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
+/*        pTag.putInt("inv_size", this.inventory.size());
+        ContainerHelper.saveAllItems(pTag, this.inventory, pRegistries);*/
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        this.inventory = NonNullList.withSize(pTag.getInt("inv_size"), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(pTag, this.inventory, pRegistries);
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
+/*        this.inventory = NonNullList.withSize(pTag.getInt("inv_size"), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(pTag, this.inventory, pRegistries);*/
     }
 }

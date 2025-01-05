@@ -3,14 +3,14 @@
   "minVersion": "0.8.2",
   "package": "net.abraxator.moresnifferflowers.mixins",
   "refmap": "more_sniffer_flowers.mixins.refmap.json",
-  "compatibilityLevel": "JAVA_11",
+  "compatibilityLevel": "JAVA_18",
   "mixins": [
-    "FarmBlockMixin",
-    "SpriteResourceLoaderMixin",
     "AgeableMobMixin",
+    "FarmBlockMixin",
     "SnifferEggMixin",
+    "SpriteResourceLoaderMixin",
     "ThrownPotionMixin",
-    "FoliagePlacerMixin"
+    "RightClickHarvestModInitMixin"
   ],
   "client": [
     "SpriteResourceLoaderMixin$PalettedPermutationsAccessor"

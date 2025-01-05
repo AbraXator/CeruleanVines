@@ -11,9 +11,9 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -51,10 +51,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         this.tag(ItemTags.PLANKS).add(ModBlocks.CORRUPTED_PLANKS.get().asItem(), ModBlocks.VIVICUS_PLANKS.get().asItem());
         this.tag(ItemTags.SAPLINGS).add(ModBlocks.CORRUPTED_SAPLING.get().asItem(), ModBlocks.VIVICUS_SAPLING.get().asItem());
         
-        this.tag(ItemTags.SNIFFER_FOOD).add(ModItems.DAWNBERRY.asItem());
+        this.tag(ItemTags.SNIFFER_FOOD).add(ModItems.DAWNBERRY.get());
     }
 
-    private Item item(DeferredBlock<Block> object) {
+    private Item item(RegistryObject<Block> object) {
         return object.get().asItem();
     }
 }

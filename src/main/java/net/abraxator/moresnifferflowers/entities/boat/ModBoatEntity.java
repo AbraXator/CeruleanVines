@@ -50,9 +50,10 @@ public class ModBoatEntity extends Boat {
     }
 
 
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(DATA_ID_TYPE, Type.CORRUPTED.ordinal());
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_ID_TYPE, Type.CORRUPTED.ordinal());
     }
 
     protected void addAdditionalSaveData(CompoundTag pCompound) {

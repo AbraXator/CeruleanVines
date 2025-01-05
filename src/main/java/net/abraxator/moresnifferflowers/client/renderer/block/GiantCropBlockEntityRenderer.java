@@ -82,9 +82,4 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 	public boolean shouldRender(T pBlockEntity, Vec3 pCameraPos) {
 		return true;
 	}
-
-	@Override
-	public AABB getRenderBoundingBox(T blockEntity) {
-		return AABB.INFINITE;
-	}
 }

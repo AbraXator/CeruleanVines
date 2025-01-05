@@ -1,5 +1,6 @@
 package net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModTrunkPlacerTypes;
@@ -9,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.Blocks;
@@ -23,9 +25,8 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 public class CorruptedTrunkPlacer extends TrunkPlacer {
-    public static final MapCodec<CorruptedTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(
-            p_70161_ -> trunkPlacerParts(p_70161_).apply(p_70161_, CorruptedTrunkPlacer::new)
-    );
+    public static final Codec<CorruptedTrunkPlacer> CODEC = RecordCodecBuilder.create(p_70161_ -> 
+            trunkPlacerParts(p_70161_).apply(p_70161_, CorruptedTrunkPlacer::new));
     
     public CorruptedTrunkPlacer(int p_70148_, int p_70149_, int p_70150_) {
         super(p_70148_, p_70149_, p_70150_);

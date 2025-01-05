@@ -4,10 +4,9 @@ import net.abraxator.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
 import net.abraxator.moresnifferflowers.components.Colorable;
 import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -20,8 +19,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.awt.*;
-
-import static net.abraxator.moresnifferflowers.items.DyespriaItem.getDyespriaUses;
 
 public class DyescrapiaItem extends BlockItem {
     public DyescrapiaItem(Properties pProperties) {
@@ -48,7 +45,9 @@ public class DyescrapiaItem extends BlockItem {
                     uses = 0;
                 }
 
-                stack.set(ModDataComponents.DYESPRIA_USES, uses);
+                CompoundTag tag = stack.getOrCreateTag();
+                tag.putInt("uses", uses);
+                stack.setTag(tag);
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }            
         }
@@ -105,6 +104,7 @@ public class DyescrapiaItem extends BlockItem {
     }
 
     public static int getDyescrapiaUses(ItemStack stack) {
-        return stack.getOrDefault(ModDataComponents.DYESPRIA_USES, 0);
+        CompoundTag tag = stack.getOrCreateTag();
+        return tag.contains("uses") ? tag.getInt("uses") : 0;
     }
 }

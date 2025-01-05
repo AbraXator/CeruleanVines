@@ -35,7 +35,8 @@ public class CorruptedProjectileRenderer extends EntityRenderer<CorruptedProject
                     pPoseStack,
                     pBufferSource.getBuffer(this.model.renderType(this.getTextureLocation(pEntity))),
                     pPackedLight,
-                    OverlayTexture.NO_OVERLAY);
+                    OverlayTexture.NO_OVERLAY,
+                    1, 1, 1, 1);
             pPoseStack.popPose();
             super.render(pEntity, pEntityYaw, pPartialTick, pPoseStack, pBufferSource, pPackedLight);
         }

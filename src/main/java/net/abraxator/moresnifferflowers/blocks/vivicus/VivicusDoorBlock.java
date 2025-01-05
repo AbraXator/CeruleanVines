@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 
 public class VivicusDoorBlock extends DoorBlock implements ColorableVivicusBlock {
     public VivicusDoorBlock(BlockSetType p_272854_, Properties p_273303_) {
-        super(p_272854_, p_273303_);
+        super(p_273303_, p_272854_);
         defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE);
     }
 

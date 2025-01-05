@@ -75,9 +75,9 @@ public class VivicusTrunkPlacerUnused extends TrunkPlacer {
                 var intchance = this.stumpChance.sample(pRandom);
                 for(int stump = 0; stump < intchance; stump++) {
                     Collections.shuffle(directions);
-                    Direction stumpDir = directions.getFirst();
+                    Direction stumpDir = directions.get(0);
                     this.placeLog(pLevel, pBlockSetter, pRandom, pPos.relative(stumpDir), pConfig);
-                    directions.removeFirst();
+                    directions.remove(0);
                 }
             }
             

@@ -13,11 +13,9 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -93,7 +91,7 @@ public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCr
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         Optional<BlockPos> highestPos = highestPos(pLevel, pPos, true);
         
         if(highestPos.isPresent()) {
@@ -135,14 +133,7 @@ public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCr
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        return harvestable(pState) && pStack.is(Items.BONE_MEAL)
-                ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
-                : super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (harvestable(pState)) {
             popResource(pLevel, pPos, Dye.stackFromDye(new Dye(pState.getValue(COLOR), 1)));
             pLevel.playSound(
@@ -153,7 +144,7 @@ public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCr
             pLevel.gameEvent(GameEvent.BLOCK_CHANGE, pPos, GameEvent.Context.of(pPlayer, blockstate));
             return InteractionResult.sidedSuccess(pLevel.isClientSide);
         } else {
-            return super.useWithoutItem(pState, pLevel, pPos, pPlayer, pHitResult);
+            return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
         }
     }
     
@@ -189,7 +180,7 @@ public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCr
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if(newState.is(this)) {
             return;
         }

@@ -66,7 +66,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
     
     @Override
-    protected boolean isRandomlyTicking(BlockState pState) {
+    public boolean isRandomlyTicking(BlockState pState) {
         return true;
     }
 
@@ -85,7 +85,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     
  
     @Override
-    protected void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if(!isMaxAge(pState)) {
             grow(pLevel, pPos);
         } else if (pRandom.nextDouble() <= 0.33D && pLevel.getBlockEntity(pPos) instanceof BondripiaBlockEntity entity) {
@@ -97,7 +97,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
                         BlockState blockState = pLevel.getBlockState(currentPos);
 
 
-                        if (blockState.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, currentPos, blockState)) {
+                        if (blockState.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, currentPos, blockState, false)) {
                             bonemealable.performBonemeal(pLevel, pRandom, currentPos, blockState);
                             break;
                         }
@@ -121,7 +121,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
     
     public void fillCauldron(Level level, BlockPos blockPos, BlockState blockState) {
-        BlockState blockstate = blockState.is(ModBlocks.ACIDRIPIA) ? ModBlocks.ACID_FILLED_CAULDRON.get().defaultBlockState() : ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
+        BlockState blockstate = blockState.is(ModBlocks.ACIDRIPIA.get()) ? ModBlocks.ACID_FILLED_CAULDRON.get().defaultBlockState() : ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
         int fluidLevel = blockState.getOptionalValue(LayeredCauldronBlock.LEVEL).orElse(0);
         if(fluidLevel < 3) {
             level.setBlockAndUpdate(blockPos, blockstate.setValue(LayeredCauldronBlock.LEVEL, fluidLevel + 1));
@@ -143,13 +143,13 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
 
     @Override
-    protected boolean canSurvive(BlockState blockState, LevelReader level, BlockPos blockPos) {
+    public boolean canSurvive(BlockState blockState, LevelReader level, BlockPos blockPos) {
         var list = Direction.Plane.HORIZONTAL.stream().filter(direction -> super.canSurvive(level.getBlockState(blockPos.relative(direction)), level, blockPos.relative(direction))).toList();
         return super.canSurvive(blockState, level, blockPos) && list.size() == 4 && getPositionsForPlant(level, blockPos).isPresent();
     }
 
     @Override
-    protected BlockState updateShape(BlockState p_154713_, Direction p_154714_, BlockState p_154715_, LevelAccessor p_154716_, BlockPos pCurrentPos, BlockPos p_154718_) {
+    public BlockState updateShape(BlockState p_154713_, Direction p_154714_, BlockState p_154715_, LevelAccessor p_154716_, BlockPos pCurrentPos, BlockPos p_154718_) {
         BlockState blockState = super.updateShape(p_154713_, p_154714_, p_154715_, p_154716_, pCurrentPos, p_154718_);
         if(blockState.is(Blocks.AIR)) {
             Direction.Plane.HORIZONTAL.forEach(direction -> {
@@ -174,7 +174,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
     
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         return !isMaxAge(pState);
     }
 

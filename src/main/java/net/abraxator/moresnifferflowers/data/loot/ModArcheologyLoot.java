@@ -4,6 +4,7 @@ import net.abraxator.moresnifferflowers.init.ModBuiltinLoottables;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -16,9 +17,9 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.function.BiConsumer;
 
-public record ModArcheologyLoot(HolderLookup.Provider registries) implements LootTableSubProvider {
+public record ModArcheologyLoot() implements LootTableSubProvider {
     @Override
-    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pOutput) {
+    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
         pOutput.accept(
                 ModBuiltinLoottables.SNOW_SNIFFER_TEMPLE, //5 rolls
                 LootTable.lootTable()

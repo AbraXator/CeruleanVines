@@ -3,6 +3,7 @@ package net.abraxator.moresnifferflowers.blocks.rebrewingstand;
 import net.abraxator.moresnifferflowers.blockentities.RebrewingStandBlockEntity;
 import net.abraxator.moresnifferflowers.blocks.ModEntityBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class RebrewingStandBlockTop extends RebrewingStandBlockBase implements ModEntityBlock {
@@ -29,6 +29,15 @@ public class RebrewingStandBlockTop extends RebrewingStandBlockBase implements M
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {}
+
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        if(pLevel.getBlockEntity(pPos) instanceof RebrewingStandBlockEntity entity) {
+            Containers.dropContents(pLevel, pPos, entity);
+        }
+        
+        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+    }
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {

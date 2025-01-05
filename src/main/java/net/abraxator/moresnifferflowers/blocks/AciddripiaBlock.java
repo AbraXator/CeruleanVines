@@ -32,7 +32,7 @@ public class AciddripiaBlock extends BondripiaBlock {
     }
     
     @Override
-    protected void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if(!isMaxAge(pState)) {
             grow(pLevel, pPos);
         } else if (pRandom.nextDouble() <= 0.33D && pLevel.getBlockEntity(pPos) instanceof BondripiaBlockEntity entity) {

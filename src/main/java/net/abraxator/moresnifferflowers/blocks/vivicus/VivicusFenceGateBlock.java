@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 
 public class VivicusFenceGateBlock extends FenceGateBlock implements ColorableVivicusBlock {
     public VivicusFenceGateBlock(WoodType p_273340_, Properties p_273352_) {
-        super(p_273340_, p_273352_);
+        super(p_273352_, p_273340_);
         defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE);
     }
 

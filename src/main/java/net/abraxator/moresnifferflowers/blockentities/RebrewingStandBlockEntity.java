@@ -8,11 +8,12 @@ import net.abraxator.moresnifferflowers.init.ModItems;
 import net.abraxator.moresnifferflowers.init.ModMobEffects;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -24,21 +25,21 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import oshi.util.tuples.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
     public static final double MAX_FUEL = 16;
     public static final int DATA_PROGRESS = 0;
     public static final int DATA_FUEL = 1;
-    public static final int DATA_COST = 2;
     public static final int MAX_PROGRESS = 100;
     private NonNullList<ItemStack> inv = NonNullList.withSize(6, ItemStack.EMPTY);
     int brewProgress;
@@ -65,7 +66,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
                 case 1:
                     RebrewingStandBlockEntity.this.fuel = pValue;
                     break;
-                case 2: 
+                case 2:
                     RebrewingStandBlockEntity.this.cost = pValue;
             }
         }
@@ -89,7 +90,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
     public boolean isEmpty() {
         return inv.stream().allMatch(Predicate.not(ItemStack::isEmpty));
     }
-    
+
     public void tick(Level level) {
         //FUEL 0; OG-POTION 1; INGREDIENT 2; POTION 3 - 5;
         var fuelStack = inv.get(0);
@@ -103,11 +104,11 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
             fuelStack.shrink(1);
             setChanged();
         }
-    
+
         if(!ogPotionStack.isEmpty()) {
-            var potionContent = getPotionContents(ogPotionStack, ingredientStack);
-            this.cost = potionContent != null ? 4 + ((potionContent.getB().size() - 2)) * 2 : 17;
-            
+            var potionContent = getEffect(ogPotionStack, ingredientStack);
+            this.cost = potionContent != null ? 4 + (potionContent.size() - 2) * 2 : 0;
+
             if(canBrew()) {
                 brewProgress++;
                 if(brewProgress >= MAX_PROGRESS) {
@@ -115,9 +116,12 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
                 }
             }
         }
-        
-        if(!canBrew()) {
-            brewProgress = 0;
+
+        if(canBrew()) {
+            brewProgress++;
+            if(brewProgress >= MAX_PROGRESS) {
+                brew(level, ogPotionStack, ingredientStack);
+            }
         }
 
         if(!Arrays.equals(potionBits, lastPotionCount)) {
@@ -126,8 +130,8 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
     }
 
     private void brew(Level level, ItemStack ogPotionStack, ItemStack ingredientStack) {
-        var potionContent = getPotionContents(ogPotionStack, ingredientStack);
-        if(potionContent != null) {
+        var effects = getEffect(ogPotionStack, ingredientStack);
+        if(effects != null) {
             List<Integer> index = Util.make(Lists.newArrayList(), integers -> integers.addAll(Arrays.asList(3, 4, 5)));
             for (int i : index) {
                 ItemStack itemStack = inv.get(i);
@@ -139,19 +143,18 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
                     } else if (ingredientStack.is(Items.DRAGON_BREATH)) {
                         outputPotion = ModItems.REBREWED_LINGERING_POTION.get().getDefaultInstance();
                     }
-                        
-                    
-                    outputPotion.set(DataComponents.POTION_CONTENTS, potionContent.getA());
+
+                    PotionUtils.setCustomEffects(outputPotion, effects);
                     inv.set(i, outputPotion);
                 }
             }
 
             ingredientStack.shrink(1);
-            fuel -= cost;
             inv.set(1, Items.GLASS_BOTTLE.getDefaultInstance());
+            fuel -= 4;
             level.playSound(null, getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
-        
+
         brewProgress = 0;
     }
 
@@ -171,10 +174,6 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
 
     private boolean canBrew() {
         boolean ret = false;
-        boolean correctInvContent = !inv.get(2).isEmpty() && inv.get(1).is(ModItems.EXTRACTED_BOTTLE.get());
-        boolean hasFuel = fuel >= 1 && this.fuel >= this.cost;
-        boolean correctCost = this.cost <= 16;
-
 
         for(int i = 3; i <= 5; i++) {
             if(!inv.get(i).isEmpty() && !inv.get(i).is(ModItems.REBREWED_POTION.get())) {
@@ -182,7 +181,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
             }
         }
 
-        return ret && correctInvContent && hasFuel && correctCost;
+        return ret && inv.get(1).is(ModItems.EXTRACTED_BOTTLE.get()) && fuel >= 1 && !inv.get(2).isEmpty();
     }
 
     private boolean[] getPotionBits() {
@@ -197,30 +196,35 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
         return ret;
     }
 
-    private Pair<PotionContents, List<MobEffectInstance>> getPotionContents(ItemStack inputPotion, ItemStack ingredient) {
+    private List<MobEffectInstance> getEffect(ItemStack inputPotion, ItemStack ingredient) {
         List<MobEffectInstance> ret = new ArrayList<>();
         List<Integer> durList = new ArrayList<>();
-        var potionContents = inputPotion.get(DataComponents.POTION_CONTENTS);
+        ListTag listTag = ((ListTag) inputPotion.getOrCreateTag().get("custom_potion_effects"));
         int defaultAmp = 1;
         int defaultDur = 6000;
 
-        if (potionContents == null) {
+        if (listTag == null) {
             return null;
         }
-        
-        potionContents.forEachEffect(mobEffectInstance -> {
-            var dur = mobEffectInstance.getDuration() + (ingredient.is(Items.REDSTONE) ? 12000 : defaultDur);
-            var amp = mobEffectInstance.getAmplifier() + (ingredient.is(Items.GLOWSTONE_DUST) ? 2 : defaultAmp);
+
+        for (int i = 0; i < listTag.size(); i++) {
+            var potion = listTag.getCompound(i);
+            var id = potion.getString("neoforge:id");
+            var amp = potion.getByte("Amplifier") + (ingredient.is(Items.GLOWSTONE_DUST) ? 2 : defaultAmp);
+            var dur = potion.getInt("Duration") + (ingredient.is(Items.REDSTONE) ? 12000 : defaultDur);
+            var splitId = id.split(":");
+            var instance = new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.get(new ResourceLocation(splitId[0], splitId[1])), dur, amp);
+
             durList.add(dur);
-            ret.add(new MobEffectInstance(mobEffectInstance.getEffect(), dur, amp));
-        });
+            ret.add(instance);
+        }
 
         int maxInt = Collections.max(durList);
-        ret.add(new MobEffectInstance(ModMobEffects.EXTRACTED, maxInt));
+        ret.add(new MobEffectInstance(ModMobEffects.EXTRACTED.get(), maxInt));
 
-        return new Pair<>(new PotionContents(Optional.of(Potions.WATER), Optional.of(PotionContents.getColor(ret)), ret), ret);
+        return ret;
     }
-    
+
     @Override
     protected AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory) {
         return new RebrewingStandMenu(pContainerId, pInventory, this, this.containerData);
@@ -234,16 +238,6 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
     @Override
     public ItemStack getItem(int pSlot) {
         return pSlot >= 0 && pSlot < this.inv.size() ? this.inv.get(pSlot) : ItemStack.EMPTY;
-    }
-    
-    @Override
-    protected NonNullList<ItemStack> getItems() {
-        return inv;
-    }
-
-    @Override
-    protected void setItems(NonNullList<ItemStack> nonNullList) {
-        this.inv = nonNullList;
     }
 
     @Override
@@ -274,23 +268,19 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        ContainerHelper.saveAllItems(pTag, inv, pRegistries);
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
+        ContainerHelper.saveAllItems(pTag, inv);
         pTag.putByte("progress", ((byte) brewProgress));
         pTag.putByte("fuel", ((byte) fuel));
     }
 
     @Override
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
         inv = NonNullList.withSize(6, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(pTag, inv, pRegistries);
+        ContainerHelper.loadAllItems(pTag, inv);
         fuel = pTag.getByte("fuel");
         brewProgress = pTag.getByte("progress");
-    }
-    
-    public static void addPotionListToStack(List<MobEffectInstance> list, ItemStack itemStack) {
-        itemStack.set(DataComponents.POTION_CONTENTS, new PotionContents(Optional.of(Potions.WATER), Optional.of(PotionContents.getColor(list)), list));
     }
 }

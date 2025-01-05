@@ -13,12 +13,12 @@ public class BoblingAttackPlayerGoal extends MeleeAttackGoal {
     }
 
     @Override
-    protected void checkAndPerformAttack(LivingEntity pTarget) {
-        if (this.canPerformAttack(pTarget)) {
+    protected void checkAndPerformAttack(LivingEntity pEnemy, double pDistToEnemySqr) {
+        if (pDistToEnemySqr <= this.getAttackReachSqr(pEnemy) && this.getTicksUntilNextAttack() <= 0) {
             this.resetAttackCooldown();
             this.mob.swing(InteractionHand.MAIN_HAND);
-            this.mob.doHurtTarget(pTarget);
-            if(this.mob instanceof BoblingEntity bobling && pTarget instanceof ServerPlayer serverPlayer) {
+            this.mob.doHurtTarget(pEnemy);
+            if(this.mob instanceof BoblingEntity bobling && pEnemy instanceof ServerPlayer serverPlayer) {
                 ModAdvancementCritters.BOBLING_ATTACK.trigger(serverPlayer);
                 bobling.setRunning(true);
             }

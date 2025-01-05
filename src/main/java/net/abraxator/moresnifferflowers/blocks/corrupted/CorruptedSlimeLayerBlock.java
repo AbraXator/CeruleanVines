@@ -29,23 +29,23 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
     }
     
     @Override
-    protected @NotNull VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public @NotNull VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return Block.box(0, 0, 0, 16, Math.max((pState.getValue(LAYERS) - 3) * 2, 0), 16);
     }
 
     @Override
-    protected void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
+    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
         pLevel.scheduleTick(pPos, this, this.getDelayAfterPlace());
     }
 
     @Override
-    protected boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
+    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         return true;
         //return pLevel.getBlockState(pPos.below()).isFaceSturdy(pLevel, pPos.below(), Direction.UP);
     }
 
     @Override
-    protected BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
         pLevel.scheduleTick(pCurrentPos, this, this.getDelayAfterPlace());
         return super.updateShape(pState, pFacing, pFacingState, pLevel, pCurrentPos, pFacingPos);
     }
@@ -78,12 +78,12 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
     }
 
     @Override
-    protected boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return true;
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int layers = state.getValue(LAYERS);
         if(layers == 1) {
             level.destroyBlock(pos, false);
@@ -93,12 +93,12 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
     }
 
     @Override
-    protected void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if (isFree(pLevel.getBlockState(pPos.below())) && pPos.getY() >= pLevel.getMinBuildHeight()) {
             for (int i = 0; i < pState.getValue(LAYERS); i++) {
                 pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
                 CorruptedProjectile projectile = new CorruptedProjectile(pLevel);
-                projectile.setPos(pPos.getBottomCenter());
+                projectile.setPos(pPos.below().getCenter());
                 projectile.setXRot(Mth.PI / 90.0F);
                 pLevel.addFreshEntity(projectile);   
             }

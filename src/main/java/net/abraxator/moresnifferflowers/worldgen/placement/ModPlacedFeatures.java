@@ -3,7 +3,7 @@ package net.abraxator.moresnifferflowers.worldgen.placement;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModConfiguredFeatures;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -15,7 +15,7 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> CURED_VIVICUS_TREE = ResourceKey.create(Registries.PLACED_FEATURE, MoreSnifferFlowers.loc("cured_vivicus_tree"));
     public static final ResourceKey<PlacedFeature> CORRUPTED_VIVICUS_TREE = ResourceKey.create(Registries.PLACED_FEATURE, MoreSnifferFlowers.loc("corrupted_vivicus_tree"));
     
-    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstapContext<PlacedFeature> context) {
         var holderGetter = context.lookup(Registries.CONFIGURED_FEATURE);
         var corruptedHolder = holderGetter.getOrThrow(ModConfiguredFeatures.CORRUPTED_TREE);
         var curedVivicusHolder = holderGetter.getOrThrow(ModConfiguredFeatures.CURED_VIVICUS_TREE);

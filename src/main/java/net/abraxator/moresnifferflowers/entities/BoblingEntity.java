@@ -1,17 +1,17 @@
 package net.abraxator.moresnifferflowers.entities;
 
-import io.netty.buffer.ByteBuf;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAttackPlayerGoal;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAvoidPlayerGoal;
-import net.abraxator.moresnifferflowers.init.*;
+import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.abraxator.moresnifferflowers.init.ModEntityDataSerializers;
+import net.abraxator.moresnifferflowers.init.ModEntityTypes;
+import net.abraxator.moresnifferflowers.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -22,10 +22,16 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -120,16 +126,16 @@ public class BoblingEntity extends PathfinderMob {
         this.setBoblingType(Type.BY_ID.apply(pCompound.getInt("bobling_type")));
         this.setRunning(pCompound.getBoolean("running"));
         this.setPlanting(pCompound.getBoolean("planting"));
-        this.setWantedPos(NbtUtils.readBlockPos(pCompound, "wanted_pos"));
+        this.setWantedPos(Optional.of(NbtUtils.readBlockPos(pCompound.getCompound("wanted_pos"))));
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
-        super.defineSynchedData(pBuilder);
-        pBuilder.define(DATA_BOBLING_TYPE, Type.CORRUPTED);
-        pBuilder.define(DATA_RUNNING, false);
-        pBuilder.define(DATA_WANTED_POS, Optional.empty());
-        pBuilder.define(DATA_PLANTING, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_BOBLING_TYPE, Type.CORRUPTED);
+        this.entityData.define(DATA_RUNNING, false);
+        this.entityData.define(DATA_WANTED_POS, Optional.empty());
+        this.entityData.define(DATA_PLANTING, false);
     }
 
     @Override
@@ -268,7 +274,7 @@ public class BoblingEntity extends PathfinderMob {
     protected InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         
-        if (itemStack.is(ModItems.VIVICUS_ANTIDOTE) && this.getBoblingType() == Type.CORRUPTED) {
+        if (itemStack.is(ModItems.VIVICUS_ANTIDOTE.get()) && this.getBoblingType() == Type.CORRUPTED) {
             this.setBoblingType(Type.CURED);
             
             if (this.attackPlayerGoal != null) {
@@ -334,7 +340,6 @@ public class BoblingEntity extends PathfinderMob {
         CURED(1, "cured");
 
         public static final IntFunction<Type> BY_ID = ByIdMap.continuous(Type::id, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
-        public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Type::id);
         private final int id;
         private final String name;
 
