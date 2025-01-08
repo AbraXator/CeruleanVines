@@ -31,12 +31,28 @@ println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty '
             mappingsVersion = project.parchment_mappings_version
             minecraftVersion = project.parchment_minecraft_version
         }
+
         runs {
+            configureEach {
+                gameDirectory = layout.projectDir.dir("runs/$name")
+                systemProperty 'forge.logging.console.level', 'debug'
+                systemProperty 'forge.logging.markers', 'REGISTRIES'
+
+            }
             client {
                 client()
             }
+            clientAuth {
+                client()
+                devLogin = true
+                gameDirectory = layout.projectDir.dir("runs/client")
+            }
             data {
                 data()
+                programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            }
+            server {
+                server()
             }
         }
         mods {
