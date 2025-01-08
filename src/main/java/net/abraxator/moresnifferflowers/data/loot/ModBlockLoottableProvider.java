@@ -200,7 +200,6 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
 
         dropSelf(ModBlocks.CROPRESSOR_OUT.get());
         dropSelf(ModBlocks.CROPRESSOR_CENTER.get());
-        dropSelf(ModBlocks.MORE_SNIFFER_FLOWER.get());
         dropSelf(ModBlocks.REBREWING_STAND_BOTTOM.get());
         add(ModBlocks.REBREWING_STAND_TOP.get(), noDrop());
         add(ModBlocks.DYESPRIA_PLANT.get(), LootTable.lootTable()
