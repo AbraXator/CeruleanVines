@@ -34,7 +34,7 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 	private final ModelPart wheat;
 
 	public GiantCropBlockEntityRenderer(BlockEntityRendererProvider.Context pContext) {
-		ModelPart carrotModelPart = pContext.bakeLayer(ModModelLayerLocations.GIANT_CARROT);
+        ModelPart carrotModelPart = pContext.bakeLayer(ModModelLayerLocations.GIANT_CARROT);
 		this.carrot = carrotModelPart.getChild("root");
 		this.modelPartMap.put(ModBlocks.GIANT_CARROT.get(), this.carrot);
 		ModelPart potatoModelPart = pContext.bakeLayer(ModModelLayerLocations.GIANT_POTATO);
@@ -57,17 +57,33 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 		String path = blockState.getBlock().getDescriptionId().replace("block." + MoreSnifferFlowers.MOD_ID + ".", "");
 		Material TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, MoreSnifferFlowers.loc("block/" + path));
 		VertexConsumer vertexConsumer = TEXTURE.buffer(pBufferSource, RenderType::entityCutout);
+		float coolPartialTick = (pBlockEntity.growProgress < 1 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) ? pPartialTick : 0;
+		// float coolGrowProgress = (float)(Math.sin(pBlockEntity.getLevel().getGameTime()))/4;
+		float coolGrowProgress = pBlockEntity.getLevel().getGameTime() - pBlockEntity.staticGameTime;
 
 		if(pBlockEntity.growProgress > 0 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) {
+            double yCord = 0;
+			float yScale = 0;
+            if (pBlockEntity.growProgress > 0 && pBlockEntity.growProgress < 1 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) {
+                yCord = (coolPartialTick + coolGrowProgress)/4 - 2;
+				yScale = Mth.lerp((coolPartialTick + coolGrowProgress)/10, 0, 1);
+            } else {
+				yCord = 0.5;
+				yScale = 1;
+            }
+
 			pPoseStack.pushPose();
-			pPoseStack.translate(0.5, (pBlockEntity.growProgress * 2) - 1.5, 0.5);
-			var delta = Math.min(pBlockEntity.growProgress * pPartialTick, 1);
-			pPoseStack.scale(1, (float) Math.min(Mth.lerp(pBlockEntity.growProgress + pPartialTick, 0, 1), pBlockEntity.growProgress), 1);
-			pPoseStack.mulPose(new Quaternionf().rotateX((float) (Math.PI)));
+			pPoseStack.translate(0.5, yCord, 0.5);
+            pPoseStack.mulPose(new Quaternionf().rotateX((float) (Math.PI)));
+			pPoseStack.scale(1, yScale, 1);
 			modelPartMap.get(blockState.getBlock()).render(pPoseStack, vertexConsumer, pPackedLight, pPackedOverlay);
-			pPoseStack.popPose();
-		}
+            pPoseStack.popPose();
+            if (pBlockEntity.growProgress < 1 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) {
+                System.out.println("Pticks=" + coolPartialTick + " Growprogress=" + pBlockEntity.growProgress + " Height=" + yCord + " Scale=" + yScale + " coolGrowProgress=" + coolGrowProgress+ " static=" + pBlockEntity.staticGameTime);
+            }
+        }
 	}
+
 	
 	@Override
 	public boolean shouldRenderOffScreen(T pBlockEntity) {

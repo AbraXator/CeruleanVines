@@ -76,13 +76,7 @@ public class ModConfiguredFeatures {
                                                 0.4F,
                                                 5,
                                                 3,
-                                                new RandomizedIntStateProvider(
-                                                        BlockStateProvider.simple(
-                                                                ModBlocks.CORRUPTED_SLUDGE.get().defaultBlockState()
-                                                        ),
-                                                        MangrovePropaguleBlock.AGE,
-                                                        UniformInt.of(0, 4)
-                                                ),
+                                                BlockStateProvider.simple(ModBlocks.CORRUPTED_SLUDGE.get().defaultBlockState()),
                                                 4,
                                                 List.of(Direction.DOWN)
                                         )

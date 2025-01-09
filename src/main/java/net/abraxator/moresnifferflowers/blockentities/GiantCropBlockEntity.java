@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +20,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     public boolean canGrow = false;
     public double growProgress = 0;
     public int state = 0; //0 NONE; 1 ANIMATION; 2 SACK;
+    public float staticGameTime;
 
     public GiantCropBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.GIANT_CROP.get(), pPos, pBlockState);
@@ -29,7 +31,11 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     @Override
     public void tick(Level level) {
         if(canGrow) {
-            growProgress += 0.25;
+            if(staticGameTime==0){
+                staticGameTime = level.getGameTime();
+                System.out.println("staticgametime="+staticGameTime);
+            }
+            growProgress += 0.10;
             this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
             if(growProgress >= 1) {
                 canGrow = false;
@@ -41,6 +47,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         var tag = new CompoundTag();
         tag.putDouble("growProgress", growProgress);
+        tag.putFloat("staticGameTime", staticGameTime);
         return tag;
     }
 
@@ -55,6 +62,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
         super.saveAdditional(pTag, pRegistries);
         pTag.putBoolean("canGrow", canGrow);
         pTag.putDouble("growProgress", growProgress);
+        pTag.putFloat("staticGameTime", staticGameTime);
         pTag.put("pos1", NbtUtils.writeBlockPos(this.pos1));
         pTag.put("pos2", NbtUtils.writeBlockPos(this.pos2));
         pTag.putInt("state", this.state);
@@ -65,6 +73,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
         super.loadAdditional(pTag, pRegistries);
         this.canGrow = pTag.getBoolean("canGrow");
         this.growProgress = pTag.getDouble("growProgress");
+        this.staticGameTime = pTag.getFloat("staticGameTime");
         this.pos1 = NbtUtils.readBlockPos(pTag, "pos1").orElseGet(this::getBlockPos);
         this.pos2 = NbtUtils.readBlockPos(pTag, "pos2").orElseGet(this::getBlockPos);
         this.state = pTag.getInt("state");
