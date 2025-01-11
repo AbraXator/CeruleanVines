@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class ModTreeGrowers {
     public static final TreeGrower CORRUPTED_TREE = new TreeGrower("corrupted_tree",
-            Optional.empty(),
+            Optional.of(ModConfiguredFeatures.GIANT_CORRUPTED_TREE),
             Optional.of(ModConfiguredFeatures.CORRUPTED_TREE),
             Optional.empty());
 

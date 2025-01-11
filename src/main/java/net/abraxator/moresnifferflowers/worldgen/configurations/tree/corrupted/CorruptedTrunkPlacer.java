@@ -47,7 +47,7 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
             this.placeLog(pLevel, pBlockSetter, pRandom, mainTrunk, pConfig);
 
             if (i == pFreeTreeHeight - 1){
-                for(int branchOrder = 0; branchOrder <= heightRandB; branchOrder++) {
+                for(int branchOrder = 0; branchOrder < heightRandB; branchOrder++) {
                     addBranch(mainTrunk.immutable(), ret, pBlockSetter, branchOrder, pLevel, pConfig, pRandom, pFreeTreeHeight);
                 }
             }

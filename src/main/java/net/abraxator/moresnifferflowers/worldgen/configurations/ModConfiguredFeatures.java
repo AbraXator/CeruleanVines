@@ -5,6 +5,7 @@ import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.boblingtree.BoblingTreeTrunkPlacer;
+import net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted.CorruptedGiantTrunkPlacer;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted.CorruptedSludgeDecorator;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted.CorruptedTrunkPlacer;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.vivicus.VivicusTrunkPlacer;
@@ -37,6 +38,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.stateproviders.RandomizedIntStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
+import net.minecraft.world.level.levelgen.feature.treedecorators.AlterGroundDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.AttachedToLeavesDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.LeaveVineDecorator;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.CherryTrunkPlacer;
@@ -46,6 +48,7 @@ import java.util.OptionalInt;
 
 public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CORRUPTED_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("corrupted_tree"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_CORRUPTED_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("giant_corrupted_tree"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> CURED_VIVICUS_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("cured_vivicus_tree"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> CORRUPTED_VIVICUS_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("corrupted_vivicus_tree"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> BOBLING_TREE = ResourceKey.create(Registries.CONFIGURED_FEATURE, MoreSnifferFlowers.loc("bobling_tree"));
@@ -84,7 +87,38 @@ public class ModConfiguredFeatures {
                         )
                         .ignoreVines()
                         .build());
-
+        FeatureUtils.register(
+                context, GIANT_CORRUPTED_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                        new WeightedStateProvider(
+                                SimpleWeightedRandomList.<BlockState>builder()
+                                        .add(ModBlocks.CORRUPTED_LOG.get().defaultBlockState(), 10)
+                                        .add(ModBlocks.STRIPPED_CORRUPTED_LOG.get().defaultBlockState(), 2)
+                        ),
+                        new CorruptedGiantTrunkPlacer(15, 1, 8),
+                        new WeightedStateProvider(
+                                SimpleWeightedRandomList.<BlockState>builder()
+                                        .add(ModBlocks.CORRUPTED_LEAVES.get().defaultBlockState(), 10)
+                                        .add(ModBlocks.CORRUPTED_LEAVES_BUSH.get().defaultBlockState(), 2)
+                        ),
+                        //new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(2), 2),
+                        new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), 2),
+                        new TwoLayersFeatureSize(2, 0, 2)
+                )
+                        .decorators(
+                                List.of(
+                                        new AttachedToLeavesDecorator(
+                                                0.01F,
+                                                5,
+                                                3,
+                                                BlockStateProvider.simple(ModBlocks.CORRUPTED_SLUDGE.get().defaultBlockState()),
+                                                4,
+                                                List.of(Direction.DOWN)
+                                        )
+                                )
+                        )
+                        .dirt(BlockStateProvider.simple(ModBlocks.CORRUPTED_GRASS_BLOCK.get()))
+                        .ignoreVines()
+                        .build());
         FeatureUtils.register(
                 context, CURED_VIVICUS_TREE, ModFeatures.VIVICUS_TREE.get(), vivicusTree()
                         .ignoreVines()
