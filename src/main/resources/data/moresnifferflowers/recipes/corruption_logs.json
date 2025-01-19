@@ -1,0 +1,10 @@
+{
+  "type": "moresnifferflowers:corruption",
+  "source": "minecraft:oak_log",
+  "corrupted": [
+    {
+      "block": "moresnifferflowers:decayed_log",
+      "weight": 100
+    }
+  ]
+}

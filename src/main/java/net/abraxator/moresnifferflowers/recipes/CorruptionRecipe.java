@@ -5,14 +5,19 @@ import com.google.gson.JsonElement;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModRecipeSerializers;
 import net.abraxator.moresnifferflowers.init.ModRecipeTypes;
+import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -22,11 +27,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
-public record CorruptionRecipe(ResourceLocation id, Block source, List<Entry> list) implements Recipe<Container> {
+public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> list) implements Recipe<Container> {
     public static final Map<Block, Block> HARDCODED_BLOCK = Util.make(Maps.newHashMap(), map -> {
         map.put(ModBlocks.DYESPRIA_PLANT.get(), ModBlocks.DYESCRAPIA_PLANT.get());
         map.put(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.GLOOMBERRY_VINE.get());
@@ -38,9 +45,30 @@ public record CorruptionRecipe(ResourceLocation id, Block source, List<Entry> li
     
     @Override
     public boolean matches(Container container, Level level) {
-        return container.getItem(0).is(source.asItem());
+        return getSourceList().stream().anyMatch(block -> block.asItem() == container.getItem(0).getItem());
     }
-
+    
+    public List<Block> getSourceList() {
+        List<Block> sourceList = new ArrayList<>();
+        
+        if(source.charAt(0) == '#') {
+            //TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, ResourceLocation.tryParse(source));
+            TagKey<Block> tagKey = BlockTags.LEAVES;
+            List<Block> blocks = StreamSupport.stream(BuiltInRegistries.BLOCK.getTagOrEmpty(tagKey).spliterator(), false)
+                    .map(blockHolder -> blockHolder.unwrap().right())
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .toList();
+            for (Block block : blocks) {
+                sourceList.add(block);
+            }
+        } else {
+            sourceList.add(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(source)));
+        }
+        
+        return sourceList;
+    }
+    
     @Override
     public ItemStack assemble(Container container, RegistryAccess registryAccess) {
         return getResultItem(registryAccess).copy();

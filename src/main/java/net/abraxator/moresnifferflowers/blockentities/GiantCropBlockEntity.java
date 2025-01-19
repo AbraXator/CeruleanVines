@@ -18,6 +18,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     public boolean canGrow = false;
     public double growProgress = 0;
     public int state = 0; //0 NONE; 1 ANIMATION; 2 SACK;
+    public float staticGameTime;
 
     public GiantCropBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.GIANT_CROP.get(), pPos, pBlockState);
@@ -28,7 +29,11 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     @Override
     public void tick(Level level) {
         if(canGrow) {
-            growProgress += 0.25;
+            if(staticGameTime == 0) {
+                staticGameTime = level.getGameTime();
+            }
+            
+            growProgress += 0.10;
             this.level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
             if(growProgress >= 1) {
                 canGrow = false;

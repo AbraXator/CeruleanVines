@@ -13,10 +13,12 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.TadpoleRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -57,20 +59,29 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 		String path = blockState.getBlock().getDescriptionId().replace("block." + MoreSnifferFlowers.MOD_ID + ".", "");
 		Material TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, MoreSnifferFlowers.loc("block/" + path));
 		VertexConsumer vertexConsumer = TEXTURE.buffer(pBufferSource, RenderType::entityCutout);
-
+		float coolPartialTick = (pBlockEntity.growProgress < 1 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) ? pPartialTick : 0;
+		float coolGrowProgress = pBlockEntity.getLevel().getGameTime() - pBlockEntity.staticGameTime;
+		
 		if(pBlockEntity.growProgress > 0 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) {
+			float yCord = 0.5F;
+			float yScale = 1;
+			
+			if(pBlockEntity.growProgress < 1) {
+				yCord = (coolGrowProgress + coolGrowProgress) / 4 - 2;
+				yScale = Mth.lerp((coolPartialTick + coolPartialTick) / 10, 0, 1);
+			}
+			
 			pPoseStack.pushPose();
-			pPoseStack.translate(0.5, (pBlockEntity.growProgress * 2) - 1.5, 0.5);
-			var delta = Math.min(pBlockEntity.growProgress * pPartialTick, 1);
-			pPoseStack.scale(1, (float) Math.min(Mth.lerp(pBlockEntity.growProgress + pPartialTick, 0, 1), pBlockEntity.growProgress), 1);
+			pPoseStack.translate(0.5, yCord, 0.5);
+			pPoseStack.scale(1, yScale, 1);
 			pPoseStack.mulPose(new Quaternionf().rotateX((float) (Math.PI)));
 			modelPartMap.get(blockState.getBlock()).render(pPoseStack, vertexConsumer, pPackedLight, pPackedOverlay);
 			pPoseStack.popPose();
 		}
 	}
-	
+
 	@Override
-	public boolean shouldRenderOffScreen(T pBlockEntity) {
+	public boolean shouldRenderOffScreen(GiantCropBlockEntity pBlockEntity) {
 		return true;
 	}
 
@@ -79,7 +90,8 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 		return 256;
 	}
 
-	public boolean shouldRender(T pBlockEntity, Vec3 pCameraPos) {
-		return true;
+	@Override
+	public boolean shouldRender(GiantCropBlockEntity blockEntity, Vec3 cameraPos) {
+		return BlockEntityRenderer.super.shouldRender((T) blockEntity, cameraPos);
 	}
 }

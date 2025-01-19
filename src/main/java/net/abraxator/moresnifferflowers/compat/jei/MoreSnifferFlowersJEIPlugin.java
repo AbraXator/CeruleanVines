@@ -20,6 +20,7 @@ import net.abraxator.moresnifferflowers.recipes.CropressingRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,9 +62,11 @@ public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
         recipeManager.getAllRecipesFor(ModRecipeTypes.CORRUPTION.get()).forEach(recipe -> {
             int totalWeight = recipe.list().stream().mapToInt(CorruptionRecipe.Entry::weight).sum();
             
-            for (CorruptionRecipe.Entry entry : recipe.list()) {
-                float percentage = ((float) entry.weight() / totalWeight) * 100;
-                corruptingRecipes.add(new CorruptionJEIRecipe(recipe.source().asItem().getDefaultInstance(), entry.block().asItem().getDefaultInstance(), (int) percentage));
+            for(Block block : recipe.getSourceList()) {
+                for (CorruptionRecipe.Entry entry : recipe.list()) {
+                    float percentage = ((float) entry.weight() / totalWeight) * 100;
+                    corruptingRecipes.add(new CorruptionJEIRecipe(block.asItem().getDefaultInstance(), entry.block().asItem().getDefaultInstance(), (int) percentage));
+                }
             }
         });
         

@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.awt.*;
 
+@Mod.EventBusSubscriber(modid = MoreSnifferFlowers.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModColorHandler {
     @SubscribeEvent
     public static void onRegisterBlockColorHandlers(RegisterColorHandlersEvent.Block event) {

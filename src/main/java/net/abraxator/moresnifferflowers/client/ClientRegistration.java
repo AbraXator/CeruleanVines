@@ -46,9 +46,6 @@ import net.minecraftforge.forgespi.locating.IModFile;
 @Mod.EventBusSubscriber(modid = MoreSnifferFlowers.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientRegistration {
     public static void init(FMLCommonSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new ClientRegistration());
-        MinecraftForge.EVENT_BUS.register(new ModColorHandler());
-
         Sheets.addWoodType(ModWoodTypes.CORRUPTED);
         Sheets.addWoodType(ModWoodTypes.VIVICUS);
         ModItemProperties.register();
