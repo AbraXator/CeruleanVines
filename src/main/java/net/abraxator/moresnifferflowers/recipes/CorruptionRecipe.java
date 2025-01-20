@@ -6,10 +6,12 @@ import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModRecipeSerializers;
 import net.abraxator.moresnifferflowers.init.ModRecipeTypes;
 import net.abraxator.moresnifferflowers.init.ModTags;
+import net.minecraft.ResourceLocationException;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -45,28 +47,14 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> l
     
     @Override
     public boolean matches(Container container, Level level) {
-        return getSourceList().stream().anyMatch(block -> block.asItem() == container.getItem(0).getItem());
-    }
-    
-    public List<Block> getSourceList() {
-        List<Block> sourceList = new ArrayList<>();
-        
+        var block = Block.byItem(container.getItem(0).getItem()).defaultBlockState();
+        var resourceLoc = ResourceLocation.tryParse(source);
         if(source.charAt(0) == '#') {
-            //TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, ResourceLocation.tryParse(source));
-            TagKey<Block> tagKey = BlockTags.LEAVES;
-            List<Block> blocks = StreamSupport.stream(BuiltInRegistries.BLOCK.getTagOrEmpty(tagKey).spliterator(), false)
-                    .map(blockHolder -> blockHolder.unwrap().right())
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .toList();
-            for (Block block : blocks) {
-                sourceList.add(block);
-            }
-        } else {
-            sourceList.add(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(source)));
-        }
-        
-        return sourceList;
+            TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, resourceLoc);
+            return block.is(tagKey);
+        } else if(ForgeRegistries.BLOCKS.getValue(resourceLoc) != null) {
+            return block.is(ForgeRegistries.BLOCKS.getValue(resourceLoc));
+        } else throw (new ResourceLocationException(resourceLoc.toString() + "must be a block or block tag"));
     }
     
     @Override
