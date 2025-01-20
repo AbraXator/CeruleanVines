@@ -45,6 +45,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     public CompoundTag getUpdateTag() {
         var tag = new CompoundTag();
         tag.putDouble("growProgress", growProgress);
+        tag.putFloat("staticGameTime", staticGameTime);
         return tag;
     }
 
@@ -59,6 +60,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
         super.saveAdditional(pTag);
         pTag.putBoolean("canGrow", canGrow);
         pTag.putDouble("growProgress", growProgress);
+        pTag.putFloat("staticGameTime", staticGameTime);
         pTag.put("pos1", NbtUtils.writeBlockPos(this.pos1));
         pTag.put("pos2", NbtUtils.writeBlockPos(this.pos2));
         pTag.putInt("state", this.state);
@@ -69,6 +71,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
         super.load(pTag);
         this.canGrow = pTag.getBoolean("canGrow");
         this.growProgress = pTag.getDouble("growProgress");
+        this.staticGameTime = pTag.getFloat("staticGameTime");
         this.pos1 = NbtUtils.readBlockPos(pTag.getCompound("pos1"));
         this.pos2 = NbtUtils.readBlockPos(pTag.getCompound("pos2"));
         this.state = pTag.getInt("state");

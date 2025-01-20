@@ -67,8 +67,8 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 			float yScale = 1;
 			
 			if(pBlockEntity.growProgress < 1) {
-				yCord = (coolGrowProgress + coolGrowProgress) / 4 - 2;
-				yScale = Mth.lerp((coolPartialTick + coolPartialTick) / 10, 0, 1);
+				yCord = (coolGrowProgress + coolPartialTick) / 4 - 2;
+				yScale = Mth.lerp((coolGrowProgress + coolPartialTick) / 10, 0, 1);
 			}
 			
 			pPoseStack.pushPose();
