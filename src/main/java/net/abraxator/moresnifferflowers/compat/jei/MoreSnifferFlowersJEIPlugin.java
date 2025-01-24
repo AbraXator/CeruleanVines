@@ -61,12 +61,10 @@ public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
         List<CorruptionJEIRecipe> corruptingRecipes = new ArrayList<>(CorruptionJEIRecipe.createRecipes());
         recipeManager.getAllRecipesFor(ModRecipeTypes.CORRUPTION.get()).forEach(recipe -> {
             int totalWeight = recipe.list().stream().mapToInt(CorruptionRecipe.Entry::weight).sum();
-            
-            for(Block block : recipe.getSourceList()) {
-                for (CorruptionRecipe.Entry entry : recipe.list()) {
-                    float percentage = ((float) entry.weight() / totalWeight) * 100;
-                    corruptingRecipes.add(new CorruptionJEIRecipe(block.asItem().getDefaultInstance(), entry.block().asItem().getDefaultInstance(), (int) percentage));
-                }
+
+            for (CorruptionRecipe.Entry entry : recipe.list()) {
+                float percentage = ((float) entry.weight() / totalWeight) * 100;
+                corruptingRecipes.add(new CorruptionJEIRecipe(ModItems.CREATIVE_TAB_ICON.get().getDefaultInstance(), entry.block().asItem().getDefaultInstance(), (int) percentage));
             }
         });
         

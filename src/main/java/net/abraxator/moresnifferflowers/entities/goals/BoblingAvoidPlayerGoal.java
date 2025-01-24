@@ -14,7 +14,7 @@ public class BoblingAvoidPlayerGoal<T extends Player> extends AvoidEntityGoal<T>
         super(pMob, pEntityClassToAvoid, pMaxDistance, pWalkSpeedModifier, pSprintSpeedModifier, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test);
         this.bobling = pMob;
     }
-
+    
     @Override
     public boolean canUse() {
         return this.bobling.isRunning() && super.canUse();

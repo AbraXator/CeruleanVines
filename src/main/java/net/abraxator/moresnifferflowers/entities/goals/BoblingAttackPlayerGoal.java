@@ -8,8 +8,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
 public class BoblingAttackPlayerGoal extends MeleeAttackGoal {
+    private BoblingEntity bobling;
+    
     public BoblingAttackPlayerGoal(BoblingEntity pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
         super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
+        this.bobling = pMob;
+    }
+
+    @Override
+    public boolean canUse() {
+        return !bobling.isRunning() && super.canUse();
     }
 
     @Override

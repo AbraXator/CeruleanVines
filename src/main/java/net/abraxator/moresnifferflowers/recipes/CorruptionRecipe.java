@@ -36,25 +36,26 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> list) implements Recipe<Container> {
-    public static final Map<Block, Block> HARDCODED_BLOCK = Util.make(Maps.newHashMap(), map -> {
-        map.put(ModBlocks.DYESPRIA_PLANT.get(), ModBlocks.DYESCRAPIA_PLANT.get());
-        map.put(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.GLOOMBERRY_VINE.get());
-        map.put(ModBlocks.BONMEELIA.get(), ModBlocks.BONWILTIA.get());
-        map.put(ModBlocks.BONDRIPIA.get(), ModBlocks.ACIDRIPIA.get());
-        map.put(ModBlocks.AMBUSH_BOTTOM.get(), ModBlocks.GARBUSH_BOTTOM.get());
-        map.put(ModBlocks.AMBUSH_TOP.get(), ModBlocks.GARBUSH_TOP.get());
+    public static final Map<String, Block> HARDCODED_BLOCK = Util.make(Maps.newHashMap(), map -> {
+        map.put(ModBlocks.DYESPRIA_PLANT.getId().toString(), ModBlocks.DYESCRAPIA_PLANT.get());
+        map.put(ModBlocks.DAWNBERRY_VINE.getId().toString(), ModBlocks.GLOOMBERRY_VINE.get());
+        map.put(ModBlocks.BONMEELIA.getId().toString(), ModBlocks.BONWILTIA.get());
+        map.put(ModBlocks.BONDRIPIA.getId().toString(), ModBlocks.ACIDRIPIA.get());
+        map.put(ModBlocks.AMBUSH_BOTTOM.getId().toString(), ModBlocks.GARBUSH_BOTTOM.get());
+        map.put(ModBlocks.AMBUSH_TOP.getId().toString(), ModBlocks.GARBUSH_TOP.get());
+        map.put(BlockTags.LEAVES.location().toString().concat("#"), Blocks.AIR);
+        map.put(BlockTags.LOGS.location().toString().concat("#"), ModBlocks.DECAYED_LOG.get());
     });
     
     @Override
     public boolean matches(Container container, Level level) {
         var block = Block.byItem(container.getItem(0).getItem()).defaultBlockState();
-        var resourceLoc = ResourceLocation.tryParse(source);
         if(source.charAt(0) == '#') {
-            TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, resourceLoc);
+            TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, ResourceLocation.tryParse(source.replace("#", "")));
             return block.is(tagKey);
-        } else if(ForgeRegistries.BLOCKS.getValue(resourceLoc) != null) {
-            return block.is(ForgeRegistries.BLOCKS.getValue(resourceLoc));
-        } else throw (new ResourceLocationException(resourceLoc.toString() + "must be a block or block tag"));
+        } else if(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(source)) != null) {
+            return block.is(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(source)));
+        } else throw (new ResourceLocationException(ResourceLocation.tryParse(source) + "must be a block or block tag"));
     }
     
     @Override
@@ -69,13 +70,18 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> l
 
     public static Optional<Block> getCorruptedBlock(Block block, Level level) {
         Optional<CorruptionRecipe> optionalRecipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.CORRUPTION.get(), new SimpleContainer(block.asItem().getDefaultInstance()), level);
-        Block hardcodedBlock = HARDCODED_BLOCK.getOrDefault(block, Blocks.AIR);
-
-        if(hardcodedBlock != Blocks.AIR) {
-            return Optional.of(hardcodedBlock);
+        for (Map.Entry<String, Block> entry : HARDCODED_BLOCK.entrySet()) {
+            var source = entry.getKey();
+            if(source.contains("#")) {
+                TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, ResourceLocation.tryParse(source.replace("#", "")));
+                if(block.defaultBlockState().is(tagKey)) return Optional.of(entry.getValue());
+            } else {
+                var block1 = ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryBuild(source.split(":")[0], source.split(":")[1]));
+                if(block1.defaultBlockState().is(block)) return Optional.of(entry.getValue());
+            }
         }
-
-        return optionalRecipe.map(corruptionRecipe -> corruptionRecipe.getResultBlock(level.random));
+        
+        return Optional.empty();
     }
 
     public static boolean canBeCorrupted(Block block, Level level) {

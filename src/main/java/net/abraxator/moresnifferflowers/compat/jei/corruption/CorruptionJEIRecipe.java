@@ -18,7 +18,7 @@ public record CorruptionJEIRecipe(ItemStack source, ItemStack corrupted, int cha
     public static List<CorruptionJEIRecipe> createRecipes() {
         List<CorruptionJEIRecipe> recipes = new ArrayList<>();
         
-        for(Map.Entry<Block, Block> entry : CorruptionRecipe.HARDCODED_BLOCK.entrySet()) {
+        /*for(Map.Entry<Block, Block> entry : CorruptionRecipe.HARDCODED_BLOCK.entrySet()) {
             if(entry.getKey() == ModBlocks.AMBUSH_BOTTOM.get()) {
                 recipes.add(new CorruptionJEIRecipe(ModItems.AMBUSH_SEEDS.get().getDefaultInstance(), ModItems.GARBUSH_SEEDS.get().getDefaultInstance(), 100));
             } else if(entry.getKey() == ModBlocks.AMBUSH_TOP.get()) {
@@ -26,7 +26,7 @@ public record CorruptionJEIRecipe(ItemStack source, ItemStack corrupted, int cha
             }
             
             recipes.add(new CorruptionJEIRecipe(entry.getKey().asItem().getDefaultInstance(), entry.getValue().asItem().getDefaultInstance(), 100));
-        }
+        }*/
         
         return recipes;
     }
