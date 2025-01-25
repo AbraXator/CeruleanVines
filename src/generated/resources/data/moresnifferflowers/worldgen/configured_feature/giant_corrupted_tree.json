@@ -19,14 +19,17 @@
         ],
         "exclusion_radius_xz": 5,
         "exclusion_radius_y": 3,
-        "probability": 0.4,
+        "probability": 0.01,
         "required_empty_blocks": 4
       }
     ],
     "dirt_provider": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "minecraft:dirt"
+        "Name": "moresnifferflowers:corrupted_grass_block",
+        "Properties": {
+          "snowy": "false"
+        }
       }
     },
     "foliage_placer": {
@@ -71,10 +74,10 @@
       "upper_size": 2
     },
     "trunk_placer": {
-      "type": "moresnifferflowers:corrupted_trunk_placer",
-      "base_height": 6,
+      "type": "moresnifferflowers:giant_corrupted_trunk_placer",
+      "base_height": 15,
       "height_rand_a": 1,
-      "height_rand_b": 4
+      "height_rand_b": 8
     },
     "trunk_provider": {
       "type": "minecraft:weighted_state_provider",
