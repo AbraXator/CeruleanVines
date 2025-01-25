@@ -1,0 +1,52 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:carrot"
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 4.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "chance": 0.05,
+          "condition": "minecraft:random_chance"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "moresnifferflowers:belt_piece",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "moresnifferflowers:carotene_armor_trim_smithing_template",
+          "weight": 22
+        },
+        {
+          "type": "minecraft:item",
+          "name": "moresnifferflowers:cropressed_carrot",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:air",
+          "weight": 50
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "moresnifferflowers:blocks/giant_carrot"
+}

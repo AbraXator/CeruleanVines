@@ -1,0 +1,40 @@
+{
+  "parent": "moresnifferflowers:bobling",
+  "criteria": {
+    "has_corrupted_slime_ball": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "moresnifferflowers:corrupted_slime_ball"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Corrupt blocks around you, to make them evil",
+      "translate": "advancements.more_sniffer_flowers.corruption.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:corrupted_slime_ball"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "Evil Blocks",
+      "translate": "advancements.more_sniffer_flowers.corruption"
+    }
+  },
+  "requirements": [
+    [
+      "has_corrupted_slime_ball"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

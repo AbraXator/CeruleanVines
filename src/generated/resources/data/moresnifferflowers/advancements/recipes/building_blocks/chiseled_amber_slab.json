@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_chiseled_amber": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "moresnifferflowers:chiseled_amber"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "moresnifferflowers:chiseled_amber_slab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_chiseled_amber",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "moresnifferflowers:chiseled_amber_slab"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,40 @@
+{
+  "parent": "moresnifferflowers:ambush",
+  "criteria": {
+    "has_garbush": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "moresnifferflowers:garbush_seeds"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Break a Garnet block, like amber but more violent",
+      "translate": "advancements.more_sniffer_flowers.garbush.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:garbush_seeds"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "Garbushed by garbush loot",
+      "translate": "advancements.more_sniffer_flowers.garbuh"
+    }
+  },
+  "requirements": [
+    [
+      "has_garbush"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

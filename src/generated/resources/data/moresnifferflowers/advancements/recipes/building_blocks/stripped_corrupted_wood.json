@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_log": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "moresnifferflowers:stripped_corrupted_log"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "moresnifferflowers:stripped_corrupted_wood"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_log",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "moresnifferflowers:stripped_corrupted_wood"
+    ]
+  },
+  "sends_telemetry_event": false
+}

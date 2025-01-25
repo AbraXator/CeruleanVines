@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "has_bottle_0=false,has_bottle_1=false,has_bottle_2=false": {
+      "model": "moresnifferflowers:block/rebrewing_stand_000"
+    },
+    "has_bottle_0=false,has_bottle_1=false,has_bottle_2=true": {
+      "model": "moresnifferflowers:block/rebrewing_stand_001"
+    },
+    "has_bottle_0=false,has_bottle_1=true,has_bottle_2=false": {
+      "model": "moresnifferflowers:block/rebrewing_stand_010"
+    },
+    "has_bottle_0=false,has_bottle_1=true,has_bottle_2=true": {
+      "model": "moresnifferflowers:block/rebrewing_stand_011"
+    },
+    "has_bottle_0=true,has_bottle_1=false,has_bottle_2=false": {
+      "model": "moresnifferflowers:block/rebrewing_stand_100"
+    },
+    "has_bottle_0=true,has_bottle_1=false,has_bottle_2=true": {
+      "model": "moresnifferflowers:block/rebrewing_stand_101"
+    },
+    "has_bottle_0=true,has_bottle_1=true,has_bottle_2=false": {
+      "model": "moresnifferflowers:block/rebrewing_stand_110"
+    },
+    "has_bottle_0=true,has_bottle_1=true,has_bottle_2=true": {
+      "model": "moresnifferflowers:block/rebrewing_stand_111"
+    }
+  }
+}

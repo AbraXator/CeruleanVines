@@ -1,0 +1,18 @@
+{
+  "type": "moresnifferflowers:add_items",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:gameplay/sniffer_digging"
+    }
+  ],
+  "item": [
+    "moresnifferflowers:dawnberry_vine_seeds",
+    "moresnifferflowers:dyespria_seeds",
+    "moresnifferflowers:ambush_seeds",
+    "moresnifferflowers:caulorflower_seeds",
+    "moresnifferflowers:bonmeelia_seeds",
+    "moresnifferflowers:bondripia_seeds",
+    "moresnifferflowers:vivicus_sapling"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "values": [
+    "moresnifferflowers:decayed_log",
+    "moresnifferflowers:corrupted_log",
+    "moresnifferflowers:vivicus_log",
+    "moresnifferflowers:stripped_corrupted_log",
+    "moresnifferflowers:stripped_vivicus_log",
+    "moresnifferflowers:corrupted_wood",
+    "moresnifferflowers:vivicus_wood",
+    "moresnifferflowers:stripped_corrupted_wood",
+    "moresnifferflowers:stripped_vivicus_wood"
+  ]
+}

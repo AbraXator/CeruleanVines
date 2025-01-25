@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "block": "moresnifferflowers:dyespria_plant",
+            "condition": "minecraft:block_state_property",
+            "properties": {
+              "age": "3"
+            }
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "moresnifferflowers:dyespria_seeds"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "moresnifferflowers:blocks/dyespria_plant"
+}

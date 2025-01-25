@@ -1,0 +1,9 @@
+{
+  "asset_name": "nether_wart",
+  "description": {
+    "color": "#831C20",
+    "translate": "trim_material.moresnifferflowers.nether_wart"
+  },
+  "ingredient": "moresnifferflowers:cropressed_nether_wart",
+  "item_model_index": 0.4
+}

@@ -1,0 +1,15 @@
+{
+  "block.cropressor.belt": {
+    "sounds": [
+      "moresnifferflowers:cropressor_sound_1",
+      "moresnifferflowers:cropressor_sound_2"
+    ],
+    "subtitle": "sound.moresnifferflowers.block.cropressor.belt"
+  },
+  "item.dyespria.paint": {
+    "sounds": [
+      "moresnifferflowers:dyespria_paint"
+    ],
+    "subtitle": "sound.moresnifferflowers.item.dyespria.paint"
+  }
+}

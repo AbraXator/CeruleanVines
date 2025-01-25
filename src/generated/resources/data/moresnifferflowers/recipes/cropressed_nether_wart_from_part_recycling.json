@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "moresnifferflowers:broken_rebrewing_stand"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "moresnifferflowers:cropressed_nether_wart"
+  }
+}
