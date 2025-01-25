@@ -2,8 +2,6 @@ package net.abraxator.moresnifferflowers.init;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.minecraft.Util;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.network.chat.Component;
@@ -34,7 +32,7 @@ public class ModTrimPatterns {
     }
 
     private static void register(BootstapContext<TrimPattern> context, Item item, ResourceKey<TrimPattern> key) {
-        TrimPattern trimPattern = new TrimPattern(key.location(), Holder.direct(item), Component.translatable(Util.makeDescriptionId("trim_pattern", key.location())));
+        TrimPattern trimPattern = new TrimPattern(key.location(), ForgeRegistries.ITEMS.getHolder(item).get(), Component.translatable(Util.makeDescriptionId("trim_pattern", key.location())));
         context.register(key, trimPattern);
     }
 }

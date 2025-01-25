@@ -10,7 +10,7 @@ import net.abraxator.moresnifferflowers.blocks.xbush.AmbushBlockLower;
 import net.abraxator.moresnifferflowers.blocks.xbush.AmbushBlockUpper;
 import net.abraxator.moresnifferflowers.blocks.cropressor.CropressorBlockBase;
 import net.abraxator.moresnifferflowers.blocks.cropressor.CropressorBlockOut;
-import net.abraxator.moresnifferflowers.blocks.giantcrops.GiantCropBlock;
+import net.abraxator.moresnifferflowers.blocks.GiantCropBlock;
 import net.abraxator.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockBase;
 import net.abraxator.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockTop;
 import net.abraxator.moresnifferflowers.blocks.signs.ModHangingSignBlock;
