@@ -1,20 +1,15 @@
 package net.abraxator.moresnifferflowers.blocks;
 
-import com.mojang.datafixers.util.Pair;
 import net.abraxator.moresnifferflowers.blockentities.GiantCropBlockEntity;
-import net.abraxator.moresnifferflowers.init.ModAdvancementCritters;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModParticles;
-import net.abraxator.moresnifferflowers.init.ModTags;
+import net.abraxator.moresnifferflowers.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -23,20 +18,22 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.ticks.ScheduledTick;
 import org.jetbrains.annotations.Nullable;
+import oshi.util.tuples.Pair;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable {
-    public static final EnumProperty<ModelPos> MODEL_POSITION = EnumProperty.create("model_pos", ModelPos.class);
-
     public GiantCropBlock(Properties pProperties) {
         super(pProperties);
-        registerDefaultState(defaultBlockState().setValue(MODEL_POSITION, ModelPos.NONE));
+        registerDefaultState(defaultBlockState().setValue(ModStateProperties.CENTER, false));
     }
 
     @Override
@@ -47,16 +44,39 @@ public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if(pLevel.getBlockEntity(pPos) instanceof GiantCropBlockEntity entity) {
-            entity.canGrow = true;
+            if(entity.state == 1) {
+                entity.canGrow = true;
+            } else if (entity.state == 2) {
+                var blockPos = entity.pos2.mutable().move(1, 0, 1).immutable();
+                List<ItemStack> drops = new ArrayList<>();
+
+                if(pLevel.getBlockState(blockPos).is(this)) {
+                    BlockPos.betweenClosed(entity.pos1, entity.pos2).forEach(blockPos1 -> {
+                        if(pLevel.getBlockState(blockPos1).is(this)) {
+                            LootParams.Builder params = new LootParams.Builder(pLevel).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withParameter(LootContextParams.ORIGIN, blockPos1.getCenter());
+
+                            drops.addAll(pLevel.getBlockState(blockPos1).getDrops(params));
+                            pLevel.destroyBlock(blockPos1, false);
+                        }
+                    });
+                }
+
+
+                BoblingSackBlock.spawnSack(pLevel, blockPos, drops);
+            }
         }
     }
 
     @Override
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
-        if(!pState.getValue(MODEL_POSITION).equals(ModelPos.NONE)) {
+        if(pState.getValue(ModStateProperties.CENTER)) {
             pLevel.getBlockTicks().schedule(new ScheduledTick<>(this, pPos, pLevel.getGameTime() + 7, pLevel.nextSubTickCount()));
-            if(pState.getValue(MODEL_POSITION).equals(ModelPos.NED) && pLevel instanceof ServerLevel level) {
-                level.sendParticles(ModParticles.GIANT_CROP.get(), pPos.getCenter().x - 1, pPos.getCenter().y - 1, pPos.getCenter().z + 1, 1, 0, 0, 0, 0);
+            if(pLevel.getBlockEntity(pPos) instanceof GiantCropBlockEntity entity && entity.state == 0) {
+                entity.state = 1;
+            }
+
+            if(pLevel instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ModParticles.GIANT_CROP.get(), pPos.getCenter().x, pPos.getCenter().y, pPos.getCenter().z, 1, 0, 0, 0, 0);
             }
         }
     }
@@ -64,7 +84,7 @@ public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
-        pBuilder.add(MODEL_POSITION);
+        pBuilder.add(ModStateProperties.CENTER);
     }
 
     @Nullable
@@ -80,62 +100,49 @@ public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable
     }
 
     @Override
-    public void performBonmeel(BlockPos blockPos, BlockState blockState, Level level, @Nullable Player player) {
-        Iterable<BlockPos> blockPosList = BlockPos.betweenClosed(
-                blockPos.getX() - 1,
-                blockPos.getY() - 0,
-                blockPos.getZ() - 1,
-                blockPos.getX() + 1,
-                blockPos.getY() + 2,
-                blockPos.getZ() + 1
-        );
-        
-        blockPosList.forEach(pos -> {
+    public void performBonmeel(BlockPos blockPos, BlockState blockState, Level level, Player player) {
+        this.blockPosList(blockPos).forEach(pos -> {
             pos = pos.immutable();
             level.destroyBlock(pos, false);
-            level.setBlockAndUpdate(pos, cropMap().get(blockState.getBlock()).getFirst().defaultBlockState().setValue(GiantCropBlock.MODEL_POSITION, evaulateModelPos(pos, blockPos)));
+            level.setBlockAndUpdate(pos, this.cropMap().get(blockState.getBlock()).getA().defaultBlockState().setValue(ModStateProperties.CENTER, pos.equals(blockPos.above())));
             if(level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
                 entity.pos1 = blockPos.mutable().move(1, 2, 1);
                 entity.pos2 = blockPos.mutable().move(-1, 0, -1);
             }
         });
 
-        if(!player.getAbilities().instabuild) {
-            player.getMainHandItem().shrink(1);
+        if(player != null) {
+            if (!player.getAbilities().instabuild) {
+                player.getMainHandItem().shrink(1);
+            }
+
+            if (player instanceof ServerPlayer serverPlayer) {
+                ModAdvancementCritters.USED_BONMEEL.trigger(serverPlayer);
+            }
         }
-        
-        if(player instanceof ServerPlayer serverPlayer) {
-            ModAdvancementCritters.USED_BONMEEL.trigger(serverPlayer);
-        }
-        
+
         level.playLocalSound(blockPos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
     }
 
     @Override
-    public boolean canBonmeel(BlockPos blockPos, BlockState bonmeeledState, Level level) {
-        Iterable<BlockPos> blockPosList = BlockPos.betweenClosed(
-                blockPos.getX() - 1,
-                blockPos.getY() - 0,
-                blockPos.getZ() - 1,
-                blockPos.getX() + 1,
-                blockPos.getY() + 2,
-                blockPos.getZ() + 1
-        );
-        return StreamSupport.stream(blockPosList.spliterator(), false).allMatch(pos -> {
-            BlockState blockState = level.getBlockState(pos);
+    public boolean canBonmeel(BlockPos blockPos, BlockState blockState, Level level) {
+        Block crop = blockState.getBlock();
+
+        return StreamSupport.stream(this.blockPosList(blockPos).spliterator(), false).allMatch(pos -> {
+            BlockState state = level.getBlockState(pos);
             int cropY = blockPos.getY();
-            var PROPERTY = cropMap().get(bonmeeledState.getBlock()).getSecond().getFirst();
-            int MAX_AGE = cropMap().get(bonmeeledState.getBlock()).getSecond().getSecond();
+            var PROPERTY = this.cropMap().get(crop).getB().getA();
+            int MAX_AGE = this.cropMap().get(crop).getB().getB();
 
             if(pos.getY() == cropY) {
-                return blockState.is(bonmeeledState.getBlock()) && blockState.is(ModTags.ModBlockTags.BONMEELABLE) && blockState.getValue(PROPERTY) == MAX_AGE;
+                return state.is(blockState.getBlock()) && state.is(ModTags.ModBlockTags.BONMEELABLE) && state.getValue(PROPERTY) == MAX_AGE;
             } else {
-                return blockState.canBeReplaced();
+                return state.canBeReplaced();
             }
         });
     }
 
-    public static Map<Block, Pair<Block, Pair<IntegerProperty, Integer>>> cropMap() {
+    private Map<Block, Pair<Block, Pair<IntegerProperty, Integer>>> cropMap() {
         return Map.of(
                 Blocks.CARROTS, new Pair<>(ModBlocks.GIANT_CARROT.get(), new Pair<>(CropBlock.AGE, CropBlock.MAX_AGE)),
                 Blocks.POTATOES, new Pair<>(ModBlocks.GIANT_POTATO.get(), new Pair<>(CropBlock.AGE, CropBlock.MAX_AGE)),
@@ -144,75 +151,15 @@ public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable
                 Blocks.WHEAT, new Pair<>(ModBlocks.GIANT_WHEAT.get(), new Pair<>(CropBlock.AGE, CropBlock.MAX_AGE))
         );
     }
-    
-    public static GiantCropBlock.ModelPos evaulateModelPos(BlockPos pos, BlockPos posToCompare) {
-        var value = GiantCropBlock.ModelPos.NONE;
 
-        posToCompare = posToCompare.above();
-        pos = pos.above();
-
-        if(pos.equals(posToCompare.north().east())) {
-            value = GiantCropBlock.ModelPos.NEU;
-        }
-        if(pos.equals(posToCompare.north().west())) {
-            value = GiantCropBlock.ModelPos.NWU;
-        }
-        if(pos.equals(posToCompare.south().east())) {
-            value = GiantCropBlock.ModelPos.SEU;
-        }
-        if(pos.equals(posToCompare.south().west())) {
-            value = GiantCropBlock.ModelPos.SWU;
-        }
-
-        posToCompare.below(2);
-        pos = pos.below(2);
-
-        if(pos.equals(posToCompare.north().east())) {
-            value = GiantCropBlock.ModelPos.NED;
-        }
-        if(pos.equals(posToCompare.north().west())) {
-            value = GiantCropBlock.ModelPos.NWD;
-        }
-        if(pos.equals(posToCompare.south().east())) {
-            value = GiantCropBlock.ModelPos.SED;
-        }
-        if(pos.equals(posToCompare.south().west())) {
-            value = GiantCropBlock.ModelPos.SWD;
-        }
-
-        return value;
-    }
-
-    public static enum ModelPos implements StringRepresentable {
-        NED("ned",-0.4992, -0.4992, 1.4992 ),
-        NEU("neu",-0.4994, 1.4994, 1.4994 ),
-        NWD("nwd",1.4996, -0.4996, 1.4996 ),
-        NWU("nwu",1.4998, 1.4998, 1.4998 ),
-        SED("sed",-0.5, -0.5, -0.5 ),
-        SEU("seu",-0.4990, 1.4990, -0.4990 ),
-        SWD("swd",1.4988, -0.4988, -0.4988 ),
-        SWU("swu",1.4986, 1.4986, -0.4986 ),
-        NONE("none");
-
-        public final String name;
-        public final double x;
-        public final double y;
-        public final double z;
-
-        ModelPos(String name, double x, double y, double z) {
-            this.name = name;
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        ModelPos(String name) {
-            this(name, 0, 0, 0);
-        }
-
-        @Override
-        public String getSerializedName() {
-            return name;
-        }
+    private Iterable<BlockPos> blockPosList(BlockPos blockPos) {
+        return BlockPos.betweenClosed(
+                blockPos.getX() - 1,
+                blockPos.getY() - 0,
+                blockPos.getZ() - 1,
+                blockPos.getX() + 1,
+                blockPos.getY() + 2,
+                blockPos.getZ() + 1
+        );
     }
 }
