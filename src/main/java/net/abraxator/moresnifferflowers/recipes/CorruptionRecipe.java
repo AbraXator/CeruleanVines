@@ -45,7 +45,12 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> l
         map.put(ModBlocks.AMBUSH_TOP.getId().toString(), ModBlocks.GARBUSH_TOP.get());
         map.put(BlockTags.LEAVES.location().toString().concat("#"), Blocks.AIR);
         map.put(BlockTags.LOGS.location().toString().concat("#"), ModBlocks.DECAYED_LOG.get());
+        map.put(ForgeRegistries.BLOCKS.getKey(Blocks.DEEPSLATE).toString(), Blocks.BLACKSTONE);
+        map.put(ForgeRegistries.BLOCKS.getKey(Blocks.DIRT).toString(), Blocks.COARSE_DIRT);
+        map.put(ForgeRegistries.BLOCKS.getKey(Blocks.GRASS_BLOCK).toString(), ModBlocks.CORRUPTED_GRASS_BLOCK.get());
+        map.put(ForgeRegistries.BLOCKS.getKey(Blocks.STONE).toString(), Blocks.NETHERRACK);
     });
+    public static final List<Block> BLACKLIST = List.of(ModBlocks.CORRUPTED_LOG.get(), ModBlocks.STRIPPED_CORRUPTED_LOG.get(), ModBlocks.CORRUPTED_LEAVES.get(), ModBlocks.CORRUPTED_LEAVES_BUSH.get());
     
     @Override
     public boolean matches(Container container, Level level) {
@@ -85,7 +90,7 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> l
     }
 
     public static boolean canBeCorrupted(Block block, Level level) {
-        if(block == null) {
+        if(block == null || BLACKLIST.contains(block)) {
             return false;
         }
 

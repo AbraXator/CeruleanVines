@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.FluidInteractionRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -113,7 +114,6 @@ public class MoreSnifferFlowers {
             ComposterBlock.add(1.0F, ModBlocks.VIVICUS_SAPLING.get());
             ComposterBlock.add(1.0F, ModBlocks.CORRUPTED_LEAVES.get());
             ComposterBlock.add(1.0F, ModBlocks.VIVICUS_LEAVES.get());
-            
             ModCauldronInteractions.bootstrap();
         });
     }

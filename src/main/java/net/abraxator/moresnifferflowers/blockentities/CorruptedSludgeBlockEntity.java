@@ -49,7 +49,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
          
         if(this.usesLeft <= 0) {
             CorruptedSludgeListener.shootProjectiles(this.getBlockPos().getCenter(), this.level.random.nextIntBetweenInclusive(8, 16), this.level);
-            this.level.destroyBlock(this.getBlockPos(), true);
+            this.level.destroyBlock(this.getBlockPos(), false);
             
             return;
         }
@@ -96,12 +96,13 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
         @Override
         public boolean handleGameEvent(ServerLevel pLevel, GameEvent pGameEvent, GameEvent.Context pContext, Vec3 pPos) {
             CorruptedSludgeBlockEntity entity;
-
+            
             if(pLevel.getBlockEntity(BlockPos.containing(this.positionSource.getPosition(pLevel).get())) instanceof CorruptedSludgeBlockEntity entity1) {
                 entity = entity1;
             } else return false;
-
-            if(entity.usesLeft <= 0 || entity.getBlockState().getValue(ModStateProperties.CURED)) {
+            
+            boolean validEvent = (pGameEvent != GameEvent.BLOCK_PLACE || pGameEvent != GameEvent.BLOCK_DESTROY);
+            if(entity.usesLeft <= 0 || entity.getBlockState().getValue(ModStateProperties.CURED) || !validEvent) {
                 return false;
             }
 
@@ -131,8 +132,8 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 return corrupted.isPresent();
             }
 
-            if(pGameEvent == GameEvent.BLOCK_DESTROY && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get()) && pContext.sourceEntity() instanceof Player player) {
-                var projectileNumber = pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES.get()) || pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES_BUSH.get())  ? pLevel.random.nextInt(1) + 1 : pLevel.random.nextInt(5) + 1;
+            if(pGameEvent == GameEvent.BLOCK_DESTROY && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get())) {
+                var projectileNumber = (pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES.get()) || pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES_BUSH.get())  ? pLevel.random.nextInt(1) : pLevel.random.nextInt(5)) + 2;
                 shootProjectiles(this.positionSource.getPosition(pLevel).get(), projectileNumber, pLevel);
                 entity.updateUses();
                 return true;
