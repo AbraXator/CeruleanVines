@@ -119,9 +119,9 @@ public class CropressorBlockEntity extends ModBlockEntity {
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.putIntArray("crop_count", cropCount);
-        pTag.put("content", currentCrop.save(pTag));
+        pTag.put("content", currentCrop.save(new CompoundTag()));
         pTag.putInt("progress", progress);
-        pTag.put("result", currentCrop.save(pTag));
+        pTag.put("result", currentCrop.save(new CompoundTag()));
     }
 
     @Override

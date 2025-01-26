@@ -119,13 +119,10 @@ public class CropressorBlockBase extends HorizontalDirectionalBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        ENTITY_POS = PART == Part.OUT ? pPos : getEntityPos(pLevel, pPos, PART);
+        ENTITY_POS = getEntityPos(pLevel, pPos, PART);
         if (!pLevel.isClientSide && pLevel.getBlockEntity(ENTITY_POS) instanceof CropressorBlockEntity entity && entity.canInteract() && pPlayer.getMainHandItem().is(ModTags.ModItemTags.CROPRESSABLE_CROPS)) {
-            var itemInHand = pPlayer.getItemInHand(pHand);
-            var itemToAddToPlayer = entity.addItem(itemInHand);
-            pPlayer.addItem(itemToAddToPlayer);
-
-
+            entity.addItem(pPlayer.getItemInHand(pHand));
+            
             return InteractionResult.SUCCESS;
         }
 
@@ -137,13 +134,8 @@ public class CropressorBlockBase extends HorizontalDirectionalBlock {
             return blockPos;
         }
 
-        for(Direction direction : Direction.Plane.HORIZONTAL) {
-            if(level.getBlockEntity(blockPos.relative(direction)) instanceof CropressorBlockEntity) {
-                return blockPos.relative(direction);
-            }
-        }
-
-        return null;
+        BlockState state = level.getBlockState(blockPos);
+        return blockPos.relative(state.getValue(FACING).getOpposite());
     }
 
     public static Part getPartFromState(BlockState blockState) {
