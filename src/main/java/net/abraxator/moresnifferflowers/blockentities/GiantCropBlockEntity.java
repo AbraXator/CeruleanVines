@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 public class GiantCropBlockEntity extends ModBlockEntity {
@@ -44,8 +45,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
     @Override
     public CompoundTag getUpdateTag() {
         var tag = new CompoundTag();
-        tag.putDouble("growProgress", growProgress);
-        tag.putFloat("staticGameTime", staticGameTime);
+        saveAdditional(tag);
         return tag;
     }
 
@@ -75,5 +75,10 @@ public class GiantCropBlockEntity extends ModBlockEntity {
         this.pos1 = NbtUtils.readBlockPos(pTag.getCompound("pos1"));
         this.pos2 = NbtUtils.readBlockPos(pTag.getCompound("pos2"));
         this.state = pTag.getInt("state");
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        return INFINITE_EXTENT_AABB;
     }
 }

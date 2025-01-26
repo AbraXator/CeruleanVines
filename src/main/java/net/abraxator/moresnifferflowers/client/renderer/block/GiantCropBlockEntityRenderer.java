@@ -82,16 +82,6 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 
 	@Override
 	public boolean shouldRenderOffScreen(GiantCropBlockEntity pBlockEntity) {
-		return true;
-	}
-
-	@Override
-	public int getViewDistance() {
-		return 256;
-	}
-
-	@Override
-	public boolean shouldRender(GiantCropBlockEntity blockEntity, Vec3 cameraPos) {
-		return BlockEntityRenderer.super.shouldRender((T) blockEntity, cameraPos);
+		return pBlockEntity.getBlockState().getValue(ModStateProperties.CENTER);
 	}
 }
