@@ -2,8 +2,6 @@ package net.abraxator.moresnifferflowers.init;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.minecraft.Util;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.network.chat.Component;
