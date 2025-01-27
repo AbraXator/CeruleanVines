@@ -1,5 +1,8 @@
 package net.abraxator.moresnifferflowers.networking;
 
+import com.google.errorprone.annotations.Var;
+import com.mojang.authlib.yggdrasil.request.ValidateRequest;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
@@ -24,15 +27,7 @@ public record CorruptedSludgePacket(Vector3f start, Vector3f target, Vector3f di
     public class Handler {
         public static void handle(CorruptedSludgePacket packet, Supplier<NetworkEvent.Context> context) {
             context.get().enqueueWork(() -> {
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handlePacket(packet, context));
-            });
-            context.get().setPacketHandled(true);
-        }
-        
-        public static boolean handlePacket(CorruptedSludgePacket packet, Supplier<NetworkEvent.Context> context) {
-            NetworkEvent.Context ctx = context.get();
-            ctx.enqueueWork(() -> {
-                var level = ctx.getSender().level();
+                var level = Minecraft.getInstance().level;
                 if (level.isClientSide()) {
                     float distance = packet.start.distance(packet.target);
 
@@ -42,6 +37,15 @@ public record CorruptedSludgePacket(Vector3f start, Vector3f target, Vector3f di
                         level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0x0443248).toVector3f(), 1.0F), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
                     }
                 }
+            });
+
+            context.get().setPacketHandled(true);
+        }   
+        
+        public static boolean handlePacket(CorruptedSludgePacket packet, Supplier<NetworkEvent.Context> context) {
+            NetworkEvent.Context ctx = context.get();
+            ctx.enqueueWork(() -> {
+
             });
 
             ctx.setPacketHandled(true);

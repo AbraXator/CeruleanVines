@@ -17,6 +17,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -126,7 +127,11 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
-
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        onCorruptByEntity(entity, pos, state, this, level);
+    }
+    
     @Override
     public void onCorrupt(Level level, BlockPos pos, BlockState oldState, Block corruptedBlock) {
         if(level.getBlockEntity(pos) instanceof DyespriaPlantBlockEntity entity && isMaxAge(oldState)) {

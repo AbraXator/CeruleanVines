@@ -101,6 +101,9 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
                         pResult.getBlockPos().relative(pResult.getDirection()),
                         ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, 1));
             }
+            this.level().setBlockAndUpdate(
+                    pResult.getBlockPos().above(),
+                    ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, 1));
         }
         this.discard();
     }

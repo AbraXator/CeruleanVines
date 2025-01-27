@@ -352,6 +352,6 @@ public class DyespriaItem extends BlockItem implements Colorable {
         var tag = stack.getOrCreateTag();
         tag.putByte("mode", (byte) newMode.ordinal());
         stack.setTag(tag);
-        ModPacketHandler.CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new DyespriaDisplayModeChangePacket(newMode.ordinal()));
+        player.displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(newMode.ordinal())), true);
     }
 }

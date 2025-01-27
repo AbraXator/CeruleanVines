@@ -21,19 +21,9 @@ public record DyespriaDisplayModeChangePacket(int dyespriaModeId) {
     public class Handler {
         public static void handle(DyespriaDisplayModeChangePacket packet, Supplier<NetworkEvent.Context> context) {
             context.get().enqueueWork(() -> {
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handlePacket(packet, context));
+                context.get().getSender().displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(packet.dyespriaModeId)), true);
             });
             context.get().setPacketHandled(true);
         }
-        
-        public static boolean handlePacket(DyespriaDisplayModeChangePacket packet, Supplier<NetworkEvent.Context> context) {
-            NetworkEvent.Context ctx = context.get();
-            ctx.enqueueWork(() -> {
-                ctx.getSender().displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(packet.dyespriaModeId)), true);
-            });
-
-            ctx.setPacketHandled(true);
-            return true;
-        }   
     }
 }

@@ -58,18 +58,9 @@ public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
         List<CropressingRecipe> cropressingRecipes = new ArrayList<>(recipeManager.getAllRecipesFor(ModRecipeTypes.CROPRESSING.get()));
-        List<CorruptionJEIRecipe> corruptingRecipes = new ArrayList<>(CorruptionJEIRecipe.createRecipes());
-        recipeManager.getAllRecipesFor(ModRecipeTypes.CORRUPTION.get()).forEach(recipe -> {
-            int totalWeight = recipe.list().stream().mapToInt(CorruptionRecipe.Entry::weight).sum();
-
-            for (CorruptionRecipe.Entry entry : recipe.list()) {
-                float percentage = ((float) entry.weight() / totalWeight) * 100;
-                corruptingRecipes.add(new CorruptionJEIRecipe(ModItems.CREATIVE_TAB_ICON.get().getDefaultInstance(), entry.block().asItem().getDefaultInstance(), (int) percentage));
-            }
-        });
         
         registration.addRecipes(CropressingRecipeCategory.CROPRESSING, cropressingRecipes);
         registration.addRecipes(RebrewingCategory.REBREWING, JeiRebrewingRecipe.createRecipes());
-        registration.addRecipes(CorruptionCategory.CORRUPTING, corruptingRecipes);
+        registration.addRecipes(CorruptionCategory.CORRUPTING, CorruptionJEIRecipe.createRecipes());
     }
 }

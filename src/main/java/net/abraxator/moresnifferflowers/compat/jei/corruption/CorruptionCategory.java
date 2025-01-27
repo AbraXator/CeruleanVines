@@ -46,7 +46,7 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionJEIRecipe> 
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, CorruptionJEIRecipe recipe, IFocusGroup iFocusGroup) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 10, 15).addItemStack(recipe.source());
+        builder.addSlot(RecipeIngredientRole.INPUT, 10, 15).addItemStacks(recipe.source());
         builder.addSlot(RecipeIngredientRole.OUTPUT, 92, 15).addItemStack(recipe.corrupted())
                 .addRichTooltipCallback((recipeSlotView, tooltip) -> {
                     if (recipe.corrupted().is(Blocks.AIR.asItem())) {
@@ -57,14 +57,6 @@ public class CorruptionCategory implements IRecipeCategory<CorruptionJEIRecipe> 
 
     @Override
     public void draw(CorruptionJEIRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        Minecraft minecraft = Minecraft.getInstance();
-        String text = "Chance: " + recipe.chance() + "%";
-        int width = minecraft.font.width(text);
-        int x = getWidth() - 30 - width;
-        int y = 0;
-
         background.draw(guiGraphics);
-        guiGraphics.drawString(minecraft.font, text, x, y, 0x714a5f, false);
-
     }
 }

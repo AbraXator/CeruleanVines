@@ -89,10 +89,12 @@ public abstract class AbstractXBushBlockBase extends ModEntityDoubleTallBlock im
         if(pEntity instanceof Ravager && pLevel.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             pLevel.destroyBlock(pPos, true, pEntity);
         }
+        
+        onCorruptByEntity(pEntity, pPos, pState, this, pLevel);
 
         super.entityInside(pState, pLevel, pPos, pEntity);
     }
-
+    
     @Override
     public boolean canBeReplaced(BlockState pState, BlockPlaceContext pUseContext) {
         return false;

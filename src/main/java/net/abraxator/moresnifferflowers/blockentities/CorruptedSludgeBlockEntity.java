@@ -1,5 +1,6 @@
 package net.abraxator.moresnifferflowers.blockentities;
 
+import com.ibm.icu.lang.UScript;
 import net.abraxator.moresnifferflowers.entities.CorruptedProjectile;
 import net.abraxator.moresnifferflowers.init.ModBlockEntities;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
@@ -32,15 +33,13 @@ import java.util.Set;
 
 public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEventListener.Holder<CorruptedSludgeBlockEntity.CorruptedSludgeListener> {
     public CorruptedSludgeListener corruptedSludgeListener;
-    public int usesLeft;
+    public int usesLeft = -1;
     public int stateChange;
     public GameEventListener listener;
     
     public CorruptedSludgeBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CORRUPTED_SLUDGE.get(), pPos, pBlockState);
         this.corruptedSludgeListener = new CorruptedSludgeListener(new BlockPositionSource(pPos));
-        this.usesLeft = Minecraft.getInstance().level.random.nextIntBetweenInclusive(16, 32);
-        this.stateChange = usesLeft / 4;
         this.listener = new CorruptedSludgeListener(new BlockPositionSource(pPos));
     }
 
@@ -68,12 +67,14 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putInt("uses", usesLeft);
+        tag.putInt("stateChange", stateChange);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        usesLeft = tag.getInt("uses");
+        this.usesLeft = tag.getInt("uses");
+        this.stateChange = tag.getInt("stateChange");
     }
 
     public static class CorruptedSludgeListener implements GameEventListener {
@@ -102,17 +103,25 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
             } else return false;
             
             boolean validEvent = (pGameEvent != GameEvent.BLOCK_PLACE || pGameEvent != GameEvent.BLOCK_DESTROY);
+            
+            if (entity.usesLeft == -1) {
+                entity.usesLeft = pLevel.random.nextIntBetweenInclusive(16, 32) - 1;
+                entity.stateChange = entity.usesLeft / 4;
+            }
+            
             if(entity.usesLeft <= 0 || entity.getBlockState().getValue(ModStateProperties.CURED) || !validEvent) {
                 return false;
             }
 
             if(pGameEvent == GameEvent.BLOCK_PLACE && CorruptionRecipe.canBeCorrupted(pContext.affectedState().getBlock(), pLevel)) {
-                Vec3 startPos = this.getListenerSource().getPosition(pLevel).get();
+                Vec3 startPos = this.getListenerSource().getPosition(pLevel).get();         
                 Vec3 dirNormal = new Vec3(pPos.x - startPos.x, pPos.y - startPos.y, pPos.z - startPos.z).normalize();
                 Optional<Block> corrupted = CorruptionRecipe.getCorruptedBlock(pContext.affectedState().getBlock(), pLevel);
                 BlockPos blockPos = BlockPos.containing(pPos);
                 corrupted.ifPresent(block -> {
-                    ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), new CorruptedSludgePacket(startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()));
+                    ModPacketHandler.CHANNEL.send(PacketDistributor.NEAR.with(() -> 
+                            new PacketDistributor.TargetPoint(startPos.x, startPos.y, startPos.z, 64, pLevel.dimension())
+                    ), new CorruptedSludgePacket(startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()));
                     if(pLevel.getBlockState(BlockPos.containing(pPos)).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.Corruptable corruptable) {
                         corruptable.onCorrupt(pLevel, blockPos, pLevel.getBlockState(BlockPos.containing(pPos)), block);
                     } else {

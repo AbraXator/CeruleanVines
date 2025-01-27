@@ -75,18 +75,20 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> l
 
     public static Optional<Block> getCorruptedBlock(Block block, Level level) {
         Optional<CorruptionRecipe> optionalRecipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.CORRUPTION.get(), new SimpleContainer(block.asItem().getDefaultInstance()), level);
-        for (Map.Entry<String, Block> entry : HARDCODED_BLOCK.entrySet()) {
-            var source = entry.getKey();
-            if(source.contains("#")) {
-                TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, ResourceLocation.tryParse(source.replace("#", "")));
-                if(block.defaultBlockState().is(tagKey)) return Optional.of(entry.getValue());
-            } else {
-                var block1 = ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryBuild(source.split(":")[0], source.split(":")[1]));
-                if(block1.defaultBlockState().is(block)) return Optional.of(entry.getValue());
-            }
-        }
-        
-        return Optional.empty();
+        return optionalRecipe.map(corruptionRecipe -> corruptionRecipe.getResultBlock(level.random));
+
+        //for (Map.Entry<String, Block> entry : HARDCODED_BLOCK.entrySet()) {
+        //    var source = entry.getKey();
+        //    if(source.contains("#")) {
+        //        TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, ResourceLocation.tryParse(source.replace("#", "")));
+        //        if(block.defaultBlockState().is(tagKey)) return Optional.of(entry.getValue());
+        //    } else {
+        //        var block1 = ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryBuild(source.split(":")[0], source.split(":")[1]));
+        //        if(block1.defaultBlockState().is(block)) return Optional.of(entry.getValue());
+        //    }
+        //}
+        //
+        //return Optional.empty();
     }
 
     public static boolean canBeCorrupted(Block block, Level level) {

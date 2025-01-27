@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -26,7 +27,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.ScheduledTick;
 
-public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
+public class BonmeeliaBlock extends BushBlock implements ModCropBlock, Corruptable {
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 16, 14);
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 6);
     public static final BooleanProperty HAS_BOTTLE = BooleanProperty.create("bottle");
@@ -84,6 +85,11 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         pLevel.setBlock(pPos, pState.setValue(SHOW_HINT, false), 3);
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        onCorruptByEntity(entity, pos, state, this, level);
     }
 
     private InteractionResult addBottle(Level level, BlockPos blockPos, BlockState blockState, ItemStack stack) {
