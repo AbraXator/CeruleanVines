@@ -1,9 +1,9 @@
 {
   "type": "moresnifferflowers:corruption",
-  "source": "#minecraft:logs",
+  "source": "minecraft:dirt",
   "corrupted": [
     {
-      "block": "moresnifferflowers:decayed_log",
+      "block": "minecraft:coarse_dirt",
       "weight": 100
     }
   ]

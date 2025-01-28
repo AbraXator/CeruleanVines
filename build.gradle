@@ -67,8 +67,9 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     //jei
-    modImplementation("mezz.jei:jei-${mc_version}-forge:${jei_version}")
-
+    compileOnlyApi("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
+    modRuntimeOnly("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+    
     //mixin
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
@@ -76,10 +77,9 @@ dependencies {
 
     //quark
     compileOnly("curse.maven:Quark-${quark_id}:${quark_version}")
-    
+
     //right click harvest
     compileOnly("curse.maven:RightClickHarvest-${RCH_id}:${RCH_version}")
-    
 }
 
 mixin {

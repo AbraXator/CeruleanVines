@@ -60,7 +60,7 @@ public class ForgeEvents {
     }
 
     @SubscribeEvent
-    public void onPlayerInteractRightClickItem(PlayerInteractEvent.RightClickBlock event) {
+    public static void onPlayerInteractRightClickItem(PlayerInteractEvent.RightClickBlock event) {
         var itemStack = event.getEntity().getItemInHand(event.getHand()).getItem().getDefaultInstance();
         var block = event.getLevel().getBlockState(event.getPos());
 
@@ -96,7 +96,7 @@ public class ForgeEvents {
         }
 
         if(event.getLevel().getBlockEntity(event.getPos()) instanceof GiantCropBlockEntity entity) {
-            BlockPos.betweenClosed(entity.pos1, entity.pos2).forEach(blockPos -> {
+            BlockPos.withinManhattanStream(entity.center, 1, 1, 1).forEach(blockPos -> {
                 event.getLevel().destroyBlock(blockPos, true);
             });
         }

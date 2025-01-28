@@ -14,8 +14,7 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 public class GiantCropBlockEntity extends ModBlockEntity {
-    public BlockPos pos1;
-    public BlockPos pos2;
+    public BlockPos center;
     public boolean canGrow = false;
     public double growProgress = 0;
     public int state = 0; //0 NONE; 1 ANIMATION; 2 SACK;
@@ -23,8 +22,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
 
     public GiantCropBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.GIANT_CROP.get(), pPos, pBlockState);
-        this.pos1 = this.getBlockPos();
-        this.pos2 = this.getBlockPos();
+        this.center = this.getBlockPos();
     }
 
     @Override
@@ -61,8 +59,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
         pTag.putBoolean("canGrow", canGrow);
         pTag.putDouble("growProgress", growProgress);
         pTag.putFloat("staticGameTime", staticGameTime);
-        pTag.put("pos1", NbtUtils.writeBlockPos(this.pos1));
-        pTag.put("pos2", NbtUtils.writeBlockPos(this.pos2));
+        pTag.put("center", NbtUtils.writeBlockPos(this.center));
         pTag.putInt("state", this.state);
     }
 
@@ -72,8 +69,7 @@ public class GiantCropBlockEntity extends ModBlockEntity {
         this.canGrow = pTag.getBoolean("canGrow");
         this.growProgress = pTag.getDouble("growProgress");
         this.staticGameTime = pTag.getFloat("staticGameTime");
-        this.pos1 = NbtUtils.readBlockPos(pTag.getCompound("pos1"));
-        this.pos2 = NbtUtils.readBlockPos(pTag.getCompound("pos2"));
+        this.center = NbtUtils.readBlockPos(pTag.getCompound("center"));
         this.state = pTag.getInt("state");
     }
 

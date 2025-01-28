@@ -46,23 +46,6 @@ public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable
         if(pLevel.getBlockEntity(pPos) instanceof GiantCropBlockEntity entity) {
             if(entity.state == 1) {
                 entity.canGrow = true;
-            } else if (entity.state == 2) {
-                var blockPos = entity.pos2.mutable().move(1, 0, 1).immutable();
-                List<ItemStack> drops = new ArrayList<>();
-
-                if(pLevel.getBlockState(blockPos).is(this)) {
-                    BlockPos.betweenClosed(entity.pos1, entity.pos2).forEach(blockPos1 -> {
-                        if(pLevel.getBlockState(blockPos1).is(this)) {
-                            LootParams.Builder params = new LootParams.Builder(pLevel).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withParameter(LootContextParams.ORIGIN, blockPos1.getCenter());
-
-                            drops.addAll(pLevel.getBlockState(blockPos1).getDrops(params));
-                            pLevel.destroyBlock(blockPos1, false);
-                        }
-                    });
-                }
-
-
-                BoblingSackBlock.spawnSack(pLevel, blockPos, drops);
             }
         }
     }
@@ -106,8 +89,7 @@ public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable
             level.destroyBlock(pos, false);
             level.setBlockAndUpdate(pos, this.cropMap().get(blockState.getBlock()).getA().defaultBlockState().setValue(ModStateProperties.CENTER, pos.equals(blockPos.above())));
             if(level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
-                entity.pos1 = blockPos.mutable().move(1, 2, 1);
-                entity.pos2 = blockPos.mutable().move(-1, 0, -1);
+                entity.center = blockPos.above();
             }
         });
 

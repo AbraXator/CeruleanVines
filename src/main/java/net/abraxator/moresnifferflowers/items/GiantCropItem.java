@@ -29,8 +29,7 @@ public class GiantCropItem extends BlockItem {
         BlockPos.betweenClosedStream(aabb).forEach(pos -> {
             level.setBlockAndUpdate(pos, this.getBlock().defaultBlockState().setValue(ModStateProperties.CENTER, pos.equals(pContext.getClickedPos().above())));
             if (level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
-                entity.pos1 = pContext.getClickedPos().mutable().move(1, 2, 1);
-                entity.pos2 = pContext.getClickedPos().mutable().move(-1, 0, -1);
+                entity.center = pContext.getClickedPos().above();
             }
         });
 
@@ -41,7 +40,7 @@ public class GiantCropItem extends BlockItem {
     protected boolean canPlace(BlockPlaceContext pContext, BlockState pState) {
         var pos = pContext.getClickedPos();
         var level = pContext.getLevel();
-        var aabb = AABB.ofSize(pContext.getClickedPos().above(2).getCenter(), 2, 2, 2);
+        var aabb = AABB.ofSize(pContext.getClickedPos().getCenter(), 2, 0, 2).setMaxY(3);
         var ret = BlockPos.betweenClosedStream(aabb)
                 .allMatch(blockPos -> level.getBlockState(blockPos).canBeReplaced());
 

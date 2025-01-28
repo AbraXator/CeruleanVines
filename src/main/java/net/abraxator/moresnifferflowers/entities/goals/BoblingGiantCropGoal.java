@@ -111,8 +111,7 @@ public class BoblingGiantCropGoal extends Goal {
             BlockPos.betweenClosedStream(aabb).forEach(pos -> {
                 level.setBlockAndUpdate(pos, giantBlock.get().defaultBlockState().setValue(ModStateProperties.CENTER, pos.equals(BlockPos.containing(this.wantedPos.add(0, 1, 0)))));
                 if (level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
-                    entity.pos1 = BlockPos.containing(this.wantedPos.add(0, 1, 0)).mutable().move(1, 2, 1);
-                    entity.pos2 = BlockPos.containing(this.wantedPos.add(0, 1, 0)).mutable().move(-1, 0, -1);
+                    entity.center = this.bobling.getWantedPos().above();
                     entity.state = 2;
                 }
 

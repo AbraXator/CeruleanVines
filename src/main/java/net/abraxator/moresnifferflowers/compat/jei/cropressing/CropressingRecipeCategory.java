@@ -28,7 +28,7 @@ public class CropressingRecipeCategory implements IRecipeCategory<CropressingRec
     public RecipeType<CropressingRecipe> getRecipeType() {
         return CROPRESSING;
     }
-
+    
     @Override
     public Component getTitle() {
         return this.localizedName;
