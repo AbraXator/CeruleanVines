@@ -3,6 +3,7 @@ package net.abraxator.moresnifferflowers.blocks.cropressor;
 import com.mojang.serialization.MapCodec;
 import net.abraxator.moresnifferflowers.blockentities.CropressorBlockEntity;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -31,14 +33,14 @@ import org.jetbrains.annotations.Nullable;
 public class CropressorBlockBase extends HorizontalDirectionalBlock {
     public final Part PART;
     protected BlockPos ENTITY_POS;
-    protected static final VoxelShape OUT_EAST = Block.box(2, 0, 2, 16, 10, 14);
-    protected static final VoxelShape OUT_SOUTH = Block.box(2, 0, 2, 14, 10, 16);
-    protected static final VoxelShape OUT_WEST = Block.box(0, 0, 2, 14, 10, 14);
-    protected static final VoxelShape OUT_NORTH = Block.box(2, 0, 0, 14, 10, 14);
-    protected static final VoxelShape CENTER_EAST = Block.box(1, 0, 2, 16, 10, 14);
-    protected static final VoxelShape CENTER_SOUTH = Block.box(2, 0, 1, 14, 10, 16);
-    protected static final VoxelShape CENTER_WEST = Block.box(0, 0, 2, 15, 10, 14);
-    protected static final VoxelShape CENTER_NORTH = Block.box(2, 0, 0, 14, 10, 15);
+    protected static final VoxelShape OUT_EAST = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape OUT_SOUTH = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape OUT_WEST = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape OUT_NORTH = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape CENTER_EAST = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape CENTER_SOUTH = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape CENTER_WEST = Block.box(0, 0, 0, 16, 11, 16);
+    protected static final VoxelShape CENTER_NORTH = Block.box(0, 0, 0, 16, 11, 16);
     public static final MapCodec<CropressorBlockBase> CODEC = simpleCodec(properties1 -> new CropressorBlockBase(properties1, Part.CENTER));
     
     public CropressorBlockBase(Properties pProperties, Part part) {
@@ -73,7 +75,7 @@ public class CropressorBlockBase extends HorizontalDirectionalBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING);
+        pBuilder.add(FACING, ModStateProperties.FULLNESS, ModStateProperties.CROP);
     }
 
     private Direction getNeighbourDirection(Part part, Direction direction) {
@@ -125,19 +127,20 @@ public class CropressorBlockBase extends HorizontalDirectionalBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        ENTITY_POS = PART == Part.OUT ? pPos : getEntityPos(pLevel, pPos);
-        
-        if (!pLevel.isClientSide && pLevel.getBlockEntity(ENTITY_POS) instanceof CropressorBlockEntity entity && entity.canInteract() && pPlayer.getMainHandItem().is(ModTags.ModItemTags.CROPRESSABLE_CROPS)) {
-            entity.addItem(pPlayer.getMainHandItem(), pLevel);
+        ENTITY_POS = PART == Part.OUT ? pPos : getEntityPos(pLevel, pPos, PART);
+        if(pLevel.getBlockEntity(ENTITY_POS) instanceof CropressorBlockEntity entity) {
+            if (!pLevel.isClientSide && entity.canInteract() && pPlayer.getMainHandItem().is(ModTags.ModItemTags.CROPRESSABLE_CROPS)) {
+                entity.addItem(pPlayer.getMainHandItem());
 
-            return ItemInteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
+            }
         }
         
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
     
-    private BlockPos getEntityPos(Level level, BlockPos blockPos) {
-        if(PART == Part.OUT) {
+    public static BlockPos getEntityPos(BlockAndTintGetter level, BlockPos blockPos, Part part) {
+        if(part == Part.OUT) {
             return blockPos;
         }
 

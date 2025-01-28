@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "center=true,age=0": {
+      "model": "moresnifferflowers:block/bondripia_stage0"
+    },
+    "center=true,age=1": {
+      "model": "moresnifferflowers:block/bondripia_stage1"
+    },
+    "center=true,age=2": {
+      "model": "moresnifferflowers:block/bondripia_stage2"
+    },
+    "center=false,age=0": {
+      "model": "moresnifferflowers:block/bondripia_stage2"
+    },
+    "center=false,age=1": {
+      "model": "moresnifferflowers:block/bondripia_stage2"
+    },
+    "center=false,age=2": {
+      "model": "moresnifferflowers:block/bondripia_stage2"
+    }
+  }
+}

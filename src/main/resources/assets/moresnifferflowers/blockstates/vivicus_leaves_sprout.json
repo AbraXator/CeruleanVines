@@ -1,0 +1,58 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "age": "0",
+        "vivicus_type": "cured"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/vivicus_leaves_sprout_0"
+      }
+    },
+    {
+      "when": {
+        "age": "1",
+        "vivicus_type": "cured"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/vivicus_leaves_sprout_1"
+      }
+    },
+    {
+      "when": {
+        "age": "2",
+        "vivicus_type": "cured"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/vivicus_leaves_sprout_2"
+      }
+    },
+    {
+      "when": {
+        "age": "0",
+        "vivicus_type": "corrupted"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/vivicus_leaves_sprout_0c"
+      }
+    },
+    {
+      "when": {
+        "age": "1",
+        "vivicus_type": "corrupted"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/vivicus_leaves_sprout_1c"
+      }
+    },
+    {
+      "when": {
+        "age": "2",
+        "vivicus_type": "corrupted"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/vivicus_leaves_sprout_2c"
+      }
+    }
+  ]
+}

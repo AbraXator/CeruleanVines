@@ -1,0 +1,61 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:capped",
+      "limit": 1,
+      "delegate": {
+        "processor_type": "minecraft:rule",
+        "rules": [
+          {
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:block_match",
+              "block": "minecraft:sand"
+            },
+            "output_state": {
+              "Name": "minecraft:suspicious_sand",
+              "Properties": {
+                "dusted": "0"
+              }
+            },
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "moresnifferflowers:sniffer_egg"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "processor_type": "minecraft:capped",
+      "limit": 5,
+      "delegate": {
+        "processor_type": "minecraft:rule",
+        "rules": [
+          {
+            "location_predicate": {
+              "predicate_type": "minecraft:always_true"
+            },
+            "input_predicate": {
+              "predicate_type": "minecraft:random_block_match",
+              "block": "minecraft:sand",
+              "probability": 0.5
+            },
+            "output_state": {
+              "Name": "minecraft:suspicious_sand",
+              "Properties": {
+                "dusted": "0"
+              }
+            },
+            "block_entity_modifier": {
+              "type": "minecraft:append_loot",
+              "loot_table": "moresnifferflowers:snow_sniffer_temple"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

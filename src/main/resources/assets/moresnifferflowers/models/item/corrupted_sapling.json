@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "moresnifferflowers:block/corrupted_sapling1"
+  }
+}

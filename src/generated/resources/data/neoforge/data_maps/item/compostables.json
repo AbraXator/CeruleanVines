@@ -6,8 +6,14 @@
     "moresnifferflowers:bonmeelia_seeds": {
       "chance": 0.5
     },
-    "moresnifferflowers:caulorflower": {
+    "moresnifferflowers:caulorflower_seeds": {
       "chance": 0.4
+    },
+    "moresnifferflowers:corrupted_leaves": {
+      "chance": 1.0
+    },
+    "moresnifferflowers:corrupted_sapling": {
+      "chance": 1.0
     },
     "moresnifferflowers:cropressed_beetroot": {
       "chance": 1.0
@@ -32,6 +38,12 @@
     },
     "moresnifferflowers:dyespria_seeds": {
       "chance": 0.4
+    },
+    "moresnifferflowers:vivicus_leaves": {
+      "chance": 1.0
+    },
+    "moresnifferflowers:vivicus_sapling": {
+      "chance": 1.0
     }
   }
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "moresnifferflowers:block/colorable_wood/cube_column",
+  "textures": {
+    "end": "moresnifferflowers:block/stripped_vivicus_log",
+    "side": "moresnifferflowers:block/stripped_vivicus_log"
+  }
+}

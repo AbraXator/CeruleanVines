@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "vivicus_type=corrupted": {
+      "model": "moresnifferflowers:block/vivicus_sapling"
+    },
+    "vivicus_type=cured": {
+      "model": "moresnifferflowers:block/vivicus_sapling_cured"
+    }
+  }
+}

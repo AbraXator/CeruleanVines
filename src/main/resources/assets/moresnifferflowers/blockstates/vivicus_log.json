@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "axis=x": [
+      {
+        "model": "moresnifferflowers:block/vivicus_log_horizontal_b",
+        "weight": 1
+      },
+      {
+        "model": "moresnifferflowers:block/vivicus_log_horizontal_b_2",
+        "weight": 2
+      },
+      {
+        "model": "moresnifferflowers:block/vivicus_log_horizontal_b_3",
+        "weight": 1
+      }
+    ],
+    "axis=y": [
+      {
+        "model": "moresnifferflowers:block/vivicus_log",
+        "weight": 1
+      },
+      {
+        "model": "moresnifferflowers:block/vivicus_log_2",
+        "weight": 2
+      },
+      {
+        "model": "moresnifferflowers:block/vivicus_log_3",
+        "weight": 1
+      }
+    ],
+    "axis=z": [
+      {
+        "model": "moresnifferflowers:block/vivicus_log_horizontal",
+        "weight": 1
+      },
+      {
+        "model": "moresnifferflowers:block/vivicus_log_horizontal_2",
+        "weight": 2
+      },
+      {
+        "model": "moresnifferflowers:block/vivicus_log_horizontal_3",
+        "weight": 1
+      }
+    ]
+  }
+}

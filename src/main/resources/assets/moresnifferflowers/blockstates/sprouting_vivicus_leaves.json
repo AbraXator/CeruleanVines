@@ -1,0 +1,28 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "age": "0"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/sprouting_vivicus_leaves_0"
+      }
+    },
+    {
+      "when": {
+        "age": "1"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/sprouting_vivicus_leaves_1"
+      }
+    },
+    {
+      "when": {
+        "age": "2"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/sprouting_vivicus_leaves_2"
+      }
+    }
+  ]
+}

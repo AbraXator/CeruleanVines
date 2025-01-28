@@ -14,9 +14,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.*;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class DragonflyProjectile extends ThrowableItemProjectile {
     public DragonflyProjectile(EntityType<? extends DragonflyProjectile> entityType, Level pLevel) {
@@ -26,6 +27,27 @@ public class DragonflyProjectile extends ThrowableItemProjectile {
     public DragonflyProjectile(Level pLevel, Player player) {
         super(ModEntityTypes.DRAGONFLY.get(), player, pLevel);
         this.setOwner(player);
+    }
+    
+    public DragonflyProjectile(Level level) {
+        super(ModEntityTypes.DRAGONFLY.get(), level);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        /*double range = 15;
+        List<LivingEntity> entities = this.level().getEntitiesOfClass(LivingEntity.class, AABB.ofSize(this.position(), range, range, range), livingEntity1 -> !(livingEntity1 instanceof Player));
+        if(!entities.isEmpty()) {
+            LivingEntity livingEntity = entities.getFirst();
+            double distance = this.distanceTo(livingEntity);
+            Vec3 dir = new Vec3(livingEntity.getX() - this.getX(), livingEntity.getY() - this.getY(), livingEntity.getZ() - this.getZ());
+            if (distance > 0) {
+                dir.normalize();
+                Vec3 deltaMov = new Vec3(dir.x / distance, dir.y / distance, dir.z / distance);
+                this.addDeltaMovement(deltaMov.normalize());
+            }
+        }*/
     }
 
     @Override

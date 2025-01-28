@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "bottom": "moresnifferflowers:block/garnet_mosaic",
+    "side": "moresnifferflowers:block/garnet_mosaic",
+    "top": "moresnifferflowers:block/garnet_mosaic"
+  }
+}

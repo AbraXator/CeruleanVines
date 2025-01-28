@@ -50,7 +50,7 @@ public class AddItemsModifier extends LootModifier {
                 return generatedLoot;
             }
         }
-
+        
         generatedLoot.clear();
         generatedLoot.add(Items.PITCHER_POD.getDefaultInstance());
         generatedLoot.add(Items.TORCHFLOWER_SEEDS.getDefaultInstance());
@@ -60,6 +60,7 @@ public class AddItemsModifier extends LootModifier {
 
         items.forEach(item -> generatedLoot.add(item.getDefaultInstance()));
         newLoot.add(Util.getRandom(generatedLoot, context.getRandom()));
+
         return newLoot;
     }
 

@@ -1,8 +1,19 @@
-// 1.21	2024-07-13T15:05:51.0424608	Tags for minecraft:item mod id moresnifferflowers
+// 1.21	2025-01-08T22:20:14.4286447	Tags for minecraft:item mod id moresnifferflowers
 840aac17023f4b3090f7a16bdac7a2917619a7ee data/c/tags/item/seeds.json
-4940dfdbd919ad960c0e9d6a3268a3c31957dae4 data/minecraft/tags/item/trim_materials.json
-01cf4ec3be8bd04cefb9690304fc5a1a9b97ce1d data/minecraft/tags/item/trim_templates.json
-d6f54d2de44a444dc58075bcd6a043f4244b195d data/moresnifferflowers/tags/item/aroma_trim_template_ingredient.json
+6d8903ab7204569206b2f7cb5c89b74235cf79d6 data/minecraft/tags/item/fence_gates.json
+cc87198368386d83a3e3bab1c343988afb547f61 data/minecraft/tags/item/planks.json
+4624239ad2a34409633762b810c001740df32e54 data/minecraft/tags/item/saplings.json
+0154551d24498e9ebaf136bcc2000b01c48e627a data/minecraft/tags/item/sniffer_food.json
+3bb53488c6b04bf4e8d90fc294813f68abfcee28 data/minecraft/tags/item/trim_materials.json
+48e11e53eb509b883d675242a00adcd098d7be98 data/minecraft/tags/item/trim_templates.json
+9399dddd5bb3da096218baaec08ef2a99c696ae0 data/minecraft/tags/item/wooden_buttons.json
+eb1e1245a4db13e3e24f578c4e3fc6af5bfe8176 data/minecraft/tags/item/wooden_doors.json
+46d0ede2478483f5cd734fee4eda2f9c41f2e4ae data/minecraft/tags/item/wooden_fences.json
+94d944fec762d284d4dfbfe5527f1a4b8d9e28ed data/minecraft/tags/item/wooden_pressure_plates.json
+f058e9cf4207523b527b26ad8fea9c2b8b4196a8 data/minecraft/tags/item/wooden_slabs.json
+fb55b7b2b985a0c3f0b20d83db002a06f912559d data/minecraft/tags/item/wooden_stairs.json
+dc0e33338cd8a401a4eac3bb7984e64b1f1c3740 data/minecraft/tags/item/wooden_trapdoors.json
+0b5da3941c0d7f395c1eed309a536c09fe07fecd data/moresnifferflowers/tags/item/aroma_trim_template_ingredient.json
 81e01fc4a489c378d1791ba949a0eefae869add6 data/moresnifferflowers/tags/item/cropressable_crops.json
 bfebd7b13f81dc723ab18466b27f49cb48207e13 data/moresnifferflowers/tags/item/cropressed_crops.json
 ef9a30a57f4fbd8cd93ac60d0c96e86895c23af5 data/moresnifferflowers/tags/item/cropressor_pieces.json

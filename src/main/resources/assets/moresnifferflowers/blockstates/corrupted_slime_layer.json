@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "layers=1": {
+      "model": "moresnifferflowers:block/corrupted_slime_height2"
+    },
+    "layers=2": {
+      "model": "moresnifferflowers:block/corrupted_slime_height4"
+    },
+    "layers=3": {
+      "model": "moresnifferflowers:block/corrupted_slime_height6"
+    },
+    "layers=4": {
+      "model": "moresnifferflowers:block/corrupted_slime_height8"
+    },
+    "layers=5": {
+      "model": "moresnifferflowers:block/corrupted_slime_height10"
+    },
+    "layers=6": {
+      "model": "moresnifferflowers:block/corrupted_slime_height12"
+    },
+    "layers=7": {
+      "model": "moresnifferflowers:block/corrupted_slime_height14"
+    },
+    "layers=8": {
+      "model": "moresnifferflowers:block/corrupted_slime_block"
+    }
+  }
+}

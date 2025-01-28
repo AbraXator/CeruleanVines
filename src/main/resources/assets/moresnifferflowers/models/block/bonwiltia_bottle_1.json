@@ -1,0 +1,7 @@
+{
+    "parent": "moresnifferflowers:block/bonmeelia_base",
+    "textures": {
+      "1": "moresnifferflowers:block/bonwiltia_bottle_1",
+	"0": "moresnifferflowers:block/bonwiltia"
+    }
+}

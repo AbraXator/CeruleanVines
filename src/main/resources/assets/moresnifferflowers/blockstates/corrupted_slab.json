@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "moresnifferflowers:block/corrupted_slab"
+    },
+    "type=double": {
+      "model": "moresnifferflowers:block/corrupted_planks"
+    },
+    "type=top": {
+      "model": "moresnifferflowers:block/corrupted_slab_top"
+    }
+  }
+}

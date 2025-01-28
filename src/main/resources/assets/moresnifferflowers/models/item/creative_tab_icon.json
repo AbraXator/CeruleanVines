@@ -1,16 +1,16 @@
 {
 	"credit": "Made with Blockbench",
-	"gui_light": "front",
+	"texture_size": [32, 32],
 	"textures": {
 		"0": "moresnifferflowers:item/creative_tab_icon",
 		"particle": "moresnifferflowers:item/creative_tab_icon"
 	},
 	"elements": [
 		{
-			"from": [-5, 0, 1],
-			"to": [21, 30, 1],
+			"from": [-8, 0, 1],
+			"to": [24, 32, 1],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"north": {"uv": [1.5, 0.5, 14.5, 15.5], "texture": "#0"},
 				"east": {"uv": [0, 0, 0, 16], "texture": "#missing"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
 				"west": {"uv": [0, 0, 0, 16], "texture": "#missing"},
@@ -19,6 +19,7 @@
 			}
 		}
 	],
+	"gui_light": "front",
 	"display": {
 		"thirdperson_righthand": {
 			"translation": [0, 3, 1],
@@ -43,7 +44,7 @@
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"gui": {
-			"translation": [0, -5, 0]
+			"translation": [0, -6, 0]
 		},
 		"head": {
 			"rotation": [0, 180, 0],

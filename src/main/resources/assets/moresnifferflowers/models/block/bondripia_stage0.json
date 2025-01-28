@@ -1,0 +1,20 @@
+{
+	"credit": "Made with Blockbench",
+	"render_type": "cutout",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "moresnifferflowers:block/bondripia_stage0",
+		"particle": "moresnifferflowers:block/bondripia_stage0"
+	},
+	"elements": [
+		{
+			"from": [-16, 15.975, -16],
+			"to": [32, 15.975, 32],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 15.975, 0]},
+			"faces": {
+				"up": {"uv": [0, 0, 12, 12], "texture": "#0"},
+				"down": {"uv": [0, 0, 12, 12], "texture": "#0"}
+			}
+		}
+	]
+}

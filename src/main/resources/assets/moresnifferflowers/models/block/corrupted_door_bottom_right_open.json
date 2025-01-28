@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right_open",
+  "textures": {
+    "bottom": "moresnifferflowers:block/corrupted_door_bottom",
+    "top": "moresnifferflowers:block/corrupted_door_top"
+  }
+}

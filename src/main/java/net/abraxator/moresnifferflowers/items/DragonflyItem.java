@@ -13,7 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
-public class DragonflyItem extends Item {
+public class 
+DragonflyItem extends Item {
     public static final int THROW_TIME = 10;
     
     public DragonflyItem(Properties pProperties) {

@@ -1,19 +1,76 @@
 {
-  "variants": {
-    "facing=east": {
-      "model": "moresnifferflowers:block/cropressor_out"
+  "multipart": [
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_out",
+        "y": 0
+      }
     },
-    "facing=north": {
-      "model": "moresnifferflowers:block/cropressor_out",
-      "y": 270
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_out2",
+        "y": 0
+      }
     },
-    "facing=west": {
-      "model": "moresnifferflowers:block/cropressor_out",
-      "y": 180
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_out",
+        "y": 90
+      }
     },
-    "facing=south": {
-      "model": "moresnifferflowers:block/cropressor_out",
-      "y": 90
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_out2",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_out",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_out2",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_out",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "moresnifferflowers:block/cropressor_out2",
+        "y": 270
+      }
     }
-  }
+  ]
 }

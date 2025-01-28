@@ -28,5 +28,13 @@
     },
   "textures": {
     "layer0": "moresnifferflowers:item/dragonfly"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "moresnifferflowers:og": 1.0
+      },
+      "model": "moresnifferflowers:item/og_dragonfly"
+    }
+  ]
 }

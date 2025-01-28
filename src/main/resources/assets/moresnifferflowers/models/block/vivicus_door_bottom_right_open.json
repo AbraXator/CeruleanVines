@@ -1,0 +1,7 @@
+{
+  "parent": "moresnifferflowers:block/colorable_wood/door_bottom_right_open",
+  "textures": {
+    "bottom": "moresnifferflowers:block/vivicus_door_bottom",
+    "top": "moresnifferflowers:block/vivicus_door_top"
+  }
+}

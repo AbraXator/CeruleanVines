@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "moresnifferflowers:block/corrupted_planks"
+  }
+}

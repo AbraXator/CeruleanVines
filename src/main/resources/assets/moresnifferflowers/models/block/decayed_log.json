@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "moresnifferflowers:block/decayed_log_top",
+    "side": "moresnifferflowers:block/decayed_log"
+  }
+}

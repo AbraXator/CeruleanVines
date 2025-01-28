@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "moresnifferflowers:amber_shard"
+    },
+    {
+      "item": "moresnifferflowers:amber_shard"
+    },
+    {
+      "item": "moresnifferflowers:amber_shard"
+    },
+    {
+      "item": "moresnifferflowers:amber_shard"
+    },
+    {
+      "item": "moresnifferflowers:amber_shard"
+    },
+    {
+      "item": "moresnifferflowers:amber_shard"
+    },
+    {
+      "item": "moresnifferflowers:amber_shard"
+    },
+    {
+      "item": "moresnifferflowers:amber_shard"
+    },
+    {
+      "item": "moresnifferflowers:amber_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "moresnifferflowers:amber_block"
+  }
+}

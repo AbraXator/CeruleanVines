@@ -1,0 +1,78 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"parent": "minecraft:block/cube_all",
+	"textures": {
+		"0": "moresnifferflowers:block/vivicus_leaves",
+		"1": "moresnifferflowers:block/corrupted_sprouting_vivicus_leaves",
+		"particle": "moresnifferflowers:block/vivicus_leaves"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"east": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"west": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"}
+			}
+		},
+		{
+			"name": "stage2a",
+			"from": [5.5, 4.80447, 4.04784],
+			"to": [10.5, 9.80447, 8.04784],
+			"rotation": {"angle": -45, "axis": "x", "origin": [8.25, 6.94239, 8.125]},
+			"faces": {
+				"north": {"uv": [0, 0, 2.5, 2.5], "texture": "#1"},
+				"east": {"uv": [7.5, 12.5, 5, 10.5], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [0, 2.5, 2.5, 5], "texture": "#1"},
+				"west": {"uv": [5, 10.5, 7.5, 12.5], "rotation": 90, "texture": "#1"},
+				"up": {"uv": [7, 2, 4.5, 0], "texture": "#1"},
+				"down": {"uv": [10, 10.5, 7.5, 12.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "stage2a",
+			"from": [6, 5.40276, 7.93261],
+			"to": [10, 9.40276, 11.93261],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [7.75, 6.94239, 7.875]},
+			"faces": {
+				"north": {"uv": [10, 4, 12, 6], "texture": "#1"},
+				"east": {"uv": [12, 8, 14, 6], "rotation": 90, "texture": "#1"},
+				"south": {"uv": [12, 4, 14, 6], "texture": "#1"},
+				"west": {"uv": [8, 8, 10, 6], "rotation": 270, "texture": "#1"},
+				"up": {"uv": [12, 8, 10, 6], "texture": "#1"},
+				"down": {"uv": [16, 6, 14, 8], "texture": "#1"}
+			}
+		},
+		{
+			"from": [6.21751, 0, -1.98959],
+			"to": [6.21751, 16, 19.01041],
+			"rotation": {"angle": 45, "axis": "y", "origin": [6.71751, 0.5, 6.01041]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 8], "texture": "#missing"},
+				"east": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 8], "texture": "#missing"},
+				"west": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 10.5], "texture": "#missing"},
+				"down": {"uv": [0, 0, 0, 10.5], "texture": "#missing"}
+			}
+		},
+		{
+			"from": [8.13173, 0, -2.36827],
+			"to": [8.13173, 16, 18.63173],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8.13173, 8, 8.13173]},
+			"faces": {
+				"north": {"uv": [0, 0, 0, 8], "texture": "#missing"},
+				"east": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 8], "texture": "#missing"},
+				"west": {"uv": [0, 0, 16, 16], "tintindex": 0, "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 10.5], "rotation": 180, "texture": "#missing"},
+				"down": {"uv": [0, 0, 0, 10.5], "rotation": 180, "texture": "#missing"}
+			}
+		}
+	]
+}

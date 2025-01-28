@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "moresnifferflowers:block/dyescrapia_plant_stage3",
+        "weight": 1
+      },
+      {
+        "model": "moresnifferflowers:block/dyescrapia_plant_stage3_rotated",
+        "weight": 1
+      }
+    ]
+  }
+}

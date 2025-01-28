@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BannerPattern;
 
@@ -22,13 +23,24 @@ public class ModTags {
     }
 
     public static class ModBlockTags {
-        public static final TagKey<Block> BONMEELABLE = create(Registries.BLOCK, "crops_fertiable_by_fbm");
+        public static final TagKey<Block> BONMEELABLE = create(Registries.BLOCK, "bonmeelable");
+        public static final TagKey<Block> BONDRIPABLE = create(Registries.BLOCK, "bondripable");
         public static final TagKey<Block> GIANT_CROPS = create(Registries.BLOCK, "giant_crops");
+        public static final TagKey<Block> VIVICUS_BLOCKS = create(Registries.BLOCK, "vivicus_blocks");
+        public static final TagKey<Block> CORRUPTED_BLOCKS = create(Registries.BLOCK, "corrupted_blocks");
+        public static final TagKey<Block> CORRUPTED_SLUDGE = create(Registries.BLOCK, "corrupted_sludge");
+        public static final TagKey<Block> VIVICUS_TREE_REPLACABLE = create(Registries.BLOCK, "vivicus_tree_replacable");
+        public static final TagKey<Block> CORRUPTION_TRANSFORMABLES = create(Registries.BLOCK, "corruption_transformables");
     }
 
     public static class ModBannerPatternTags {
         public static final TagKey<BannerPattern> AMBUSH_BANNER_PATTERN = create(Registries.BANNER_PATTERN, "pattern_item/ambush");
+        public static final TagKey<BannerPattern> EVIL_BANNER_PATTERN = create(Registries.BANNER_PATTERN, "pattern_item/evil");
 
+    }
+    
+    public static class ModBiomeTags {
+        public static final TagKey<Biome> HAS_SWAMP_SNIFFER_TEMPLE = create(Registries.BIOME, "has_swamp_sniffer_temple");
     }
 
     private static <T extends Object> TagKey<T> create(ResourceKey<Registry<T>> registry, String name){

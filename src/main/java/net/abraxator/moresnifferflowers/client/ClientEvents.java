@@ -1,50 +1,56 @@
 package net.abraxator.moresnifferflowers.client;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.blocks.CaulorflowerBlock;
+import net.abraxator.moresnifferflowers.blocks.ColorableVivicusBlock;
 import net.abraxator.moresnifferflowers.client.gui.screen.RebrewingStandScreen;
 import net.abraxator.moresnifferflowers.client.model.ModModelLayerLocations;
+import net.abraxator.moresnifferflowers.client.model.block.BondripiaModel;
 import net.abraxator.moresnifferflowers.client.model.block.CropressorModel;
 import net.abraxator.moresnifferflowers.client.model.block.GiantCropModels;
+import net.abraxator.moresnifferflowers.client.model.entity.BoblingModel;
+import net.abraxator.moresnifferflowers.client.model.entity.CorruptedProjectileModel;
 import net.abraxator.moresnifferflowers.client.model.entity.DragonflyModel;
-import net.abraxator.moresnifferflowers.client.particle.AmbushParticle;
-import net.abraxator.moresnifferflowers.client.particle.CarrotParticle;
-import net.abraxator.moresnifferflowers.client.particle.FlyParticle;
-import net.abraxator.moresnifferflowers.client.particle.GiantCropParticle;
-import net.abraxator.moresnifferflowers.client.renderer.block.AmbushBlockEntityRenderer;
-import net.abraxator.moresnifferflowers.client.renderer.block.CropressorBlockEntityRenderer;
-import net.abraxator.moresnifferflowers.client.renderer.block.DyespriaPlantBlockEntityRenderer;
-import net.abraxator.moresnifferflowers.client.renderer.block.GiantCropBlockEntityRenderer;
+import net.abraxator.moresnifferflowers.client.particle.*;
+import net.abraxator.moresnifferflowers.client.renderer.block.*;
+import net.abraxator.moresnifferflowers.client.renderer.entity.BoblingRenderer;
+import net.abraxator.moresnifferflowers.client.renderer.entity.CorruptedProjectileRenderer;
 import net.abraxator.moresnifferflowers.client.renderer.entity.DragonflyRenderer;
+import net.abraxator.moresnifferflowers.client.renderer.entity.ModBoatRenderer;
+import net.abraxator.moresnifferflowers.components.Colorable;
 import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.init.*;
 import net.abraxator.moresnifferflowers.items.DyespriaItem;
-import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.core.Position;
+import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforgespi.locating.IModFile;
 
+import java.awt.*;
 import java.util.Optional;
 
 @EventBusSubscriber(modid = MoreSnifferFlowers.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEvents {
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
+        Sheets.addWoodType(ModWoodTypes.CORRUPTED);
+        Sheets.addWoodType(ModWoodTypes.VIVICUS);
         ModItemProperties.register();
     }
     
@@ -56,7 +62,14 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onEntityRenderersRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         //ENTITY
+        event.registerLayerDefinition(ModModelLayerLocations.BOBLING, BoblingModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayerLocations.DRAGONFLY, DragonflyModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayerLocations.CORRUPTED_PROJECTILE, CorruptedProjectileModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayerLocations.CORRUPTED_BOAT_LAYER, BoatModel::createBodyModel);
+        event.registerLayerDefinition(ModModelLayerLocations.CORRUPTED_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+        event.registerLayerDefinition(ModModelLayerLocations.VIVICUS_BOAT_LAYER, BoatModel::createBodyModel);
+        event.registerLayerDefinition(ModModelLayerLocations.VIVICUS_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+
         //BLOCK
         event.registerLayerDefinition(ModModelLayerLocations.GIANT_CARROT, GiantCropModels::createGiantCarrotLayer);
         event.registerLayerDefinition(ModModelLayerLocations.GIANT_POTATO, GiantCropModels::createGiantPotatoLayer);
@@ -64,19 +77,32 @@ public class ClientEvents {
         event.registerLayerDefinition(ModModelLayerLocations.GIANT_BEETROOT, GiantCropModels::createBeetrootLayer);
         event.registerLayerDefinition(ModModelLayerLocations.GIANT_WHEAT, GiantCropModels::createWheatLayer);
         event.registerLayerDefinition(ModModelLayerLocations.CROPRESSOR, CropressorModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayerLocations.BONDRIPIA, BondripiaModel::createBodyLayer);
     }
 
     @SubscribeEvent
     public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntityTypes.BOBLING.get(), BoblingRenderer::new);
         event.registerEntityRenderer(ModEntityTypes.DRAGONFLY.get(), DragonflyRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.CORRUPTED_SLIME_BALL.get(), CorruptedProjectileRenderer::new);
+        event.registerEntityRenderer(ModEntityTypes.MOD_CORRUPTED_BOAT.get(), pContext -> new ModBoatRenderer(pContext, false));
+        event.registerEntityRenderer(ModEntityTypes.MOD_CORRUPTED_CHEST_BOAT.get(), pContext -> new ModBoatRenderer(pContext, true));
+        event.registerEntityRenderer(ModEntityTypes.MOD_VIVICUS_BOAT.get(), pContext -> new ModBoatRenderer(pContext, false));
+        event.registerEntityRenderer(ModEntityTypes.MOD_VIVICUS_CHEST_BOAT.get(), pContext -> new ModBoatRenderer(pContext, true));
+        event.registerEntityRenderer(ModEntityTypes.JAR_OF_ACID.get(), ThrownItemRenderer::new);
     }
 
     @SubscribeEvent
     public static void blockRenderer(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModBlockEntities.AMBUSH.get(), AmbushBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.XBUSH.get(), AmbushBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.GIANT_CROP.get(), GiantCropBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.CROPRESSOR.get(), CropressorBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.DYESPRIA_PLANT.get(), DyespriaPlantBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.MOD_SIGN.get(), SignRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.VIVICUS_SIGN.get(), VivicusSignRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.MOD_HANGING_SIGN.get(), HangingSignRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.VIVICUS_HANGING_SIGN.get(), VivicusHangingSignRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.BONDRIPIA.get(), BondripiaBlockEntityRenderer::new);
     }
 
     @SubscribeEvent
@@ -84,26 +110,15 @@ public class ClientEvents {
         event.registerSpriteSet(ModParticles.FLY.get(), FlyParticle.Provider::new);
         event.registerSpriteSet(ModParticles.CARROT.get(), CarrotParticle.Provider::new);
         event.registerSpriteSet(ModParticles.AMBUSH.get(), AmbushParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.GARBUSH.get(), AmbushParticle.Provider::new);
         event.registerSpriteSet(ModParticles.GIANT_CROP.get(), GiantCropParticle.Provider::new);
-    }
-
-    @SubscribeEvent
-    public static void onRegisterBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
-        event.register((pState, pLevel, pPos, pTintIndex) -> {
-            if(pTintIndex == 0) {
-                return BiomeColors.getAverageFoliageColor(pLevel, pPos);
-            }
-            if(pTintIndex == 1) {
-                return Dye.colorForDye(((CaulorflowerBlock) pState.getBlock()), pState.getValue(ModStateProperties.COLOR));
-            }
-            return -1;
-        }, ModBlocks.CAULORFLOWER.get());
+        event.registerSpriteSet(ModParticles.BONDRIPIA.get(), BondripiaParticle.BondripiaParticleProvider::new);
     }
 
     @SubscribeEvent
     public static void onRegisterItemColorHandlers(RegisterColorHandlersEvent.Item event) {
         event.register((pStack, pTintIndex) -> {
-            Dye dye = Dye.getDyeFromStack(pStack);
+            Dye dye = Dye.getDyeFromDyespria(pStack);
             if(pTintIndex != 0 || dye.isEmpty()) {
                 return -1;
             } else {

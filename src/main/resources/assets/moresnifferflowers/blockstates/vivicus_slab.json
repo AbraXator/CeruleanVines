@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "moresnifferflowers:block/vivicus_slab"
+    },
+    "type=double": {
+      "model": "moresnifferflowers:block/vivicus_planks"
+    },
+    "type=top": {
+      "model": "moresnifferflowers:block/vivicus_slab_top"
+    }
+  }
+}

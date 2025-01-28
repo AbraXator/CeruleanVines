@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:glass_blocks/colorless"
+    },
+    "B": {
+      "item": "moresnifferflowers:jar_of_acid"
+    },
+    "C": {
+      "item": "moresnifferflowers:corrupted_bobling_core"
+    },
+    "D": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    " AB",
+    "ACA",
+    "DA "
+  ],
+  "result": {
+    "count": 1,
+    "id": "moresnifferflowers:vivicus_antidote"
+  }
+}

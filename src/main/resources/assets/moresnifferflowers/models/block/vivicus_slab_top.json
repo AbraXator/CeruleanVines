@@ -1,0 +1,8 @@
+{
+  "parent": "moresnifferflowers:block/colorable_wood/slab_top",
+  "textures": {
+    "bottom": "moresnifferflowers:block/vivicus_planks",
+    "side": "moresnifferflowers:block/vivicus_planks",
+    "top": "moresnifferflowers:block/vivicus_planks"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "moresnifferflowers:block/colorable_wood/template_orientable_trapdoor_top",
+  "render_type": "cutout",
+  "textures": {
+    "texture": "moresnifferflowers:block/vivicus_trapdoor"
+  }
+}

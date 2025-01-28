@@ -3,9 +3,12 @@ package net.abraxator.moresnifferflowers.components;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.init.ModDataComponents;
+import net.abraxator.moresnifferflowers.items.DyespriaItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import org.lwjgl.opengl.INTELMapTexture;
 
 public record Dye(DyeColor color, int amount) {
     public static final Codec<Dye> CODEC = RecordCodecBuilder.create(
@@ -25,8 +28,8 @@ public record Dye(DyeColor color, int amount) {
         return new Dye(((DyeItem) dyeStack.getItem()).getDyeColor(), dyeStack.getCount());
     }
     
-    public static Dye getDyeFromStack(ItemStack itemStack) {
-        return itemStack.getOrDefault(ModDataComponents.DYE, EMPTY);
+    public static Dye getDyeFromDyespria(ItemStack dyespria) {
+        return dyespria.getOrDefault(ModDataComponents.DYE, EMPTY);
     }
     
     public static ItemStack stackFromDye(Dye dye) {
@@ -43,9 +46,14 @@ public record Dye(DyeColor color, int amount) {
         return colorable.colorValues().getOrDefault(dyeColor, -1);
     }
 
-    public static void setDyeToStack(ItemStack stack, ItemStack dyeToInsert, int amount) {
+    public static void setDyeToDyeHolderStack(ItemStack dyespria, ItemStack dyeToInsert, int amount) {
+        setDyeToDyeHolderStack(dyespria, dyeToInsert, amount, 4);
+    }
+    
+    public static void setDyeToDyeHolderStack(ItemStack dyespria, ItemStack dyeToInsert, int amount, int uses) {
         var dyeColor = dyeToInsert.getItem() instanceof DyeItem ? ((DyeItem) dyeToInsert.getItem()).getDyeColor() : DyeColor.WHITE;
-        stack.set(ModDataComponents.DYE, new Dye(dyeColor, amount));
+        dyespria.set(ModDataComponents.DYE, new Dye(dyeColor, amount));
+        dyespria.set(ModDataComponents.DYESPRIA_USES, uses);
     }
     
     public static void setDyeColorToStack(ItemStack stack, DyeColor color, int amount) {

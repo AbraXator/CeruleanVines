@@ -1,0 +1,6 @@
+{
+  "type": "moresnifferflowers:swamp_sniffer_temple",
+  "biomes": "#moresnifferflowers:has_swamp_sniffer_temple",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

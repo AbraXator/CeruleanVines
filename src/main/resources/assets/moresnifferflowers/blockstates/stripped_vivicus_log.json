@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "moresnifferflowers:block/stripped_vivicus_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "moresnifferflowers:block/stripped_vivicus_log"
+    },
+    "axis=z": {
+      "model": "moresnifferflowers:block/stripped_vivicus_log_horizontal",
+      "x": 90
+    }
+  }
+}

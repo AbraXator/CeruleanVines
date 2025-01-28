@@ -1,0 +1,7 @@
+{
+	"render_type": "cutout",
+	"ambientocclusion": false,
+	"textures": {
+		"all": "moresnifferflowers:block/clear_texture"
+	}
+}

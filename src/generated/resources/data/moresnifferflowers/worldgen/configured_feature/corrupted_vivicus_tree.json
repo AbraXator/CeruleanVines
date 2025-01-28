@@ -1,0 +1,81 @@
+{
+  "type": "moresnifferflowers:vivicus_tree",
+  "config": {
+    "decorators": [
+      {
+        "type": "minecraft:attached_to_leaves",
+        "block_provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "moresnifferflowers:vivicus_leaves_sprout",
+            "Properties": {
+              "age": "0",
+              "color": "white",
+              "distance": "7",
+              "persistent": "false",
+              "vivicus_type": "corrupted",
+              "waterlogged": "false"
+            }
+          }
+        },
+        "directions": [
+          "down"
+        ],
+        "exclusion_radius_xz": 1,
+        "exclusion_radius_y": 0,
+        "probability": 0.14,
+        "required_empty_blocks": 2
+      }
+    ],
+    "dirt_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:dirt"
+      }
+    },
+    "foliage_placer": {
+      "type": "minecraft:fancy_foliage_placer",
+      "height": 4,
+      "offset": 2,
+      "radius": 3
+    },
+    "foliage_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "moresnifferflowers:vivicus_leaves",
+        "Properties": {
+          "color": "white",
+          "distance": "7",
+          "persistent": "false",
+          "waterlogged": "false"
+        }
+      }
+    },
+    "force_dirt": false,
+    "ignore_vines": true,
+    "minimum_size": {
+      "type": "minecraft:two_layers_feature_size",
+      "limit": 0,
+      "lower_size": 0,
+      "min_clipped_height": 4,
+      "upper_size": 0
+    },
+    "trunk_placer": {
+      "type": "moresnifferflowers:vivicus_trunk_placer",
+      "base_height": 8,
+      "height_rand_a": 2,
+      "height_rand_b": 2
+    },
+    "trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "moresnifferflowers:vivicus_log",
+        "Properties": {
+          "axis": "y",
+          "color": "white",
+          "vivicus_type": "corrupted"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "uses=0": {
+      "model": "moresnifferflowers:block/corrupted_sludge3"
+    },
+    "uses=1": {
+      "model": "moresnifferflowers:block/corrupted_sludge2"
+    },
+    "uses=2": {
+      "model": "moresnifferflowers:block/corrupted_sludge1"
+    },
+    "uses=3": {
+      "model": "moresnifferflowers:block/corrupted_sludge"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_VIVICUS_planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "moresnifferflowers:vivicus_planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "moresnifferflowers:vivicus_fence"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_VIVICUS_planks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "moresnifferflowers:vivicus_fence"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "moresnifferflowers:block/corrupted_sapling0"
+    },
+    "stage=1": {
+      "model": "moresnifferflowers:block/corrupted_sapling1"
+    }
+  }
+}

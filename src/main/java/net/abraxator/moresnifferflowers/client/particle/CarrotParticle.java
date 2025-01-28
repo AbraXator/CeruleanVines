@@ -12,8 +12,8 @@ import javax.annotation.Nullable;
 public class CarrotParticle extends SimpleAnimatedParticle {
     protected CarrotParticle(ClientLevel pLevel, double pX, double pY, double pZ, SpriteSet pSprites) {
         super(pLevel, pX, pY, pZ, pSprites, 0);
-        this.scale(1.5F);
-        this.setLifetime(20);
+        this.scale(2);
+        this.setLifetime(200);
         this.setSpriteFromAge(pSprites);
     }
 

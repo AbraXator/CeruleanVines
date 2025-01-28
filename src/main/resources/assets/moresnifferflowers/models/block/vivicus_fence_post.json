@@ -1,0 +1,6 @@
+{
+  "parent": "moresnifferflowers:block/colorable_wood/fence_post",
+  "textures": {
+    "texture": "moresnifferflowers:block/vivicus_planks"
+  }
+}

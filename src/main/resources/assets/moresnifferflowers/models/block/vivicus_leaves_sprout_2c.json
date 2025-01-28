@@ -1,0 +1,7 @@
+{
+  "parent": "moresnifferflowers:block/vivicus_leaves_sprout_2",
+  "textures": {
+    "0": "moresnifferflowers:block/vivicus_leaves_sprout_c",
+    "particle": "moresnifferflowers:block/vivicus_leaves_sprout_c"
+  }
+}

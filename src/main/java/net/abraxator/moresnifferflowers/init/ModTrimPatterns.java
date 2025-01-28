@@ -12,6 +12,7 @@ import net.minecraft.world.item.armortrim.TrimPattern;
 
 public class ModTrimPatterns {
     public static final ResourceKey<TrimPattern> AROMA = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("aroma"));
+    public static final ResourceKey<TrimPattern> CARNAGE = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("carnage"));
     public static final ResourceKey<TrimPattern> NETHER_WART = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("nether_wart"));
     public static final ResourceKey<TrimPattern> TATER = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("tater"));
     public static final ResourceKey<TrimPattern> CAROTENE = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("carotene"));
@@ -22,6 +23,7 @@ public class ModTrimPatterns {
 
     public static void bootstrap(BootstrapContext<TrimPattern> context) {
         register(context, ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get(), AROMA);
+        register(context, ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), CARNAGE);
         register(context, ModItems.NETHER_WART_ARMOR_TRIM_SMITHING_TEMPLATE.get(), NETHER_WART);
         register(context, ModItems.TATER_ARMOR_TRIM_SMITHING_TEMPLATE.get(), TATER);
         register(context, ModItems.CAROTENE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), CAROTENE);

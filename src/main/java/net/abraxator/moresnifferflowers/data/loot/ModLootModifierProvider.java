@@ -23,7 +23,8 @@ public class ModLootModifierProvider extends GlobalLootModifierProvider {
     protected void start() {
         add("seeds_from_sniffing", new AddItemsModifier(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(ResourceLocation.parse("gameplay/sniffer_digging")).build()
-        }, List.of(ModItems.DAWNBERRY_VINE_SEEDS.get(), ModItems.AMBUSH_SEEDS.get(), ModBlocks.CAULORFLOWER.get().asItem(), ModItems.BONMEELIA_SEEDS.get())));
+        }, List.of(ModItems.DAWNBERRY_VINE_SEEDS.get(), ModItems.DYESPRIA_SEEDS.get(), ModItems.AMBUSH_SEEDS.get(), ModItems.CAULORFLOWER_SEEDS.get(),
+                ModItems.BONMEELIA_SEEDS.get(), ModItems.BONDRIPIA_SEEDS.get(), ModBlocks.VIVICUS_SAPLING.get().asItem())));
     }
 
 }
