@@ -21,7 +21,7 @@ public class GloomberryVineBlock extends DawnberryVineBlock {
     }
 
     @Override
-    protected void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
+    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
         if(pEntity instanceof LivingEntity livingEntity) {
             livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 30, 0));
         }

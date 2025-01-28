@@ -7,7 +7,6 @@ import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.accesstransformer.generated.AtParser;
 
 public class BoblingRenderer extends MobRenderer<BoblingEntity, BoblingModel<BoblingEntity>> {
     public static final ResourceLocation CORRUPTED_TEXTURE = MoreSnifferFlowers.loc("textures/entity/bobling/corrupted_bobling.png");

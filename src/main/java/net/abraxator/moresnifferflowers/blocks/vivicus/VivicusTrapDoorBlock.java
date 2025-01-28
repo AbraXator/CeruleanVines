@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 
 public class VivicusTrapDoorBlock extends TrapDoorBlock implements ColorableVivicusBlock {
     public VivicusTrapDoorBlock(BlockSetType p_272964_, Properties p_273079_) {
-        super(p_272964_, p_273079_);
+        super(p_273079_, p_272964_);
         defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE);
     }
 

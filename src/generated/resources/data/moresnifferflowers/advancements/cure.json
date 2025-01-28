@@ -1,0 +1,47 @@
+{
+  "parent": "moresnifferflowers:bobling",
+  "criteria": {
+    "used_antidote": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {}
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": [
+                "moresnifferflowers:vivicus_antidote"
+              ]
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Cure a vivicus sapling to get regular (kind) boblings",
+      "translate": "advancements.more_sniffer_flowers.cure.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:vivicus_antidote"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "A bobling of Kindness",
+      "translate": "advancements.more_sniffer_flowers.cure"
+    }
+  },
+  "requirements": [
+    [
+      "used_antidote"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

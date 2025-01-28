@@ -19,12 +19,12 @@ public class CorruptedLeavesBlock extends LeavesBlock {
     }
 
     @Override
-    protected void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         pLevel.setBlock(pPos, updateDistance(pState, pLevel, pPos), 3);
     }
     
     @Override
-    protected BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
+    public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
         if (pState.getValue(WATERLOGGED)) {
             pLevel.scheduleTick(pCurrentPos, Fluids.WATER, Fluids.WATER.getTickDelay(pLevel));
         }
@@ -57,7 +57,7 @@ public class CorruptedLeavesBlock extends LeavesBlock {
     }
 
     public static OptionalInt getOptionalDistanceAt(BlockState pState) {
-        if (pState.is(BlockTags.LOGS) || pState.is(ModBlocks.CORRUPTED_SLUDGE)) {
+        if (pState.is(BlockTags.LOGS) || pState.is(ModBlocks.CORRUPTED_SLUDGE.get())) {
             return OptionalInt.of(0);
         } else {
             return pState.hasProperty(DISTANCE) ? OptionalInt.of(pState.getValue(DISTANCE)) : OptionalInt.empty();

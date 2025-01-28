@@ -7,8 +7,6 @@ import net.abraxator.moresnifferflowers.items.DyespriaItem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
@@ -30,9 +28,8 @@ public enum DyespriaMode implements StringRepresentable {
     ROW("row", DyespriaSelector::row, ChatFormatting.GREEN),
     SHAPE("shape", DyespriaSelector::shape, ChatFormatting.RED);
 
-    public static final Codec<DyespriaMode> CODEC = StringRepresentable.fromValues(DyespriaMode::values);
+    public static final Codec<DyespriaMode> CODEC = StringRepresentable.fromEnum(DyespriaMode::values);
     public static final IntFunction<DyespriaMode> BY_ID = ByIdMap.continuous(DyespriaMode::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
-    public static final StreamCodec<ByteBuf, DyespriaMode> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Enum::ordinal); 
 
     private final String name;
     private final Function<DyespriaSelector, Set<BlockPos>> selector;

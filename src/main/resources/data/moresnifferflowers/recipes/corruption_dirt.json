@@ -1,0 +1,10 @@
+{
+  "type": "moresnifferflowers:corruption",
+  "source": "minecraft:dirt",
+  "corrupted": [
+    {
+      "block": "minecraft:coarse_dirt",
+      "weight": 100
+    }
+  ]
+}

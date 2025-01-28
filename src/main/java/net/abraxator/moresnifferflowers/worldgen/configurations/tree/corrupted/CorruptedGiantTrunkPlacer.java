@@ -1,5 +1,6 @@
 package net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModTrunkPlacerTypes;
@@ -15,15 +16,13 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
 public class CorruptedGiantTrunkPlacer extends TrunkPlacer {
-    public static final MapCodec<CorruptedGiantTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(
-            p_70161_ -> trunkPlacerParts(p_70161_).apply(p_70161_, CorruptedGiantTrunkPlacer::new)
-    );
+    public static final Codec<CorruptedGiantTrunkPlacer> CODEC = RecordCodecBuilder.create(p_70161_ ->
+            trunkPlacerParts(p_70161_).apply(p_70161_, CorruptedGiantTrunkPlacer::new));
 
     public CorruptedGiantTrunkPlacer(int pBaseHeight, int pHeightRandA, int pBranchCount) {
         super(pBaseHeight, pHeightRandA, pBranchCount);

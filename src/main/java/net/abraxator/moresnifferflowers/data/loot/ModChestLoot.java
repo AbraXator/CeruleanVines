@@ -4,6 +4,7 @@ import net.abraxator.moresnifferflowers.init.ModBuiltinLoottables;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -14,9 +15,9 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.function.BiConsumer;
 
-public record ModChestLoot(HolderLookup.Provider registries) implements LootTableSubProvider {
+public record ModChestLoot() implements LootTableSubProvider {
     @Override
-    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pOutput) {
+    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
         pOutput.accept(
                 ModBuiltinLoottables.SWAMP_SNIFFER_TEMPLE_CHEST,
                 LootTable.lootTable()

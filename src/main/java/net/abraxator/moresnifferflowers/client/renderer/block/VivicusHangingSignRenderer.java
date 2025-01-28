@@ -4,28 +4,27 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.abraxator.moresnifferflowers.blocks.ColorableVivicusBlock;
+import net.abraxator.moresnifferflowers.client.ModColorHandler;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
-import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.level.block.SignBlock;
-import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class VivicusHangingSignRenderer extends HangingSignRenderer {
     public VivicusHangingSignRenderer(BlockEntityRendererProvider.Context pContext) {
         super(pContext);
     }
-
+    
     @Override
     public void renderSignWithText(SignBlockEntity pSignEntity, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay, BlockState pState, SignBlock pSignBlock, WoodType pWoodType, Model pModel) {
         pPoseStack.pushPose();
@@ -66,7 +65,7 @@ public class VivicusHangingSignRenderer extends HangingSignRenderer {
         if(pState.getBlock() instanceof ColorableVivicusBlock colorableVivicusBlock) {
             var dyeColor = pState.getValue(ModStateProperties.COLOR);
             color = colorableVivicusBlock.colorValues().get(dyeColor);
-            vertexconsumer.setColor(color);
+            vertexconsumer.color(color);
         }
         this.renderSignModel(pPoseStack, pPackedLight, pPackedOverlay, pModel, vertexconsumer, color);
         pPoseStack.popPose();
@@ -74,6 +73,6 @@ public class VivicusHangingSignRenderer extends HangingSignRenderer {
 
     void renderSignModel(PoseStack pPoseStack, int pPackedLight, int pPackedOverlay, Model pModel, VertexConsumer pVertexConsumer, int color) {
         HangingSignRenderer.HangingSignModel hangingsignrenderer$hangingsignmodel = (HangingSignRenderer.HangingSignModel)pModel;
-        hangingsignrenderer$hangingsignmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, color);
+        hangingsignrenderer$hangingsignmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, ModColorHandler.hexToRGB(color)[0], ModColorHandler.hexToRGB(color)[1], ModColorHandler.hexToRGB(color)[2], 1);
     }
 }

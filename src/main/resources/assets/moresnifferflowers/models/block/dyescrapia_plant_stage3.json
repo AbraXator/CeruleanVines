@@ -24,7 +24,7 @@
             "scale": [ 0.8, 0.80, 0.80 ]
         }
       },
-	"loader": "neoforge:obj",
+	"loader": "forge:obj",
 	"flip-v": true,
 	"model": "moresnifferflowers:models/block/obj/dyescrapia_plant.obj",
 	"textures": {

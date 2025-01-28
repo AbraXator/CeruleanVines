@@ -1,0 +1,38 @@
+{
+  "parent": "moresnifferflowers:bonmeel",
+  "criteria": {
+    "has_cropressed_crop": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "moresnifferflowers:cropressed_crops"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Cropress any crop",
+      "translate": "advancements.more_sniffer_flowers.cropressor.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:cropressed_beetroot"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "Compressing with extra steps",
+      "translate": "advancements.more_sniffer_flowers.cropressor"
+    }
+  },
+  "requirements": [
+    [
+      "has_cropressed_crop"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

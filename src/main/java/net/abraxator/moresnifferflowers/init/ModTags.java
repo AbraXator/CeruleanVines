@@ -31,6 +31,7 @@ public class ModTags {
         public static final TagKey<Block> CORRUPTED_SLUDGE = create(Registries.BLOCK, "corrupted_sludge");
         public static final TagKey<Block> VIVICUS_TREE_REPLACABLE = create(Registries.BLOCK, "vivicus_tree_replacable");
         public static final TagKey<Block> CORRUPTION_TRANSFORMABLES = create(Registries.BLOCK, "corruption_transformables");
+        public static final TagKey<Block> DYED = create(Registries.BLOCK, "dyed");
     }
 
     public static class ModBannerPatternTags {

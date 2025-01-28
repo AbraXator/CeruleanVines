@@ -1,0 +1,32 @@
+{
+  "parent": "moresnifferflowers:root",
+  "criteria": {
+    "used_bonmeel": {
+      "conditions": {},
+      "trigger": "moresnifferflowers:used_bonmeel"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "fallback": "Enlarge your crops using the magic of Bonmeel",
+      "translate": "advancements.more_sniffer_flowers.bonmeel.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:jar_of_bonmeel"
+    },
+    "show_toast": true,
+    "title": {
+      "fallback": "Let It Grow!",
+      "translate": "advancements.more_sniffer_flowers.bonmeel"
+    }
+  },
+  "requirements": [
+    [
+      "used_bonmeel"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

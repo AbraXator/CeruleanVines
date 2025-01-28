@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+issueTrackerURL="https://github.com/AbraXator/MoreSnifferFlowers/issues"
+[[mods]]
+modId="moresnifferflowers"
+version="${file.jarVersion}"
+displayName="More Sniffer Flowers"
+itemIcon="moresnifferflowers:dyespria"
+logoFile="moresnifferflowers_logo.png"
+authors="AbraXator, Nikdo53"
+description='''Sniffer Flowers, but there's More of them and they actually do something'''
+[[mixins]]
+    config="more_sniffer_flowers.mixins.json"
+[[dependencies.moresnifferflowers]]
+    modId="forge"
+    mandatory = true
+    versionRange="[47.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.moresnifferflowers]]
+    modId="minecraft"
+    mandatory = true
+    versionRange="1.20.1"
+    ordering="NONE"
+    side="BOTH"

@@ -26,7 +26,7 @@ public class BoblingSackBlock extends Block implements ModEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         return SHAPE;
     }
 
@@ -43,7 +43,7 @@ public class BoblingSackBlock extends Block implements ModEntityBlock {
     }
     
     @Override
-    protected void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
         if(pLevel.getBlockEntity(pPos) instanceof BoblingSackBlockEntity entity) {
             Containers.dropContents(pLevel, pPos, entity.inventory);
         }

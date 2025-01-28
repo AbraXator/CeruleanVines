@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_jar_of_acid": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "moresnifferflowers:jar_of_acid"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "moresnifferflowers:vivicus_antidote"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_jar_of_acid",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "moresnifferflowers:vivicus_antidote"
+    ]
+  },
+  "sends_telemetry_event": false
+}

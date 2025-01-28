@@ -2,7 +2,6 @@ package net.abraxator.moresnifferflowers.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class ModEntityDoubleTallBlock extends Block implements IModEntityDoubleTallBlock {
@@ -32,7 +30,7 @@ public abstract class ModEntityDoubleTallBlock extends Block implements IModEnti
     }
     
     @Override
-    public BlockState playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
+    public void playerWillDestroy(Level pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
         if(!pLevel.isClientSide) {
             if(pPlayer.isCreative()) {
                 preventCreativeDropFromBottomPart(pLevel, pPos, pState, pPlayer);
@@ -43,21 +41,11 @@ public abstract class ModEntityDoubleTallBlock extends Block implements IModEnti
         }
 
         super.playerWillDestroy(pLevel, pPos, pState, pPlayer);
-        return pState;
     }
 
     @Override
     public void playerDestroy(Level pLevel, Player pPlayer, BlockPos pPos, BlockState pState, @Nullable BlockEntity pBlockEntity, ItemStack pTool) {
         super.playerDestroy(pLevel, pPlayer, pPos, Blocks.AIR.defaultBlockState(), pBlockEntity, pTool);
-    }
-
-    @Override
-    public void onRemove(@NotNull BlockState pState, Level pLevel, BlockPos pPos, @NotNull BlockState pNewState, boolean pMovedByPiston) {
-        if(isUpper(pState)) {
-            Containers.dropContentsOnDestroy(pState, pNewState, pLevel, pPos);
-        }
-
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
     
     @Override

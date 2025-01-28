@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 
 public class VivicusPressurePlateBlock extends PressurePlateBlock implements ColorableVivicusBlock {
     public VivicusPressurePlateBlock(BlockSetType p_273284_, Properties p_273571_) {
-        super(p_273284_, p_273571_);
+        super(Sensitivity.EVERYTHING, p_273571_, p_273284_);
         defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE);
     }
 

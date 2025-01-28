@@ -8,7 +8,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.block.entity.BannerPattern;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,7 +19,7 @@ public class ModBannerPatternTagsProvider extends TagsProvider<BannerPattern> {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        tag(ModTags.ModBannerPatternTags.AMBUSH_BANNER_PATTERN).add(ModBannerPatterns.AMBUSH);
-        tag(ModTags.ModBannerPatternTags.EVIL_BANNER_PATTERN).add(ModBannerPatterns.EVIL);
+        tag(ModTags.ModBannerPatternTags.AMBUSH_BANNER_PATTERN).add(ModBannerPatterns.AMBUSH.getKey());
+        tag(ModTags.ModBannerPatternTags.EVIL_BANNER_PATTERN).add(ModBannerPatterns.EVIL.getKey());
     }
 }

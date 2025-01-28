@@ -1,18 +1,19 @@
 package net.abraxator.moresnifferflowers.entities;
 
-import io.netty.buffer.ByteBuf;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAttackPlayerGoal;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAvoidPlayerGoal;
-import net.abraxator.moresnifferflowers.init.*;
+import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.abraxator.moresnifferflowers.init.ModEntitySerializers;
+import net.abraxator.moresnifferflowers.init.ModEntityTypes;
+import net.abraxator.moresnifferflowers.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.ByIdMap;
@@ -22,10 +23,16 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,14 +47,11 @@ import java.util.Set;
 import java.util.function.IntFunction;
 
 public class BoblingEntity extends PathfinderMob {
-    private static final EntityDataAccessor<Type> DATA_BOBLING_TYPE = SynchedEntityData.defineId(BoblingEntity.class, ModEntityDataSerializers.BOBLING_TYPE.get());
+    private static final EntityDataAccessor<Type> DATA_BOBLING_TYPE = SynchedEntityData.defineId(BoblingEntity.class, ModEntitySerializers.DATA_BOBLING_TYPE);
     private static final EntityDataAccessor<Boolean> DATA_RUNNING = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Optional<BlockPos>> DATA_WANTED_POS = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<Boolean> DATA_PLANTING = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
-    
-    private BoblingAttackPlayerGoal attackPlayerGoal;
-    private BoblingAvoidPlayerGoal<Player> avoidPlayerGoal;
-    
+
     private int idleAnimationTimeout = 0;
     public AnimationState idleAnimationState = new AnimationState();
     public AnimationState plantingAnimationState = new AnimationState();
@@ -83,7 +87,6 @@ public class BoblingEntity extends PathfinderMob {
 
     public void setRunning(boolean running) {
         this.entityData.set(DATA_RUNNING, running);
-        if(running) this.updateRunningGoals();
     }
     
     @Nullable
@@ -120,34 +123,28 @@ public class BoblingEntity extends PathfinderMob {
         this.setBoblingType(Type.BY_ID.apply(pCompound.getInt("bobling_type")));
         this.setRunning(pCompound.getBoolean("running"));
         this.setPlanting(pCompound.getBoolean("planting"));
-        this.setWantedPos(NbtUtils.readBlockPos(pCompound, "wanted_pos"));
+        this.setWantedPos(Optional.of(NbtUtils.readBlockPos(pCompound.getCompound("wanted_pos"))));
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder pBuilder) {
-        super.defineSynchedData(pBuilder);
-        pBuilder.define(DATA_BOBLING_TYPE, Type.CORRUPTED);
-        pBuilder.define(DATA_RUNNING, false);
-        pBuilder.define(DATA_WANTED_POS, Optional.empty());
-        pBuilder.define(DATA_PLANTING, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_BOBLING_TYPE, Type.CORRUPTED);
+        this.entityData.define(DATA_RUNNING, false);
+        this.entityData.define(DATA_WANTED_POS, Optional.empty());
+        this.entityData.define(DATA_PLANTING, false);
     }
 
     @Override
     protected void registerGoals() {
-        if(this.getBoblingType() == Type.CORRUPTED) {
-            if (this.attackPlayerGoal == null) {
-                this.attackPlayerGoal = new BoblingAttackPlayerGoal(this, 1.5F, false);
-            }
-
-            this.goalSelector.addGoal(2, this.attackPlayerGoal);
-        }
         /* else if (this.getBoblingType() == Type.CURED) {
             this.goalSelector.addGoal(3, new TemptGoal(this, 0.9F, itemStack ->
                     itemStack.is(ModItems.JAR_OF_BONMEEL), false));
         }*/
 
-
         this.goalSelector.addGoal(1, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new BoblingAttackPlayerGoal(this, 1.5F, false));
+        this.goalSelector.addGoal(2, new BoblingAvoidPlayerGoal<>(this, Player.class, 16.0F, 1.0F, 1.3F));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.8F));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
@@ -250,30 +247,12 @@ public class BoblingEntity extends PathfinderMob {
         }
     }
 
-    public void updateRunningGoals() {
-        if (this.avoidPlayerGoal == null) {
-            this.avoidPlayerGoal = new BoblingAvoidPlayerGoal<>(this, Player.class, 16.0F, 1.0F, 1.3F);
-        }
-
-        if (this.attackPlayerGoal != null && goalSelector.getAvailableGoals().stream().anyMatch(wrappedGoal -> wrappedGoal.getGoal() == attackPlayerGoal)) {
-            this.goalSelector.removeGoal(this.attackPlayerGoal);
-        }
-        
-        if(goalSelector.getAvailableGoals().stream().noneMatch(wrappedGoal -> wrappedGoal.getGoal() == avoidPlayerGoal)) {
-            this.goalSelector.addGoal(2, this.avoidPlayerGoal);
-        }
-    }
-
     @Override
     protected InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         
-        if (itemStack.is(ModItems.VIVICUS_ANTIDOTE) && this.getBoblingType() == Type.CORRUPTED) {
+        if (itemStack.is(ModItems.VIVICUS_ANTIDOTE.get()) && this.getBoblingType() == Type.CORRUPTED) {
             this.setBoblingType(Type.CURED);
-            
-            if (this.attackPlayerGoal != null) {
-                this.goalSelector.removeGoal(this.attackPlayerGoal);
-            }
             
             particles(new DustParticleOptions(Vec3.fromRGB24(7118872).toVector3f(), 1));
             itemStack.shrink(1);
@@ -334,7 +313,6 @@ public class BoblingEntity extends PathfinderMob {
         CURED(1, "cured");
 
         public static final IntFunction<Type> BY_ID = ByIdMap.continuous(Type::id, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
-        public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, Type::id);
         private final int id;
         private final String name;
 

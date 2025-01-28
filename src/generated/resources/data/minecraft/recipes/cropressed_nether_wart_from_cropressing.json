@@ -1,0 +1,10 @@
+{
+  "type": "moresnifferflowers:cropressing",
+  "count": 16,
+  "ingredient": {
+    "item": "minecraft:nether_wart"
+  },
+  "result": {
+    "item": "moresnifferflowers:cropressed_nether_wart"
+  }
+}

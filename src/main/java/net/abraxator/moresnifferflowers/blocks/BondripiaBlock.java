@@ -2,13 +2,14 @@ package net.abraxator.moresnifferflowers.blocks;
 
 import net.abraxator.moresnifferflowers.blockentities.BondripiaBlockEntity;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModParticles;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock, ModCropBlock {
+public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock, ModCropBlock, Corruptable {
     public BondripiaBlock(Properties p_49795_) {
         super(p_49795_);
         this.defaultBlockState()
@@ -66,7 +68,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
     
     @Override
-    protected boolean isRandomlyTicking(BlockState pState) {
+    public boolean isRandomlyTicking(BlockState pState) {
         return true;
     }
 
@@ -78,14 +80,14 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
             list = list.subList(0, random.nextInt(6));
             list.forEach(blockPos -> {
                 var vec3 = blockPos.getCenter();
-                level.addParticle(ModParticles.BONDRIPIA.get(), vec3.x, vec3.y, vec3.z, 0, 0, 0);
+                level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0xAA51B2).toVector3f(), 1.0F), vec3.x, vec3.y - random.nextIntBetweenInclusive(0, 5), vec3.z, 0, -1.0F, 0);
             });
         }
     }
     
  
     @Override
-    protected void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if(!isMaxAge(pState)) {
             grow(pLevel, pPos);
         } else if (pRandom.nextDouble() <= 0.33D && pLevel.getBlockEntity(pPos) instanceof BondripiaBlockEntity entity) {
@@ -95,9 +97,8 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
                 for (int i = 0; i < 10; i++) {
                     if (isBondripable(pLevel, currentPos)) {
                         BlockState blockState = pLevel.getBlockState(currentPos);
-
-
-                        if (blockState.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, currentPos, blockState)) {
+                        
+                        if (blockState.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, currentPos, blockState, false)) {
                             bonemealable.performBonemeal(pLevel, pRandom, currentPos, blockState);
                             break;
                         }
@@ -121,13 +122,18 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
     
     public void fillCauldron(Level level, BlockPos blockPos, BlockState blockState) {
-        BlockState blockstate = blockState.is(ModBlocks.ACIDRIPIA) ? ModBlocks.ACID_FILLED_CAULDRON.get().defaultBlockState() : ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
+        BlockState blockstate = blockState.is(ModBlocks.ACIDRIPIA.get()) ? ModBlocks.ACID_FILLED_CAULDRON.get().defaultBlockState() : ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
         int fluidLevel = blockState.getOptionalValue(LayeredCauldronBlock.LEVEL).orElse(0);
         if(fluidLevel < 3) {
             level.setBlockAndUpdate(blockPos, blockstate.setValue(LayeredCauldronBlock.LEVEL, fluidLevel + 1));
             level.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(blockstate));
             level.levelEvent(1047, blockPos, 0);
         }
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        onCorruptByEntity(entity, pos, state, this, level);
     }
     
     public void grow(Level level, BlockPos blockPos) {
@@ -143,13 +149,13 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
 
     @Override
-    protected boolean canSurvive(BlockState blockState, LevelReader level, BlockPos blockPos) {
+    public boolean canSurvive(BlockState blockState, LevelReader level, BlockPos blockPos) {
         var list = Direction.Plane.HORIZONTAL.stream().filter(direction -> super.canSurvive(level.getBlockState(blockPos.relative(direction)), level, blockPos.relative(direction))).toList();
         return super.canSurvive(blockState, level, blockPos) && list.size() == 4 && getPositionsForPlant(level, blockPos).isPresent();
     }
 
     @Override
-    protected BlockState updateShape(BlockState p_154713_, Direction p_154714_, BlockState p_154715_, LevelAccessor p_154716_, BlockPos pCurrentPos, BlockPos p_154718_) {
+    public BlockState updateShape(BlockState p_154713_, Direction p_154714_, BlockState p_154715_, LevelAccessor p_154716_, BlockPos pCurrentPos, BlockPos p_154718_) {
         BlockState blockState = super.updateShape(p_154713_, p_154714_, p_154715_, p_154716_, pCurrentPos, p_154718_);
         if(blockState.is(Blocks.AIR)) {
             Direction.Plane.HORIZONTAL.forEach(direction -> {
@@ -174,7 +180,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
     
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         return !isMaxAge(pState);
     }
 

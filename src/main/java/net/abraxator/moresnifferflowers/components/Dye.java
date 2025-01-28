@@ -2,13 +2,11 @@ package net.abraxator.moresnifferflowers.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.abraxator.moresnifferflowers.init.ModDataComponents;
-import net.abraxator.moresnifferflowers.items.DyespriaItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import org.lwjgl.opengl.INTELMapTexture;
 
 public record Dye(DyeColor color, int amount) {
     public static final Codec<Dye> CODEC = RecordCodecBuilder.create(
@@ -29,7 +27,11 @@ public record Dye(DyeColor color, int amount) {
     }
     
     public static Dye getDyeFromDyespria(ItemStack dyespria) {
-        return dyespria.getOrDefault(ModDataComponents.DYE, EMPTY);
+        CompoundTag tag = dyespria.getOrCreateTag();
+        int count = tag.getInt("amount");
+        DyeColor color = DyeColor.byId(tag.getInt("color"));
+        
+        return new Dye(color, count);
     }
     
     public static ItemStack stackFromDye(Dye dye) {
@@ -52,12 +54,18 @@ public record Dye(DyeColor color, int amount) {
     
     public static void setDyeToDyeHolderStack(ItemStack dyespria, ItemStack dyeToInsert, int amount, int uses) {
         var dyeColor = dyeToInsert.getItem() instanceof DyeItem ? ((DyeItem) dyeToInsert.getItem()).getDyeColor() : DyeColor.WHITE;
-        dyespria.set(ModDataComponents.DYE, new Dye(dyeColor, amount));
-        dyespria.set(ModDataComponents.DYESPRIA_USES, uses);
+        CompoundTag tag = dyespria.getOrCreateTag();
+        tag.putInt("amount", amount);
+        tag.putInt("color", dyeColor.getId());
+        tag.putInt("uses", uses);
+        dyespria.setTag(tag);
     }
     
     public static void setDyeColorToStack(ItemStack stack, DyeColor color, int amount) {
-        stack.set(ModDataComponents.DYE, new Dye(color, amount));
+        CompoundTag tag = stack.getOrCreateTag();
+        tag.putInt("amount", amount);
+        tag.putInt("color", color.getId());
+        stack.setTag(tag);
     }
     
     public static DyeColor colorFromId(int id) {

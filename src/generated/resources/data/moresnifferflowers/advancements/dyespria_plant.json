@@ -1,0 +1,30 @@
+{
+  "parent": "moresnifferflowers:root",
+  "criteria": {
+    "planted_dyespria_plant": {
+      "conditions": {},
+      "trigger": "moresnifferflowers:placed_dyespria_plant"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.more_sniffer_flowers.dyespria_plant.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "moresnifferflowers:dyespria"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.more_sniffer_flowers.dyespria_plant"
+    }
+  },
+  "requirements": [
+    [
+      "planted_dyespria_plant"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

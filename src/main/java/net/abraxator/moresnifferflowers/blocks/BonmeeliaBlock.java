@@ -1,6 +1,5 @@
 package net.abraxator.moresnifferflowers.blocks;
 
-import com.mojang.serialization.MapCodec;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -8,7 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -28,8 +27,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.ScheduledTick;
 
-public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
-    public static final MapCodec<BonmeeliaBlock> CODEC = simpleCodec(pProperties -> new BonmeeliaBlock(pProperties, false));
+public class BonmeeliaBlock extends BushBlock implements ModCropBlock, Corruptable {
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 16, 14);
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 6);
     public static final BooleanProperty HAS_BOTTLE = BooleanProperty.create("bottle");
@@ -40,18 +38,13 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
             .map(Property.Value::value)
             .max(Integer::compare)
             .orElse(0);
-    
-    private final boolean wilted;
 
+    private final boolean wilted;
+    
     public BonmeeliaBlock(Properties pProperties, boolean wilted) {
         super(pProperties);
         registerDefaultState(this.defaultBlockState().setValue(HAS_BOTTLE, false).setValue(SHOW_HINT, false).setValue(AGE, 0).setValue(HAS_JAR, false));
         this.wilted = wilted;
-    }
-
-    @Override
-    protected MapCodec<? extends BushBlock> codec() {
-        return CODEC;
     }
 
     @Override
@@ -75,20 +68,13 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if(pStack.is(Items.GLASS_BOTTLE) && canInsertBottle(pState)) {
-            return addBottle(pLevel, pPos, pState, pStack);
-        } else if(pStack.is(Items.BONE_MEAL)) {
-            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
-        } 
-            
-        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
-    }
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        ItemStack itemStack = pPlayer.getMainHandItem();
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (pState.getValue(HAS_BOTTLE) && pState.getValue(AGE) >= MAX_AGE) {
-            return takeJarOfBonmeel(pLevel, pPos, pState);
+        if (itemStack.is(Items.GLASS_BOTTLE) && canInsertBottle(pState)) {
+            return addBottle(pLevel, pPos, pState, itemStack);
+        } else if (pState.getValue(HAS_BOTTLE) && pState.getValue(AGE) >= MAX_AGE) {
+            return takeJarOfBonmeel(pLevel, pPos, pState, pPlayer);
         } else if (!pState.getValue(HAS_BOTTLE) && getAge(pState) >= 3) {
             return hint(pLevel, pPos, pState);
         }
@@ -100,19 +86,21 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         pLevel.setBlock(pPos, pState.setValue(SHOW_HINT, false), 3);
     }
-    
-    private ItemInteractionResult addBottle(Level level, BlockPos blockPos, BlockState blockState, ItemStack stack) {
-        if(!level.isClientSide) {
-            level.setBlock(blockPos, blockState.setValue(HAS_BOTTLE, true), 3);
-            stack.shrink(1);
-        }
 
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        onCorruptByEntity(entity, pos, state, this, level);
     }
 
-    private InteractionResult takeJarOfBonmeel(Level level, BlockPos blockPos, BlockState blockState) {
-        level.setBlock(blockPos, blockState.setValue(AGE, 3).setValue(HAS_BOTTLE, false), 3);
-        popResource(level, blockPos, wilted ? ModItems.JAR_OF_ACID.toStack() : ModItems.JAR_OF_BONMEEL.toStack());
+    private InteractionResult addBottle(Level level, BlockPos blockPos, BlockState blockState, ItemStack stack) {
+        level.setBlock(blockPos, blockState.setValue(HAS_BOTTLE, true), 3);
+        stack.shrink(1);
+        return InteractionResult.sidedSuccess(level.isClientSide());
+    }
+
+    private InteractionResult takeJarOfBonmeel(Level level, BlockPos blockPos, BlockState blockState, Player player) {
+        level.setBlock(blockPos, blockState.setValue(AGE, 0).setValue(HAS_BOTTLE, false), 3);
+        popResource(level, blockPos, wilted ? ModItems.JAR_OF_ACID.get().getDefaultInstance() : ModItems.JAR_OF_BONMEEL.get().getDefaultInstance());
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
@@ -121,7 +109,7 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
         level.getBlockTicks().schedule(new ScheduledTick<>(this, blockPos, level.getGameTime() + 40, level.nextSubTickCount()));
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
-    
+
     @Override
     public boolean isRandomlyTicking(BlockState pState) {
         return getAge(pState) < 3 || (getAge(pState) >= 3 && pState.getValue(HAS_BOTTLE));
@@ -133,12 +121,12 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
 
     @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (!isMaxAge(pState)) {
+        if(!isMaxAge(pState)) {
             pLevel.setBlockAndUpdate(pPos, pState
                     .setValue(AGE, getAge(pState) + 1)
                     .setValue(HAS_JAR, (getAge(pState) + 1) == MAX_AGE && pState.getValue(HAS_BOTTLE)));
-            var particle = new DustParticleOptions(wilted ? Vec3.fromRGB24(0xaeff5c).toVector3f() : Vec3.fromRGB24(11162034).toVector3f(), 1F);
-            if (getAge(pState) >= 3) {
+            var particle = new DustParticleOptions(wilted ? Vec3.fromRGB24(0xaeff5c).toVector3f() : Vec3.fromRGB24(0xAA51B2).toVector3f(), 1F);
+            if(getAge(pState) >= 3) {
                 for (int i = 0; i <= pRandom.nextIntBetweenInclusive(5, 10); i++) {
                     pLevel.sendParticles(
                             particle,
@@ -157,7 +145,7 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         return getAge(pState) < 3;
     }
 

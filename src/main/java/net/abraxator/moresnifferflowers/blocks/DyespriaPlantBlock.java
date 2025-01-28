@@ -1,9 +1,11 @@
 package net.abraxator.moresnifferflowers.blocks;
 
-import com.mojang.serialization.MapCodec;
 import net.abraxator.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
 import net.abraxator.moresnifferflowers.components.Dye;
-import net.abraxator.moresnifferflowers.init.*;
+import net.abraxator.moresnifferflowers.init.ModAdvancementCritters;
+import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.abraxator.moresnifferflowers.init.ModItems;
+import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +17,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -41,7 +43,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEntityBlock, Corruptable {
-    public static final MapCodec<DyespriaPlantBlock> CODEC = simpleCodec(DyespriaPlantBlock::new);
     public static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 16, 14);
 
     public DyespriaPlantBlock(Properties pProperties) {
@@ -50,11 +51,6 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
                 .setValue(getAgeProperty(), 0)
                 .setValue(ModStateProperties.SHEARED, false)
                 .setValue(ModStateProperties.COLOR, DyeColor.WHITE));
-    }
-
-    @Override
-    protected MapCodec<? extends BushBlock> codec() {
-        return CODEC;
     }
 
     @Override
@@ -76,33 +72,28 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if(pStack.is(Items.BONE_MEAL)) {
-            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
-        } else if(isMaxAge(pState) && pLevel.getBlockEntity(pPos) instanceof DyespriaPlantBlockEntity entity) {
-            if(pStack.getItem() instanceof DyeItem) {
-                return addDye(pStack, pPlayer, pLevel, entity);
-            } else if(pStack.is(Items.SHEARS)) {
-                shear(pPlayer, pLevel, pPos, pState, pHand);
-                return ItemInteractionResult.sidedSuccess(pLevel.isClientSide());
-            }
-        }
-        
-        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
-    }
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        var stack = pPlayer.getItemInHand(pHand);
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if(isMaxAge(pState) && pLevel.getBlockEntity(pPos) instanceof DyespriaPlantBlockEntity entity) {
+        if(stack.is(Items.BONE_MEAL) && !isMaxAge(pState)) {
+            return InteractionResult.PASS;
+        } else if(isMaxAge(pState) && pLevel.getBlockEntity(pPos) instanceof DyespriaPlantBlockEntity entity) {
+            if(stack.getItem() instanceof DyeItem) {
+                return addDye(stack, pPlayer, pLevel, entity);
+            } else if(stack.is(Items.SHEARS)) {
+                shear(pPlayer, pLevel, pPos, pState, pHand);
+                return InteractionResult.sidedSuccess(pLevel.isClientSide());
+            }
+        } else if(isMaxAge(pState) && pLevel.getBlockEntity(pPos) instanceof DyespriaPlantBlockEntity entity) {
             pPlayer.addItem(Dye.stackFromDye(entity.removeDye()));
 
             return InteractionResult.sidedSuccess(pLevel.isClientSide());
         }
-        
-        return super.useWithoutItem(pState, pLevel, pPos, pPlayer, pHitResult);
+
+        return InteractionResult.PASS;
     }
 
-    private ItemInteractionResult addDye(ItemStack dye, Player player, Level level, DyespriaPlantBlockEntity entity) {
+    private InteractionResult addDye(ItemStack dye, Player player, Level level, DyespriaPlantBlockEntity entity) {
         if(!level.isClientSide) {
             var stack = dye.copy();
             dye.setCount(-1);
@@ -110,7 +101,7 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
         }
         
         level.playSound(null, entity.getBlockPos(), SoundEvents.DYE_USE, SoundSource.BLOCKS, 1.0F, (float) (1.0F + level.random.nextFloat() * 0.2));
-        return ItemInteractionResult.sidedSuccess(level.isClientSide());
+        return InteractionResult.sidedSuccess(level.isClientSide());
     }
 
     @Override
@@ -125,7 +116,7 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
     
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        if(!pNewState.is(ModBlocks.DYESCRAPIA_PLANT) && !pState.is(pNewState.getBlock()) && pLevel.getBlockEntity(pPos) instanceof DyespriaPlantBlockEntity entity && isMaxAge(pState)) {
+        if(!pNewState.is(ModBlocks.DYESCRAPIA_PLANT.get()) && !pState.is(pNewState.getBlock()) && pLevel.getBlockEntity(pPos) instanceof DyespriaPlantBlockEntity entity && isMaxAge(pState)) {
             var dyespria = ModItems.DYESPRIA.get().getDefaultInstance();
             var dye = new ItemStack(DyeItem.byColor(entity.dye.color()), entity.dye.amount());
 
@@ -136,7 +127,11 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
         super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
     }
 
-
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        onCorruptByEntity(entity, pos, state, this, level);
+    }
+    
     @Override
     public void onCorrupt(Level level, BlockPos pos, BlockState oldState, Block corruptedBlock) {
         if(level.getBlockEntity(pos) instanceof DyespriaPlantBlockEntity entity && isMaxAge(oldState)) {
@@ -169,7 +164,7 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         return !isMaxAge(pState);
     }
 
@@ -184,14 +179,14 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         if(player.isShiftKeyDown() && isMaxAge(state) && level.getBlockEntity(pos) instanceof DyespriaPlantBlockEntity entity) {
-            var stack =  ModItems.DYESPRIA.toStack();
-            stack.set(ModDataComponents.DYE, entity.dye);
+            var stack = ModItems.DYESPRIA.get().getDefaultInstance();
+            Dye.setDyeToDyeHolderStack(stack, Dye.stackFromDye(entity.dye), entity.dye.amount());
             return stack;
         }
         
-        return ModItems.DYESPRIA_SEEDS.toStack();
+        return ModItems.DYESPRIA_SEEDS.get().getDefaultInstance();
     }
 
     @Nullable

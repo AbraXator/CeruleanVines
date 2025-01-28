@@ -1,21 +1,17 @@
 package net.abraxator.moresnifferflowers.items;
 
 import net.abraxator.moresnifferflowers.entities.JarOfAcidProjectile;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.level.Level;
 
-public class JarOfAcidItem extends Item implements ProjectileItem {
+public class JarOfAcidItem extends Item {
     public JarOfAcidItem(Properties pProperties) {
         super(pProperties);
     }
@@ -40,14 +36,7 @@ public class JarOfAcidItem extends Item implements ProjectileItem {
         }
 
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
-        itemstack.consume(1, pPlayer);
+        itemstack.shrink(1);
         return InteractionResultHolder.sidedSuccess(itemstack, pLevel.isClientSide());
-    }
-
-    @Override
-    public Projectile asProjectile(Level pLevel, Position pPos, ItemStack pStack, Direction pDirection) {
-        JarOfAcidProjectile snowball = new JarOfAcidProjectile(pLevel);
-        snowball.setItem(pStack);
-        return snowball;
     }
 }

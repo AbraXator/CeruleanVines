@@ -35,9 +35,9 @@ public class VivicusChestBoatEntity extends ModChestBoatEntity implements Colora
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(COLOR_DATA, DyeColor.WHITE.getId());
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(COLOR_DATA, DyeColor.WHITE.getId());
     }
     
     public void setColor(DyeColor color) {
@@ -51,7 +51,7 @@ public class VivicusChestBoatEntity extends ModChestBoatEntity implements Colora
     @Override
     public InteractionResult interact(Player pPlayer, InteractionHand pHand) {
         var dyespria = pPlayer.getMainHandItem();
-        if (dyespria.is(ModItems.DYESPRIA)) {
+        if (dyespria.is(ModItems.DYESPRIA.get())) {
             var dye = Dye.getDyeFromDyespria(dyespria);
             int uses = DyespriaItem.getDyespriaUses(dyespria);
             int dyeCount;

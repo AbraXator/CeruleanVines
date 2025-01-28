@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.blockentities.BondripiaBlockEntity;
+import net.abraxator.moresnifferflowers.blockentities.GiantCropBlockEntity;
 import net.abraxator.moresnifferflowers.client.model.ModModelLayerLocations;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
@@ -33,7 +34,7 @@ public class BondripiaBlockEntityRenderer<T extends BondripiaBlockEntity> implem
         if(pBlockEntity.getBlockState().getValue(ModStateProperties.CENTER) && pBlockEntity.getBlockState().getValue(ModStateProperties.AGE_2) >= 2) {
             pPoseStack.translate(0.5, 1.5, 0.5);
             pPoseStack.mulPose(Axis.XP.rotationDegrees(180));
-            Material material = pBlockEntity.getBlockState().is(ModBlocks.ACIDRIPIA) ? ACID_DRIPIATEXTURE : BONDRIPIA_TEXTURE;
+            Material material = pBlockEntity.getBlockState().is(ModBlocks.ACIDRIPIA.get()) ? ACID_DRIPIATEXTURE : BONDRIPIA_TEXTURE;
             this.model.render(pPoseStack, material.buffer(pBufferSource, RenderType::entityCutout), pPackedLight, pPackedOverlay);
         }
     }
@@ -43,17 +44,11 @@ public class BondripiaBlockEntityRenderer<T extends BondripiaBlockEntity> implem
         return true;
     }
 
-    @Override
     public int getViewDistance() {
         return 256;
     }
 
     public boolean shouldRender(T pBlockEntity, Vec3 pCameraPos) {
-        return true;
-    }
-
-    @Override
-    public AABB getRenderBoundingBox(T blockEntity) {
-        return AABB.INFINITE;
+        return Vec3.atCenterOf(pBlockEntity.getBlockPos()).multiply(1.0D, 0.0D, 1.0D).closerThan(pCameraPos.multiply(1.0D, 0.0D, 1.0D), this.getViewDistance());
     }
 }

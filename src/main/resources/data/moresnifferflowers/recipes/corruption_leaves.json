@@ -1,0 +1,10 @@
+{
+  "type": "moresnifferflowers:corruption",
+  "source": "#minecraft:leaves",
+  "corrupted": [
+    {
+      "block": "minecraft:air",
+      "weight": 100
+    }
+  ]
+}

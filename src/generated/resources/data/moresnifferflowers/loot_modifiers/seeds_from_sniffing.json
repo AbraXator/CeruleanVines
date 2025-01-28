@@ -2,7 +2,7 @@
   "type": "moresnifferflowers:add_items",
   "conditions": [
     {
-      "condition": "neoforge:loot_table_id",
+      "condition": "forge:loot_table_id",
       "loot_table_id": "minecraft:gameplay/sniffer_digging"
     }
   ],

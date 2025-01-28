@@ -1,17 +1,13 @@
 package net.abraxator.moresnifferflowers.worldgen.configurations.tree.boblingtree;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModTrunkPlacerTypes;
-import net.abraxator.moresnifferflowers.worldgen.configurations.tree.vivicus.VivicusTrunkPlacer;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
-import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,15 +17,13 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
-import org.openjdk.nashorn.internal.objects.NativeWeakMap;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 public class BoblingTreeTrunkPlacer extends TrunkPlacer {
-    public static final MapCodec<BoblingTreeTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(
+    public static final Codec<BoblingTreeTrunkPlacer> CODEC = RecordCodecBuilder.create(
             p_338099_ -> trunkPlacerParts(p_338099_).apply(p_338099_, BoblingTreeTrunkPlacer::new)
     );
     

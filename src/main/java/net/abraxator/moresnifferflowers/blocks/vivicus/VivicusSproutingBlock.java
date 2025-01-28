@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -18,8 +17,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-
-import static net.abraxator.moresnifferflowers.init.ModStateProperties.FLIPPED;
 
 public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCropBlock, ColorableVivicusBlock {
     public VivicusSproutingBlock(Properties p_54422_) {
@@ -40,7 +37,7 @@ public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCrop
     }
 
     @Override
-    protected boolean isRandomlyTicking(BlockState pState) {
+    public boolean isRandomlyTicking(BlockState pState) {
         return super.isRandomlyTicking(pState) || !isMaxAge(pState);
     }
 
@@ -56,9 +53,7 @@ public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCrop
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        net.neoforged.neoforge.common.util.TriState soilDecision = level.getBlockState(pos.above()).canSustainPlant(level, pos.above(), Direction.DOWN, state);
-        if (!soilDecision.isDefault()) return soilDecision.isTrue();
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         return level.getBlockState(pos.above()).is(ModBlocks.VIVICUS_LEAVES.get());
     }
 
@@ -70,16 +65,16 @@ public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCrop
     }
 
     @Override
-    protected void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
+    public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if(pRandom.nextDouble() <= 0.5D) {
             grow(pState, pLevel, pPos);
         }
         
         super.randomTick(pState, pLevel, pPos, pRandom);
     }
-
+    
     @Override
-    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState) {
+    public boolean isValidBonemealTarget(LevelReader pLevel, BlockPos pPos, BlockState pState, boolean pIsClient) {
         return !isMaxAge(pState);
     }
 

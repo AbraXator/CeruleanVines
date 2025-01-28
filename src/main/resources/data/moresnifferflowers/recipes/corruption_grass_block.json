@@ -1,0 +1,14 @@
+{
+  "type": "moresnifferflowers:corruption",
+  "source": "minecraft:grass_block",
+  "corrupted": [
+    {
+      "block": "moresnifferflowers:corrupted_grass_block",
+      "weight": 15
+    },
+    {
+      "block": "minecraft:coarse_dirt",
+      "weight": 85
+    }
+  ]
+}

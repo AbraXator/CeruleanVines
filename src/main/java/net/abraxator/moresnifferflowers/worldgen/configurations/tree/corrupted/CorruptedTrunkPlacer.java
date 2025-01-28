@@ -1,6 +1,6 @@
 package net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModTrunkPlacerTypes;
 import net.minecraft.core.BlockPos;
@@ -18,10 +18,9 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 public class CorruptedTrunkPlacer extends TrunkPlacer {
-    public static final MapCodec<CorruptedTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(
-            p_70161_ -> trunkPlacerParts(p_70161_).apply(p_70161_, CorruptedTrunkPlacer::new)
-    );
-    
+    public static final Codec<CorruptedTrunkPlacer> CODEC = RecordCodecBuilder.create(p_70161_ -> 
+            trunkPlacerParts(p_70161_).apply(p_70161_, CorruptedTrunkPlacer::new));
+
     public CorruptedTrunkPlacer(int pBaseHeight, int pHeightRandA, int pBranchCount) {
         super(pBaseHeight, pHeightRandA, pBranchCount);
     }
@@ -43,7 +42,7 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
         int innerHeight =  Math.min(outerHeight + pRandom.nextIntBetweenInclusive(3, 5), pFreeTreeHeight - 2);
 
         for(int i = 0; i < pFreeTreeHeight; i++) {
-            
+
             this.placeLog(pLevel, pBlockSetter, pRandom, mainTrunk, pConfig);
 
             if (i == pFreeTreeHeight - 1){
@@ -59,7 +58,7 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
             mainTrunk.move(Direction.UP);
         }
 
-       // ret.add(new FoliagePlacer.FoliageAttachment(mainTrunk.above(1), 0, false));
+        // ret.add(new FoliagePlacer.FoliageAttachment(mainTrunk.above(1), 0, false));
         return ret;
     }
 
@@ -124,63 +123,17 @@ public class CorruptedTrunkPlacer extends TrunkPlacer {
 
             if(x == branchLength - 1) {
                 this.placeLog(level, pBlockSetter, random, pos.move(0, -1, 0), config);
-           //     ret.add(new FoliagePlacer.FoliageAttachment(pos.below(1), 0, false));
             }
         }
 
     }
-
-
-    //Old Branch maker//
- /*   private void addBranch(BlockPos blockPos, List<FoliagePlacer.FoliageAttachment> ret, BiConsumer<BlockPos, BlockState> pBlockSetter, LevelSimulatedReader level, TreeConfiguration config, RandomSource random, int pFreeTreeHeight) {
-        Direction direction = computeBranchDir(random);
-        BlockPos.MutableBlockPos pos = blockPos.relative(direction).mutable();
-        int branchHeight = 5+Math.min(random.nextIntBetweenInclusive(3, 6), pFreeTreeHeight);
-
-        for (int i = 0; i < branchHeight; i++) {
-            this.placeLog(level, pBlockSetter, random, pos, config);
-            //pBlockSetter.accept(branch.pos, Blocks.ORANGE_WOOL.defaultBlockState());
-            if(random.nextDouble() >= 0.66D) {
-                this.placeLog(level, pBlockSetter, random, pos.move(direction), config);
-                //pBlockSetter.accept(branch.pos.relative(branch.direction), Blocks.ORANGE_WOOL.defaultBlockState());
-            }
-
-            pos.move(Direction.UP);
-
-            if(i == branchHeight - 1) {
-                ret.add(new FoliagePlacer.FoliageAttachment(pos.immutable(), 0, false));
-            }
-        }
-    } */
-
-    /*private void placeBranch(List<Branch> branches, List<FoliagePlacer.FoliageAttachment> ret, BiConsumer<BlockPos, BlockState> pBlockSetter, LevelSimulatedReader level, TreeConfiguration config, RandomSource random, int height, int pFreeTreeHeight) {
-        for (int i = 0; i < branches.size(); i++) {
-            Branch branch = branches.get(i);
-            
-            if(branch.last) {
-            } else {
-                this.placeLog(level, pBlockSetter, random, branch.pos, config);
-                //pBlockSetter.accept(branch.pos, Blocks.ORANGE_WOOL.defaultBlockState());
-                if(random.nextBoolean()) {
-                    this.placeLog(level, pBlockSetter, random, branch.pos.relative(branch.direction), config);
-                    //pBlockSetter.accept(branch.pos.relative(branch.direction), Blocks.ORANGE_WOOL.defaultBlockState());
-                }
-
-                Direction direction = Branch.computeBranchDir(branch.direction, random, 0.3D);
-                BlockPos blockPos = branch.pos.relative(direction).above();
-                boolean last = branch.lenght > 3 && height >= pFreeTreeHeight - random.nextInt(1);
-                
-                branches.set(i, new Branch(blockPos, direction, 1, height == pFreeTreeHeight - 1));
-            }
-        }
-    }*/
 
     private static Direction computeBranchDir(RandomSource random) {
         Direction direction = Direction.Plane.HORIZONTAL.getRandomDirection(random);
         Direction clockAdjusted = random.nextBoolean() ? direction.getClockWise() : direction.getCounterClockWise();
         return random.nextBoolean() ? direction : clockAdjusted;
     }
-    
+
     @Override
     protected boolean validTreePos(LevelSimulatedReader pLevel, BlockPos pPos) {
         return true;

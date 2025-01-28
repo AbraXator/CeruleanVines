@@ -13,10 +13,12 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.TadpoleRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -34,7 +36,7 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 	private final ModelPart wheat;
 
 	public GiantCropBlockEntityRenderer(BlockEntityRendererProvider.Context pContext) {
-        ModelPart carrotModelPart = pContext.bakeLayer(ModModelLayerLocations.GIANT_CARROT);
+		ModelPart carrotModelPart = pContext.bakeLayer(ModModelLayerLocations.GIANT_CARROT);
 		this.carrot = carrotModelPart.getChild("root");
 		this.modelPartMap.put(ModBlocks.GIANT_CARROT.get(), this.carrot);
 		ModelPart potatoModelPart = pContext.bakeLayer(ModModelLayerLocations.GIANT_POTATO);
@@ -58,49 +60,28 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 		Material TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, MoreSnifferFlowers.loc("block/" + path));
 		VertexConsumer vertexConsumer = TEXTURE.buffer(pBufferSource, RenderType::entityCutout);
 		float coolPartialTick = (pBlockEntity.growProgress < 1 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) ? pPartialTick : 0;
-		// float coolGrowProgress = (float)(Math.sin(pBlockEntity.getLevel().getGameTime()))/4;
 		float coolGrowProgress = pBlockEntity.getLevel().getGameTime() - pBlockEntity.staticGameTime;
-
+		
 		if(pBlockEntity.growProgress > 0 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) {
-            double yCord = 0;
-			float yScale = 0;
-            if (pBlockEntity.growProgress > 0 && pBlockEntity.growProgress < 1 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) {
-                yCord = (coolPartialTick + coolGrowProgress)/4 - 2;
-				yScale = Mth.lerp((coolPartialTick + coolGrowProgress)/10, 0, 1);
-            } else {
-				yCord = 0.5;
-				yScale = 1;
-            }
-
+			float yCord = 0.5F;
+			float yScale = 1;
+			
+			if(pBlockEntity.growProgress < 1) {
+				yCord = (coolGrowProgress + coolPartialTick) / 4 - 2;
+				yScale = Mth.lerp((coolGrowProgress + coolPartialTick) / 10, 0, 1);
+			}
+			
 			pPoseStack.pushPose();
 			pPoseStack.translate(0.5, yCord, 0.5);
-            pPoseStack.mulPose(new Quaternionf().rotateX((float) (Math.PI)));
 			pPoseStack.scale(1, yScale, 1);
+			pPoseStack.mulPose(new Quaternionf().rotateX((float) (Math.PI)));
 			modelPartMap.get(blockState.getBlock()).render(pPoseStack, vertexConsumer, pPackedLight, pPackedOverlay);
-            pPoseStack.popPose();
-            if (pBlockEntity.growProgress < 1 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) {
-                System.out.println("Pticks=" + coolPartialTick + " Growprogress=" + pBlockEntity.growProgress + " Height=" + yCord + " Scale=" + yScale + " coolGrowProgress=" + coolGrowProgress+ " static=" + pBlockEntity.staticGameTime);
-            }
-        }
-	}
-
-	
-	@Override
-	public boolean shouldRenderOffScreen(T pBlockEntity) {
-		return true;
+			pPoseStack.popPose();
+		}
 	}
 
 	@Override
-	public int getViewDistance() {
-		return 256;
-	}
-
-	public boolean shouldRender(T pBlockEntity, Vec3 pCameraPos) {
-		return true;
-	}
-
-	@Override
-	public AABB getRenderBoundingBox(T blockEntity) {
-		return AABB.INFINITE;
+	public boolean shouldRenderOffScreen(GiantCropBlockEntity pBlockEntity) {
+		return pBlockEntity.getBlockState().getValue(ModStateProperties.CENTER);
 	}
 }

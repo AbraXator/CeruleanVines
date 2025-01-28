@@ -1,0 +1,10 @@
+{
+  "type": "moresnifferflowers:corruption",
+  "source": "minecraft:deepslate",
+  "corrupted": [
+    {
+      "block": "minecraft:blackstone",
+      "weight": 100
+    }
+  ]
+}

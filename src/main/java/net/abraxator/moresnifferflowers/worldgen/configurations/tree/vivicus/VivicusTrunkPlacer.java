@@ -1,5 +1,6 @@
 package net.abraxator.moresnifferflowers.worldgen.configurations.tree.vivicus;
 
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.abraxator.moresnifferflowers.init.ModTags;
@@ -24,7 +25,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class VivicusTrunkPlacer extends TrunkPlacer {
-    public static final MapCodec<VivicusTrunkPlacer> CODEC = RecordCodecBuilder.mapCodec(
+    public static final Codec<VivicusTrunkPlacer> CODEC = RecordCodecBuilder.create(
             p_338099_ -> trunkPlacerParts(p_338099_).apply(p_338099_, VivicusTrunkPlacer::new)
     );
 

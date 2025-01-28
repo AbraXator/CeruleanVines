@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "moresnifferflowers:scrap_piece"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "item": "minecraft:copper_ingot"
+  }
+}

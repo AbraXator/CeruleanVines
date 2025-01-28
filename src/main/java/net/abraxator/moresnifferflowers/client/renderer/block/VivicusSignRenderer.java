@@ -16,8 +16,10 @@ import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
 public class VivicusSignRenderer extends SignRenderer {
@@ -67,7 +69,7 @@ public class VivicusSignRenderer extends SignRenderer {
         if(pState.getBlock() instanceof ColorableVivicusBlock colorableVivicusBlock) {
             var dyeColor = pState.getValue(ModStateProperties.COLOR);
             color = colorableVivicusBlock.colorValues().get(dyeColor);
-            vertexconsumer.setColor(color);
+            vertexconsumer.color(color);
         }
         this.renderSignModel(pPoseStack, pPackedLight, pPackedOverlay, pModel, vertexconsumer, color);
         pPoseStack.popPose();
@@ -75,6 +77,6 @@ public class VivicusSignRenderer extends SignRenderer {
 
     void renderSignModel(PoseStack pPoseStack, int pPackedLight, int pPackedOverlay, Model pModel, VertexConsumer pVertexConsumer, int color) {
         SignRenderer.SignModel signrenderer$signmodel = (SignRenderer.SignModel)pModel;
-        signrenderer$signmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, color);
+        signrenderer$signmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF, 1);
     }
 }

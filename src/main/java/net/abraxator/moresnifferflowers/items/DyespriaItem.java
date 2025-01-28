@@ -7,9 +7,10 @@ import net.abraxator.moresnifferflowers.components.Dye;
 import net.abraxator.moresnifferflowers.components.DyespriaMode;
 import net.abraxator.moresnifferflowers.components.EntityDistanceComparator;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModDataComponents;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import net.abraxator.moresnifferflowers.init.ModTags;
 import net.abraxator.moresnifferflowers.networking.DyespriaDisplayModeChangePacket;
+import net.abraxator.moresnifferflowers.networking.ModPacketHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -40,8 +41,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +70,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
         }
 
         if (checkDyedBlock(blockState) || blockState.getBlock() instanceof Colorable && !dye.isEmpty()) {
-            DyespriaMode dyespriaMode = stack.getOrDefault(ModDataComponents.DYESPRIA_MODE, DyespriaMode.SINGLE);
+            DyespriaMode dyespriaMode = getMode(stack);
             DyespriaMode.DyespriaSelector dyespriaSelector = new DyespriaMode.DyespriaSelector(blockPos, blockState, getMatchTag(blockState), level, pContext.getClickedFace());
             Set<BlockPos> set = dyespriaMode.getSelector().apply(dyespriaSelector);
             set.stream().sorted(new EntityDistanceComparator(blockPos)).forEach(blockPos1 -> {
@@ -85,6 +85,10 @@ public class DyespriaItem extends BlockItem implements Colorable {
         }
 
         return handlePlacement(blockPos, level, player, pContext.getHand(), stack);
+    }
+    
+    public DyespriaMode getMode(ItemStack stack) {
+        return DyespriaMode.byIndex(stack.getOrCreateTag().getByte("mode"));
     }
     
     private @Nullable TagKey<Block> getMatchTag(BlockState blockState) {
@@ -190,11 +194,14 @@ public class DyespriaItem extends BlockItem implements Colorable {
     }
     
     public static int getDyespriaUses(ItemStack stack) {
-        return stack.getOrDefault(ModDataComponents.DYESPRIA_USES, 4);
+        var tag = stack.getOrCreateTag();
+        return tag.contains("uses") ? tag.getInt("uses") : 4;
     }
     
     public static void setDyespriaUses(ItemStack stack, int uses) {
-        stack.set(ModDataComponents.DYESPRIA_USES, uses);
+        var tag = stack.getOrCreateTag();
+        tag.putInt("uses", uses);
+        stack.setTag(tag);
     }
     
     private boolean canDye(BlockState blockState, Dye dye) {
@@ -202,7 +209,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
     }
 
     public static boolean checkDyedBlock(BlockState blockState) {
-        return blockState.is(Tags.Blocks.DYED);
+        return blockState.is(ModTags.ModBlockTags.DYED);
     }
     
     private void dyeNonColorableBlock(BlockState blockState, BlockPos blockPos, DyeColor newColor, Level level) {
@@ -222,7 +229,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
         splitBlockId[colorIndex] = newColor.getName();
         
         String finalBlockName = String.join("_", splitBlockId);
-        Block finalBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath(modId, finalBlockName));
+        Block finalBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(modId, finalBlockName));
         BlockState finalBlockState = finalBlock.defaultBlockState();
         
         level.setBlockAndUpdate(blockPos, copyAllBlockStateProperties(blockState, finalBlockState));
@@ -273,10 +280,10 @@ public class DyespriaItem extends BlockItem implements Colorable {
             return ItemStack.EMPTY;
         }
     }
-    
+
     @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         Dye dye = Dye.getDyeFromDyespria(pStack);
         Component usage = Component.translatableWithFallback("tooltip.dyespria.usage", "Right click with dye to insert \nRight click caulorflower to repaint \nSneak to apply to the whole column \n").withStyle(ChatFormatting.GOLD);
         var usageComponents = Arrays.stream(usage.getString().split("\n", -1))
@@ -285,7 +292,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
 
         usageComponents.forEach(s -> pTooltipComponents.add(Component.literal(s).withStyle(ChatFormatting.GOLD)));
         pTooltipComponents.add(Component.empty());
-        pTooltipComponents.add(getCurrentModeComponent(getCurrentMode(pStack)));
+        pTooltipComponents.add(getCurrentModeComponent(getMode(pStack)));
         pTooltipComponents.add(Component.empty());
         
         if(!dye.isEmpty()) {
@@ -332,10 +339,6 @@ public class DyespriaItem extends BlockItem implements Colorable {
             dyeColorHexFormatMap.put(DyeColor.PINK, 0xFFf8b0c4);
         });
     }
-
-    public static DyespriaMode getCurrentMode(ItemStack itemStack) {
-        return itemStack.getOrDefault(ModDataComponents.DYESPRIA_MODE.get(), DyespriaMode.SINGLE);
-    }
     
     public static Component getCurrentModeComponent(DyespriaMode dyespriaMode) {
         var baseText = Component.translatable("message.more_sniffer_flowers.dyespria_mode").append(": ").withStyle(ChatFormatting.GOLD);
@@ -344,9 +347,11 @@ public class DyespriaItem extends BlockItem implements Colorable {
     }
     
     public void changeMode(ServerPlayer player, ItemStack stack, int amount) {
-        var currentMode = stack.getOrDefault(ModDataComponents.DYESPRIA_MODE, DyespriaMode.SINGLE);
+        var currentMode = getMode(stack);
         var newMode = DyespriaMode.shift(currentMode, amount);
-        stack.set(ModDataComponents.DYESPRIA_MODE, newMode);
-        PacketDistributor.sendToPlayer(player, new DyespriaDisplayModeChangePacket(newMode.ordinal()));
+        var tag = stack.getOrCreateTag();
+        tag.putByte("mode", (byte) newMode.ordinal());
+        stack.setTag(tag);
+        player.displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(newMode.ordinal())), true);
     }
 }

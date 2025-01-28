@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cropressor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "moresnifferflowers:cropressor"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:cropressed_carrot_from_cropressing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_cropressor",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:cropressed_carrot_from_cropressing"
+    ]
+  },
+  "sends_telemetry_event": false
+}

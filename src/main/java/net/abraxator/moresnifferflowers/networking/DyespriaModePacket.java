@@ -1,36 +1,27 @@
 package net.abraxator.moresnifferflowers.networking;
 
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import io.netty.buffer.ByteBuf;
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.items.DyespriaItem;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraftforge.network.NetworkEvent;
 
-public record DyespriaModePacket(int amount) implements IMSFPacket {
-    public static final Type<DyespriaModePacket> TYPE = new Type<>(MoreSnifferFlowers.loc("dyespria_mode"));
-    public static final StreamCodec<ByteBuf, DyespriaModePacket> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.INT, DyespriaModePacket::amount,
-            DyespriaModePacket::new
-    );
-    
-    @Override
-    public Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+import java.util.function.Supplier;
+
+public record DyespriaModePacket(int amount) {
+    public DyespriaModePacket(FriendlyByteBuf buf) {
+        this(buf.readInt());
     }
 
-    @Override
-    public void handle(IPayloadContext context) {
-        context.enqueueWork(() -> {
-            var player = context.player();
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeInt(amount);
+    }
+
+    public static void handle(DyespriaModePacket packet, Supplier<NetworkEvent.Context> context) {
+        NetworkEvent.Context ctx = context.get();
+        ctx.enqueueWork(() -> {
+            var player = ctx.getSender();
             var stack = player.getMainHandItem();
-            if(stack.getItem() instanceof DyespriaItem dyespriaItem && player instanceof ServerPlayer serverPlayer) {
-                dyespriaItem.changeMode(serverPlayer, stack, amount);
+            if(stack.getItem() instanceof DyespriaItem dyespriaItem) {
+                dyespriaItem.changeMode(player, stack, packet.amount);
             }
         });
     }

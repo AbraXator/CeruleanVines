@@ -1,0 +1,70 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "moresnifferflowers:bonmeelia_seeds"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "moresnifferflowers:bonmeelia",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "age": "6",
+            "bottle": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "moresnifferflowers:jar_of_bonmeel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:all_of",
+          "terms": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "block": "moresnifferflowers:bonmeelia",
+                "condition": "minecraft:block_state_property",
+                "properties": {
+                  "age": "6"
+                }
+              }
+            },
+            {
+              "block": "moresnifferflowers:bonmeelia",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "bottle": "true"
+              }
+            }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:glass_bottle"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "moresnifferflowers:blocks/bonmeelia"
+}

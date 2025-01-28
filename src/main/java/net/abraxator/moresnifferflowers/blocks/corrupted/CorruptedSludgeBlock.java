@@ -4,6 +4,7 @@ import net.abraxator.moresnifferflowers.blockentities.CorruptedSludgeBlockEntity
 import net.abraxator.moresnifferflowers.blocks.ModEntityBlock;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;

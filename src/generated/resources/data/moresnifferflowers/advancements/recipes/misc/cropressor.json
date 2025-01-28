@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cropressor_piece": {
+      "conditions": {
+        "items": [
+          {
+            "tag": "moresnifferflowers:cropressor_pieces"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "moresnifferflowers:cropressor"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_cropressor_piece",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "moresnifferflowers:cropressor"
+    ]
+  },
+  "sends_telemetry_event": false
+}

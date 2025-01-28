@@ -29,13 +29,9 @@ public class VivicusTreeFeature extends TreeFeature {
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<TreeConfiguration> pContext) {
-        final WorldGenLevel worldgenlevel = pContext.level();
-        RandomSource randomsource = pContext.random();
-        BlockPos blockpos = pContext.origin();
-        BlockState blockState = pContext.level().getBlockState(blockpos);
+    public boolean place(TreeConfiguration treeconfiguration, WorldGenLevel worldgenlevel, ChunkGenerator pChunkGenerator, RandomSource randomsource, BlockPos blockpos) {
+        BlockState blockState = worldgenlevel.getBlockState(blockpos);
         DyeColor saplingColor = blockState.hasProperty(ModStateProperties.COLOR) ? blockState.getValue(ModStateProperties.COLOR) : DyeColor.WHITE;
-        TreeConfiguration treeconfiguration = pContext.config();
         Set<BlockPos> set = Sets.newHashSet();
         Set<BlockPos> set1 = Sets.newHashSet();
         final Set<BlockPos> set2 = Sets.newHashSet();

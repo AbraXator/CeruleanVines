@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.math.Axis;
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.entities.boat.ModBoatEntity;
 import net.abraxator.moresnifferflowers.entities.boat.ModChestBoatEntity;
@@ -25,12 +24,12 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.entity.vehicle.ChestBoat;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.joml.Quaternionf;
 
 import java.util.Map;
 import java.util.stream.Stream;
+
+import static net.abraxator.moresnifferflowers.client.ModColorHandler.hexToRGB;
 
 public class ModBoatRenderer extends BoatRenderer {
     private final Map<ModBoatEntity.Type, Pair<ResourceLocation, ListModel<Boat>>> boatResources;
@@ -38,7 +37,7 @@ public class ModBoatRenderer extends BoatRenderer {
     public ModBoatRenderer(EntityRendererProvider.Context pContext, boolean pChestBoat) {
         super(pContext, pChestBoat);
         this.boatResources = Stream.of(ModBoatEntity.Type.values()).collect(ImmutableMap.toImmutableMap(type -> type,
-               type -> Pair.of(ResourceLocation.fromNamespaceAndPath(MoreSnifferFlowers.MOD_ID, getTextureLocation(type, pChestBoat)), this.createBoatModel(pContext, type, pChestBoat))));    
+               type -> Pair.of(MoreSnifferFlowers.loc(getTextureLocation(type, pChestBoat)), this.createBoatModel(pContext, type, pChestBoat))));    
     }
 
     @Override
@@ -68,7 +67,8 @@ public class ModBoatRenderer extends BoatRenderer {
         pPoseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         listmodel.setupAnim(pEntity, pPartialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
         VertexConsumer vertexconsumer = pBuffer.getBuffer(listmodel.renderType(resourcelocation));
-        listmodel.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, boatColor(pEntity));
+        int hex = boatColor(pEntity);
+        listmodel.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, hexToRGB(hex)[0], hexToRGB(hex)[1], hexToRGB(hex)[2], 1);
         if (!pEntity.isUnderWater()) {
             VertexConsumer vertexconsumer1 = pBuffer.getBuffer(RenderType.waterMask());
             if (listmodel instanceof WaterPatchModel waterpatchmodel) {
@@ -98,7 +98,7 @@ public class ModBoatRenderer extends BoatRenderer {
     }
 
     private static ModelLayerLocation createLocation(String pPath, String pModel) {
-        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(MoreSnifferFlowers.MOD_ID, pPath), pModel);
+        return new ModelLayerLocation(MoreSnifferFlowers.loc(pPath), pModel);
     }
 
     @Override

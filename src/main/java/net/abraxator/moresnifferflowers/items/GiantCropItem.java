@@ -9,9 +9,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -26,30 +28,28 @@ public class GiantCropItem extends BlockItem {
         var aabb = AABB.ofSize(pContext.getClickedPos().above(1).getCenter(), 2, 2, 2);
         BlockPos.betweenClosedStream(aabb).forEach(pos -> {
             level.setBlockAndUpdate(pos, this.getBlock().defaultBlockState().setValue(ModStateProperties.CENTER, pos.equals(pContext.getClickedPos().above())));
-            if(level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
-                entity.pos1 = pContext.getClickedPos().mutable().move(1, 2, 1);
-                entity.pos2 = pContext.getClickedPos().mutable().move(-1, 0, -1);
+            if (level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
+                entity.center = pContext.getClickedPos().above();
             }
         });
-        
+
         return true;
     }
 
     @Override
-    protected boolean canPlace(BlockPlaceContext pContext, BlockState pState) { 
+    protected boolean canPlace(BlockPlaceContext pContext, BlockState pState) {
         var pos = pContext.getClickedPos();
         var level = pContext.getLevel();
-        var aabb = AABB.ofSize(pContext.getClickedPos().above(2).getCenter(), 2, 2, 2);
+        var aabb = AABB.ofSize(pContext.getClickedPos().getCenter(), 2, 0, 2).setMaxY(3);
         var ret = BlockPos.betweenClosedStream(aabb)
-                .allMatch(blockPos -> level.getBlockState(blockPos).isEmpty());
-        
+                .allMatch(blockPos -> level.getBlockState(blockPos).canBeReplaced());
+
         return ret;
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
-        
-        pTooltipComponents.add(Component.literal("CREATIVE ONLY").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        tooltip.add(Component.literal("CREATIVE ONLY").withStyle(ChatFormatting.DARK_RED, ChatFormatting.BOLD));
     }
 }
