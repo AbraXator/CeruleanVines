@@ -1,0 +1,13 @@
+{
+  "sweet": {
+    "minecraft:honey": 80,
+    "minecraft:sugar": 100
+  },
+  "salty": {
+    "minecraft:cod": 40,
+    "minecraft:bread": 20
+  },
+  "neutral": {
+    "minecraft:bread": 80
+  }
+}

@@ -1,7 +1,6 @@
 package net.abraxator.moresnifferflowers.items;
 
 import net.abraxator.moresnifferflowers.components.CropressorAnimation;
-import net.abraxator.moresnifferflowers.init.ModDataComponents;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;

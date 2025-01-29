@@ -70,7 +70,7 @@ public class ColoredBlockEntity extends ModBlockEntity implements Colorable {
         pTag.putInt("dyeId", dye.color().getId());
         pTag.putInt("amount", dye.amount());
     }
-    
+
     @Override
     public CompoundTag getUpdateTag() {
         super.getUpdateTag();

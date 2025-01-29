@@ -2,6 +2,7 @@ package net.abraxator.moresnifferflowers;
 
 import com.google.common.collect.Maps;
 import com.mojang.logging.LogUtils;
+import net.abraxator.moresnifferflowers.data.NutritionLoader;
 import net.abraxator.moresnifferflowers.init.*;
 import net.abraxator.moresnifferflowers.networking.ModPacketHandler;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModTreeDecoratorTypes;
@@ -14,6 +15,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidInteractionRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -51,6 +54,8 @@ public class MoreSnifferFlowers {
         ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         
         ModPacketHandler.init();
+        
+        MinecraftForge.EVENT_BUS.addListener(this::addReloadListener);
     }
     
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -116,6 +121,10 @@ public class MoreSnifferFlowers {
             ComposterBlock.add(1.0F, ModBlocks.VIVICUS_LEAVES.get());
             ModCauldronInteractions.bootstrap();
         });
+    }
+    
+    public void addReloadListener(AddReloadListenerEvent event) {
+        event.addListener(new NutritionLoader());
     }
     
     public static ResourceLocation loc(String path) {
