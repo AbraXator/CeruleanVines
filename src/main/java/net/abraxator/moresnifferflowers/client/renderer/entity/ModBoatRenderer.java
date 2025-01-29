@@ -68,7 +68,7 @@ public class ModBoatRenderer extends BoatRenderer {
         listmodel.setupAnim(pEntity, pPartialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
         VertexConsumer vertexconsumer = pBuffer.getBuffer(listmodel.renderType(resourcelocation));
         int hex = boatColor(pEntity);
-        listmodel.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, hexToRGB(hex)[0], hexToRGB(hex)[1], hexToRGB(hex)[2], 1);
+        listmodel.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1-hexToRGB(hex)[0], 1-hexToRGB(hex)[1], 1-hexToRGB(hex)[2], 1);
         if (!pEntity.isUnderWater()) {
             VertexConsumer vertexconsumer1 = pBuffer.getBuffer(RenderType.waterMask());
             if (listmodel instanceof WaterPatchModel waterpatchmodel) {

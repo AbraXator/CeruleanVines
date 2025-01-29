@@ -76,7 +76,7 @@ public abstract class AbstractXBushBlockBase extends ModEntityDoubleTallBlock im
     
     @Override
     public boolean mayPlaceOn(BlockState pState) {
-        return ModCropBlock.super.mayPlaceOn(pState) || pState.is(getLowerBlock());
+        return ModCropBlock.super.mayPlaceOn(pState);
     }
 
     @Override
