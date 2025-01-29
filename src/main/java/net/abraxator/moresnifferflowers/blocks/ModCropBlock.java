@@ -79,7 +79,7 @@ public interface ModCropBlock extends BonemealableBlock {
             for(int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
                 BlockState blockstate = pLevel.getBlockState(blockpos.offset(i, 0, j));
-                if (blockstate.canSustainPlant(pLevel, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (net.minecraftforge.common.IPlantable) pState.getBlock())) {
+                if (pState.getBlock() instanceof net.minecraftforge.common.IPlantable && blockstate.canSustainPlant(pLevel, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (net.minecraftforge.common.IPlantable) pState.getBlock())) {
                     f1 = 1.0F;
                     if (blockstate.isFertile(pLevel, pPos.offset(i, 0, j))) {
                         f1 = 3.0F;
