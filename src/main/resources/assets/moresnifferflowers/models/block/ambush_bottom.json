@@ -1,7 +1,0 @@
-{
-  "render_type": "cutout",
-  "parent": "moresnifferflowers:block/farmland_cross",
-  "textures": {
-    "cross": "moresnifferflowers:block/ambush_bottom"
-  }
-}
