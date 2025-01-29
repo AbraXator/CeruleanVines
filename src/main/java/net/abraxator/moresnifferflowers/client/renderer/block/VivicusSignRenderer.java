@@ -77,6 +77,6 @@ public class VivicusSignRenderer extends SignRenderer {
 
     void renderSignModel(PoseStack pPoseStack, int pPackedLight, int pPackedOverlay, Model pModel, VertexConsumer pVertexConsumer, int color) {
         SignRenderer.SignModel signrenderer$signmodel = (SignRenderer.SignModel)pModel;
-        signrenderer$signmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF, 1);
+        signrenderer$signmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, 1-((color >> 16) & 0xFF), 1-((color >> 8) & 0xFF), 1-(color & 0xFF), 1);
     }
 }

@@ -73,6 +73,6 @@ public class VivicusHangingSignRenderer extends HangingSignRenderer {
 
     void renderSignModel(PoseStack pPoseStack, int pPackedLight, int pPackedOverlay, Model pModel, VertexConsumer pVertexConsumer, int color) {
         HangingSignRenderer.HangingSignModel hangingsignrenderer$hangingsignmodel = (HangingSignRenderer.HangingSignModel)pModel;
-        hangingsignrenderer$hangingsignmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, ModColorHandler.hexToRGB(color)[0], ModColorHandler.hexToRGB(color)[1], ModColorHandler.hexToRGB(color)[2], 1);
+        hangingsignrenderer$hangingsignmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay,  1-((color >> 16) & 0xFF), 1-((color >> 8) & 0xFF), 1-(color & 0xFF), 1);
     }
 }
