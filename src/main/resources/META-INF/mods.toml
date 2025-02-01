@@ -9,7 +9,7 @@ displayName="More Sniffer Flowers"
 itemIcon="moresnifferflowers:dyespria"
 logoFile="moresnifferflowers_logo.png"
 authors="AbraXator, Nikdo53"
-description='''Sniffer Flowers, but there's More of them and they actually do something'''
+description="Minecraft mod expanding upon the sniffer, adding entire new mechanics, while keeping it somewhat vanilla friendly"
 [[mixins]]
     config="more_sniffer_flowers.mixins.json"
 [[dependencies.moresnifferflowers]]
