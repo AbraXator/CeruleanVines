@@ -301,7 +301,7 @@ public class BoblingEntity extends PathfinderMob {
         if (set.stream().noneMatch(aabb::contains)) {
             CorruptedProjectile projectile = new CorruptedProjectile(this.level());
             projectile.setPos(vec3);
-            Vec3 dir = new Vec3(projectile.getX() - this.getX(), projectile.getY() - this.getY(), projectile.getZ() - this.getZ()).normalize();
+            Vec3 dir = new Vec3((projectile.getX() - this.getX())/10, (projectile.getY() - this.getY())/10, (projectile.getZ() - this.getZ())/10).normalize();
             projectile.setDeltaMovement(dir);
             this.level().addFreshEntity(projectile);
             set.add(vec3);
