@@ -2,6 +2,7 @@ package net.abraxator.moresnifferflowers;
 
 import com.google.common.collect.Maps;
 import com.mojang.logging.LogUtils;
+import net.abraxator.moresnifferflowers.compat.quark.OtherModEvents;
 import net.abraxator.moresnifferflowers.init.*;
 import net.abraxator.moresnifferflowers.networking.ModPacketHandler;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModTreeDecoratorTypes;
@@ -14,8 +15,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.FluidInteractionRegistry;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -49,6 +52,10 @@ public class MoreSnifferFlowers {
         ModStructureTypes.STRUCTURE_PIECE.register(modEventBus);
         ModBannerPatterns.BANNER_PATTERNS.register(modEventBus);
         ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+
+        if(ModList.get().isLoaded("quark")) {
+            MinecraftForge.EVENT_BUS.addListener(OtherModEvents::onSimpleHarvest);
+        }
         
         ModPacketHandler.init();
     }
