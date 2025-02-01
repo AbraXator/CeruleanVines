@@ -99,7 +99,7 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock, Corruptab
     }
 
     private InteractionResult takeJarOfBonmeel(Level level, BlockPos blockPos, BlockState blockState, Player player) {
-        level.setBlock(blockPos, blockState.setValue(AGE, 0).setValue(HAS_BOTTLE, false), 3);
+        level.setBlock(blockPos, blockState.setValue(AGE, 3).setValue(HAS_BOTTLE, false), 3);
         popResource(level, blockPos, wilted ? ModItems.JAR_OF_ACID.get().getDefaultInstance() : ModItems.JAR_OF_BONMEEL.get().getDefaultInstance());
         return InteractionResult.sidedSuccess(level.isClientSide());
     }

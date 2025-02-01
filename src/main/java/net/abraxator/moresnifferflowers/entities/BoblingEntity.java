@@ -153,7 +153,7 @@ public class BoblingEntity extends PathfinderMob {
     @Override
     protected void actuallyHurt(DamageSource pDamageSource, float pDamageAmount) {
         super.actuallyHurt(pDamageSource, pDamageAmount);
-        if (this.isRunning()) {
+        if (this.isRunning() && pDamageSource.is(DamageTypes.PLAYER_ATTACK) && this.getBoblingType() == Type.CORRUPTED) {
             var r = 2.5;
             var checkR = 1.5;
             Set<Vec3> set = new HashSet<>();
@@ -309,7 +309,7 @@ public class BoblingEntity extends PathfinderMob {
     }
 
     public enum Type implements StringRepresentable {
-        CORRUPTED(0, "corrupted"), 
+        CORRUPTED(0, "corrupted"),
         CURED(1, "cured");
 
         public static final IntFunction<Type> BY_ID = ByIdMap.continuous(Type::id, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
