@@ -37,12 +37,12 @@ public record BoblingTypeCondition(boolean cured) implements LootItemCondition {
     public static class ConditionSerializer implements Serializer<BoblingTypeCondition> {
         @Override
         public void serialize(JsonObject json, BoblingTypeCondition value, JsonSerializationContext context) {
-            json.addProperty("inverse", value.cured);
+            json.addProperty("cured", value.cured);
         }
 
         @Override
         public BoblingTypeCondition deserialize(JsonObject json, JsonDeserializationContext context) {
-            return new BoblingTypeCondition(GsonHelper.getAsBoolean(json, "inverse", false));
+            return new BoblingTypeCondition(GsonHelper.getAsBoolean(json, "cured", false));
         }
     }
 }
