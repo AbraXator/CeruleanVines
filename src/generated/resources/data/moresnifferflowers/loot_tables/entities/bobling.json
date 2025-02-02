@@ -9,7 +9,7 @@
           "conditions": [
             {
               "condition": "moresnifferflowers:bobling_type",
-              "inverse": false
+              "cured": false
             },
             {
               "chance": 0.8,
@@ -24,7 +24,7 @@
           "conditions": [
             {
               "condition": "moresnifferflowers:bobling_type",
-              "inverse": true
+              "cured": true
             },
             {
               "chance": 0.4,

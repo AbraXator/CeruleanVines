@@ -1,4 +1,4 @@
-// 1.20.1	2025-02-02T19:40:56.1638875	Loot Tables
+// 1.20.1	2025-02-02T20:16:59.7918994	Loot Tables
 3d52630c5d3ea1bc964bfbca9110a18bb946ee46 data/moresnifferflowers/loot_tables/blocks/acidripia.json
 16882dced81963aacd1b4d32ed8e0ca33a618998 data/moresnifferflowers/loot_tables/blocks/acid_filled_cauldron.json
 e37d1e0a9608760103f1f41ea813a4050dadc2fc data/moresnifferflowers/loot_tables/blocks/amber_block.json
@@ -88,7 +88,7 @@ b864a8e5c7d850b5988a56b0cd57e90222e54dee data/moresnifferflowers/loot_tables/blo
 ed127a50c6a52560bb1d3cfd12213f8c1f19c6bd data/moresnifferflowers/loot_tables/blocks/vivicus_wall_sign.json
 364fff66e9da0603af6aa3c176a99b73c8851bb4 data/moresnifferflowers/loot_tables/blocks/vivicus_wood.json
 720683fc586527b27f49f431f62b0aab3c6be429 data/moresnifferflowers/loot_tables/dessert_sniffer_temple.json
-096cf7f5961751e7835499c7ad2bbc875d12172f data/moresnifferflowers/loot_tables/entities/bobling.json
+a24d7ba071c15a27491c6fc1f0ac03050b969aa0 data/moresnifferflowers/loot_tables/entities/bobling.json
 c9bf1e162e5c5389c764189fb8241eef0fe96f7f data/moresnifferflowers/loot_tables/sniffer_egg.json
 7e36ac8b3addb8cc876550a98973db3fc1ce99a0 data/moresnifferflowers/loot_tables/snow_sniffer_temple.json
 54cbbe254741e458a3c1226e3be4be65efff08fe data/moresnifferflowers/loot_tables/swamp_sniffer_temple.json

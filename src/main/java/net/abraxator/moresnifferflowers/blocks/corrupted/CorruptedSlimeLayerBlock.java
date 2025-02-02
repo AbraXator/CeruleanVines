@@ -74,7 +74,7 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
     }
 
     public boolean isFree(BlockState pState) {
-        return pState.isAir() || pState.is(BlockTags.FIRE) || pState.liquid() || pState.canBeReplaced() || pState.is(this);
+        return pState.isAir() || pState.is(BlockTags.FIRE) || pState.liquid() || pState.canBeReplaced();
     }
 
     @Override
