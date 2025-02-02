@@ -1,4 +1,25 @@
 {
   "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "moresnifferflowers:acidripia",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "center": "true"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "moresnifferflowers:acidripia_seeds"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
   "random_sequence": "moresnifferflowers:blocks/acidripia"
 }

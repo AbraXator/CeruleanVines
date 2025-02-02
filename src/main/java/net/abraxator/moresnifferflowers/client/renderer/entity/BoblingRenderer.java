@@ -19,7 +19,7 @@ public class BoblingRenderer extends MobRenderer<BoblingEntity, BoblingModel<Bob
 
     @Override
     public ResourceLocation getTextureLocation(BoblingEntity pEntity) {
-        if (pEntity.getBoblingType() == BoblingEntity.Type.CORRUPTED) {
+        if (!pEntity.isCured()) {
             return CORRUPTED_TEXTURE;
         } else {
             return CURED_TEXTURE;

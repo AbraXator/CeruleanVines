@@ -3,7 +3,7 @@
     {
       "when": {
         "age": "0",
-        "vivicus_type": "cured"
+        "vivicus_cured": "true"
       },
       "apply": {
         "model": "moresnifferflowers:block/vivicus_leaves_sprout_0"
@@ -12,7 +12,7 @@
     {
       "when": {
         "age": "1",
-        "vivicus_type": "cured"
+        "vivicus_cured": "true"
       },
       "apply": {
         "model": "moresnifferflowers:block/vivicus_leaves_sprout_1"
@@ -21,7 +21,7 @@
     {
       "when": {
         "age": "2",
-        "vivicus_type": "cured"
+        "vivicus_cured": "true"
       },
       "apply": {
         "model": "moresnifferflowers:block/vivicus_leaves_sprout_2"
@@ -30,7 +30,7 @@
     {
       "when": {
         "age": "0",
-        "vivicus_type": "corrupted"
+        "vivicus_cured": "false"
       },
       "apply": {
         "model": "moresnifferflowers:block/vivicus_leaves_sprout_0c"
@@ -39,7 +39,7 @@
     {
       "when": {
         "age": "1",
-        "vivicus_type": "corrupted"
+        "vivicus_cured": "false"
       },
       "apply": {
         "model": "moresnifferflowers:block/vivicus_leaves_sprout_1c"
@@ -48,7 +48,7 @@
     {
       "when": {
         "age": "2",
-        "vivicus_type": "corrupted"
+        "vivicus_cured": "false"
       },
       "apply": {
         "model": "moresnifferflowers:block/vivicus_leaves_sprout_2c"

@@ -1,7 +1,6 @@
 package net.abraxator.moresnifferflowers.worldgen.configurations;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.boblingtree.BoblingTreeTrunkPlacer;
@@ -20,7 +19,6 @@ import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.MangrovePropaguleBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -29,7 +27,6 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.RandomSpreadFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.minecraft.world.level.levelgen.feature.stateproviders.RandomizedIntStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.AttachedToLeavesDecorator;
@@ -119,7 +116,7 @@ public class ModConfiguredFeatures {
                                         1,
                                         0,
                                         BlockStateProvider.simple(ModBlocks.VIVICUS_LEAVES_SPROUT.get().defaultBlockState()
-                                                .setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CURED)),
+                                                .setValue(ModStateProperties.VIVICUS_CURED, true)),
                                         2,
                                         List.of(Direction.DOWN)
                                 )
@@ -134,7 +131,7 @@ public class ModConfiguredFeatures {
                                         1,
                                         0,
                                         BlockStateProvider.simple(ModBlocks.VIVICUS_LEAVES_SPROUT.get().defaultBlockState()
-                                                .setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CORRUPTED)),
+                                                .setValue(ModStateProperties.VIVICUS_CURED, false)),
                                         2,
                                         List.of(Direction.DOWN)
                                 )

@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "moresnifferflowers:bobling_type",
+              "inverse": false
+            },
+            {
+              "chance": 0.8,
+              "condition": "minecraft:random_chance_with_looting",
+              "looting_multiplier": 0.05
+            }
+          ],
+          "name": "moresnifferflowers:corrupted_bobling_core"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "moresnifferflowers:bobling_type",
+              "inverse": true
+            },
+            {
+              "chance": 0.4,
+              "condition": "minecraft:random_chance_with_looting",
+              "looting_multiplier": 0.1
+            }
+          ],
+          "name": "moresnifferflowers:bobling_core"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "moresnifferflowers:entities/bobling"
+}
