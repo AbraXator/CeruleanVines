@@ -91,9 +91,12 @@
 	"block.moresnifferflowers.bonmeelia": "Bonmeelia",
 	"block.moresnifferflowers.bondripia": "Bondripia",
 	"block.moresnifferflowers.bonwiltia": "Bonwiltia",
-	"block.moresnifferflowers.Acidripia": "Acidripia",
+	"block.moresnifferflowers.acidripia": "Acidripia",
 	
 	"block.moresnifferflowers.cropressor": "Cropressor",
+	"block.moresnifferflowers.cropressor_centre": "Cropressor Base",
+	"block.moresnifferflowers.cropressor_out": "Cropressor Outer",
+
 	"block.moresnifferflowers.giant_potato": "Giant Potato",
 	"block.moresnifferflowers.giant_netherwart": "Giant Nether Wart",
 	"block.moresnifferflowers.giant_carrot": "Giant Carrot",
@@ -249,6 +252,8 @@
 
 	"entity.moresnifferflowers.dragonfly": "Dragonfly",
 	"entity.moresnifferflowers.bobling": "Bobling",
+	"entity.moresnifferflowers.corrupted_slime_ball": "Corrupted Slime Ball",
+	"entity.moresnifferflowers.jar_od_acid": "Jar of Acid",
 	
 	"effect.moresnifferflowers.extracted.description":"Prevents the target from extracting their current potion effects via the Bottle o' Extraction."
 }
