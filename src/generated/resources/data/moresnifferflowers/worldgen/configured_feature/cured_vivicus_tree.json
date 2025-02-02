@@ -13,7 +13,7 @@
               "color": "white",
               "distance": "7",
               "persistent": "false",
-              "vivicus_type": "cured",
+              "vivicus_cured": "true",
               "waterlogged": "false"
             }
           }
@@ -73,7 +73,7 @@
         "Properties": {
           "axis": "y",
           "color": "white",
-          "vivicus_type": "corrupted"
+          "vivicus_cured": "false"
         }
       }
     }

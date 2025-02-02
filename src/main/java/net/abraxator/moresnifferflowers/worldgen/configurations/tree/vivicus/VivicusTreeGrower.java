@@ -1,6 +1,5 @@
 package net.abraxator.moresnifferflowers.worldgen.configurations.tree.vivicus;
 
-import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModConfiguredFeatures;
 import net.minecraft.core.BlockPos;
@@ -20,7 +19,7 @@ import javax.annotation.Nullable;
 public class VivicusTreeGrower {
     @Nullable
     private ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource pRandom, BlockState saplingState) {
-        return saplingState.getValue(ModStateProperties.VIVICUS_TYPE) == BoblingEntity.Type.CORRUPTED ? ModConfiguredFeatures.CORRUPTED_VIVICUS_TREE : ModConfiguredFeatures.CURED_VIVICUS_TREE;
+        return saplingState.getValue(ModStateProperties.VIVICUS_CURED) == false ? ModConfiguredFeatures.CORRUPTED_VIVICUS_TREE : ModConfiguredFeatures.CURED_VIVICUS_TREE;
     }
 
     public boolean growTree(ServerLevel pLevel, ChunkGenerator pChunkGenerator, BlockPos pPos, BlockState saplingState, RandomSource pRandom) {

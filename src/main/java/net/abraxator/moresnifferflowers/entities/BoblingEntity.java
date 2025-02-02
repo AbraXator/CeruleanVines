@@ -45,7 +45,7 @@ import java.util.Set;
 import java.util.function.IntFunction;
 
 public class BoblingEntity extends PathfinderMob {
-    private static final EntityDataAccessor<Type> DATA_BOBLING_TYPE = SynchedEntityData.defineId(BoblingEntity.class, ModEntitySerializers.DATA_BOBLING_TYPE);
+    private static final EntityDataAccessor<Boolean> DATA_CURED = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_RUNNING = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Optional<BlockPos>> DATA_WANTED_POS = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<Boolean> DATA_PLANTING = SynchedEntityData.defineId(BoblingEntity.class, EntityDataSerializers.BOOLEAN);
@@ -53,30 +53,30 @@ public class BoblingEntity extends PathfinderMob {
     private int idleAnimationTimeout = 0;
     public AnimationState idleAnimationState = new AnimationState();
     public AnimationState plantingAnimationState = new AnimationState();
-    
+
     private boolean finalizePlanting = false;
     private int plantingProgress = 0;
     private static final int MAX_PLANTING_PROGRESS = 35;
 
-    public BoblingEntity(EntityType<? extends PathfinderMob> entityType, Level level, Type type) {
-        super(entityType, level);
-        setBoblingType(type);
+    public BoblingEntity(EntityType<? extends BoblingEntity> pEntityType, Level pLevel, boolean type) {
+        super(pEntityType, pLevel);
+        setCured(type);
     }
 
-    public BoblingEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
-        this(pEntityType, pLevel, Type.CORRUPTED);
+    public BoblingEntity(EntityType<? extends BoblingEntity> pEntityType, Level pLevel) {
+        this(pEntityType, pLevel, false);
     }
 
-    public BoblingEntity(Level level, Type type) {
+    public BoblingEntity(Level level, boolean type) {
         this(ModEntityTypes.BOBLING.get(), level, type);
     }
 
-    public Type getBoblingType() {
-        return this.entityData.get(DATA_BOBLING_TYPE);
+    public boolean isCured() {
+        return this.entityData.get(DATA_CURED);
     }
 
-    public void setBoblingType(Type type) {
-        this.entityData.set(DATA_BOBLING_TYPE, type);
+    public void setCured(boolean type) {
+        this.entityData.set(DATA_CURED, type);
     }
 
     public boolean isRunning() {
@@ -86,7 +86,7 @@ public class BoblingEntity extends PathfinderMob {
     public void setRunning(boolean running) {
         this.entityData.set(DATA_RUNNING, running);
     }
-    
+
     @Nullable
     public BlockPos getWantedPos() {
         return this.entityData.get(DATA_WANTED_POS).orElse(null);
@@ -107,7 +107,7 @@ public class BoblingEntity extends PathfinderMob {
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        pCompound.putInt("bobling_type", getBoblingType().id());
+        pCompound.putBoolean("cured", this.isCured());
         pCompound.putBoolean("running", this.isRunning());
         pCompound.putBoolean("planting", this.isPlanting());
         if (getWantedPos() != null) {
@@ -118,7 +118,7 @@ public class BoblingEntity extends PathfinderMob {
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        this.setBoblingType(Type.BY_ID.apply(pCompound.getInt("bobling_type")));
+        this.setCured(pCompound.getBoolean("cured"));
         this.setRunning(pCompound.getBoolean("running"));
         this.setPlanting(pCompound.getBoolean("planting"));
         this.setWantedPos(Optional.of(NbtUtils.readBlockPos(pCompound.getCompound("wanted_pos"))));
@@ -127,7 +127,7 @@ public class BoblingEntity extends PathfinderMob {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_BOBLING_TYPE, Type.CORRUPTED);
+        this.entityData.define(DATA_CURED, false);
         this.entityData.define(DATA_RUNNING, false);
         this.entityData.define(DATA_WANTED_POS, Optional.empty());
         this.entityData.define(DATA_PLANTING, false);
@@ -151,7 +151,7 @@ public class BoblingEntity extends PathfinderMob {
     @Override
     protected void actuallyHurt(DamageSource pDamageSource, float pDamageAmount) {
         super.actuallyHurt(pDamageSource, pDamageAmount);
-        if (this.isRunning() && pDamageSource.is(DamageTypes.PLAYER_ATTACK) && this.getBoblingType() == Type.CORRUPTED) {
+        if (this.isRunning() && pDamageSource.is(DamageTypes.PLAYER_ATTACK) && !isCured()) {
             var r = 2.5;
             var checkR = 1.5;
             Set<Vec3> set = new HashSet<>();
@@ -253,9 +253,9 @@ public class BoblingEntity extends PathfinderMob {
     protected InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         
-        if (itemStack.is(ModItems.VIVICUS_ANTIDOTE.get()) && this.getBoblingType() == Type.CORRUPTED) {
-            this.setBoblingType(Type.CURED);
-            
+        if (itemStack.is(ModItems.VIVICUS_ANTIDOTE.get()) && !isCured()) {
+            this.setCured(true);
+
             particles(new DustParticleOptions(Vec3.fromRGB24(7118872).toVector3f(), 1));
             itemStack.shrink(1);
             
@@ -276,7 +276,7 @@ public class BoblingEntity extends PathfinderMob {
     
     @Override
     public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
-        return this.getBoblingType() == Type.CURED;
+        return false;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -310,7 +310,7 @@ public class BoblingEntity extends PathfinderMob {
         }
     }
 
-    public enum Type implements StringRepresentable {
+/*    public enum Type implements StringRepresentable {
         CORRUPTED(0, "corrupted"),
         CURED(1, "cured");
 
@@ -331,5 +331,5 @@ public class BoblingEntity extends PathfinderMob {
         public String getSerializedName() {
             return name;
         }
-    }
+    }*/
 }

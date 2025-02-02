@@ -1,8 +1,16 @@
 {
   "criteria": {
     "has_advancement": {
-      "conditions": {},
-      "trigger": "moresnifferflowers:earn_sniffer_advancement"
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:sniffer_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {

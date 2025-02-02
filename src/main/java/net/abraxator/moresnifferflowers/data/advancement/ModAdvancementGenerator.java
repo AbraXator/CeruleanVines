@@ -11,6 +11,7 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 
@@ -30,7 +31,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         true,
                         false,
                         false)
-                .addCriterion("has_advancement", ModAdvancementCritters.getSnifferAdvancement())
+                .addCriterion("has_advancement", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(Blocks.SNIFFER_EGG).build()))
                 .save(consumer, MoreSnifferFlowers.loc("root").toString());
 
         var dyespria_plant = Advancement.Builder.advancement()
@@ -111,7 +112,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 .display(
                         ModItems.CORRUPTED_BOBLING_CORE.get(),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling", "Fight back!"),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back the trees"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back against the trees"),
                         null,
                         FrameType.TASK,
                         true,
@@ -196,7 +197,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 .addCriterion("dye_boat", ModAdvancementCritters.dyeBoat())
                 .save(consumer, MoreSnifferFlowers.loc("dye_boat").toString());
     }
-    
+
     private String id(String name) {
         return "%s:%s".formatted(MoreSnifferFlowers.MOD_ID, name);
     }

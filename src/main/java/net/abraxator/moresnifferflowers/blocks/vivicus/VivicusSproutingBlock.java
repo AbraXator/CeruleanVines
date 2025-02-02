@@ -21,14 +21,14 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCropBlock, ColorableVivicusBlock {
     public VivicusSproutingBlock(Properties p_54422_) {
         super(p_54422_);
-        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CORRUPTED));
+        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.VIVICUS_CURED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
         pBuilder.add(ModStateProperties.AGE_3);
-        pBuilder.add(ModStateProperties.VIVICUS_TYPE);
+        pBuilder.add(ModStateProperties.VIVICUS_CURED);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCrop
         makeGrowOnBonemeal(pLevel, pPos, pState);
         
         if(isMaxAge(pLevel.getBlockState(pPos))) {
-            BoblingEntity boblingEntity = new BoblingEntity(pLevel, pState.getValue(ModStateProperties.VIVICUS_TYPE));
+            BoblingEntity boblingEntity = new BoblingEntity(pLevel, pState.getValue(ModStateProperties.VIVICUS_CURED));
             boblingEntity.setPos(pPos.getCenter());
             pLevel.addFreshEntity(boblingEntity);
             pLevel.removeBlock(pPos, false);

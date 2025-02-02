@@ -1,9 +1,9 @@
 {
   "variants": {
-    "vivicus_type=corrupted": {
+    "vivicus_cured=false": {
       "model": "moresnifferflowers:block/vivicus_sapling"
     },
-    "vivicus_type=cured": {
+    "vivicus_cured=true": {
       "model": "moresnifferflowers:block/vivicus_sapling_cured"
     }
   }
