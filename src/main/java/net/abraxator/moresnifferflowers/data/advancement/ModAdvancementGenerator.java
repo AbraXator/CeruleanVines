@@ -113,7 +113,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .display(
                         ModItems.CORRUPTED_BOBLING_CORE.get(),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling", "Fight back!"),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back the tree madness"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back the trees"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -128,7 +128,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .display(
                         ModItems.CORRUPTED_SLIME_BALL.get(),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption", "Evil Blocks"),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption.desc", "Corrupt blocks around you, to make them evil"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption.desc", "Corrupt blocks around you, making them evil"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -150,8 +150,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         true,
                         false
                 )
-                .addCriterion("used_antidote", 
-                        ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(ModItems.VIVICUS_ANTIDOTE)))
+                .addCriterion("used_antidote", ModAdvancementCritters.usedCure())
                 .save(saver, MoreSnifferFlowers.loc("cure").toString());
 
         var ambush = Advancement.Builder.advancement()
@@ -159,7 +158,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .display(
                         ModItems.AMBUSH_SEEDS.get(),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.ambush", "Ambushed by great loot"),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.ambush.desc", "Break an amber block to get whats inside (the \"great\" part not quaranteed)"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.ambush.desc", "Break an amber block to get whats inside (the \"great\" part not guaranteed)"),
                         null,
                         AdvancementType.TASK,
                         true,
@@ -173,7 +172,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .parent(ambush)
                 .display(
                         ModItems.GARBUSH_SEEDS.get(),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.garbuh", "Garbushed by garbush loot"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.garbush", "Garbushed by garbush loot"),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.garbush.desc", "Break a Garnet block, like amber but more violent"),
                         null,
                         AdvancementType.TASK,

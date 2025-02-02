@@ -1,4 +1,4 @@
-// 1.21	2025-01-08T21:01:46.1516585	Loot Tables
+// 1.21	2025-02-02T11:32:28.8546399	Loot Tables
 d4911378e2a6a51e1f4b1222b049c50f33028309 data/moresnifferflowers/loot_table/blocks/acidripia.json
 16882dced81963aacd1b4d32ed8e0ca33a618998 data/moresnifferflowers/loot_table/blocks/acid_filled_cauldron.json
 867be0e1c64c89c59a6ef95f1d02bf10cf067d66 data/moresnifferflowers/loot_table/blocks/amber_block.json
@@ -8,7 +8,6 @@ d4911378e2a6a51e1f4b1222b049c50f33028309 data/moresnifferflowers/loot_table/bloc
 b804f954ba62b6a32b37a6ea1839e963e8cbcea1 data/moresnifferflowers/loot_table/blocks/amber_mosaic_wall.json
 82709fac129d665d29913b9da4679bcd34ba753f data/moresnifferflowers/loot_table/blocks/ambush_bottom.json
 39b9b49d7469774aff8d068125bbfeafe0c50423 data/moresnifferflowers/loot_table/blocks/ambush_top.json
-68ec98b280e3788ac2d74e87d5a77d34c0c796dc data/moresnifferflowers/loot_table/blocks/bobling_head.json
 baead50b069112a911e2dbab10b4573932d9295f data/moresnifferflowers/loot_table/blocks/bobling_sack.json
 160d0a0b01cdc567c6eb394ea2df6fd440f99e17 data/moresnifferflowers/loot_table/blocks/bondripia.json
 71d641c2be4ab828fa5b2e1f1ec9e344ab9eff96 data/moresnifferflowers/loot_table/blocks/bonmeelia.json

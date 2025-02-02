@@ -130,7 +130,6 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(Items.DIAMOND_BLOCK).setWeight(12))
                         .add(LootItem.lootTableItem(Items.HEAVY_CORE).setWeight(12))));
 
-        dropSelf(ModBlocks.BOBLING_HEAD.get());
 
         dropWhenSilkTouch(ModBlocks.CRACKED_AMBER.get());
         dropWhenSilkTouch(ModBlocks.CHISELED_AMBER.get());

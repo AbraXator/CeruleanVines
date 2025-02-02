@@ -24,7 +24,7 @@ import static net.abraxator.moresnifferflowers.init.ModStateProperties.FLIPPED;
 public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCropBlock, ColorableVivicusBlock {
     public VivicusSproutingBlock(Properties p_54422_) {
         super(p_54422_);
-        defaultBlockState().setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CORRUPTED);
+        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CORRUPTED));
     }
 
     @Override

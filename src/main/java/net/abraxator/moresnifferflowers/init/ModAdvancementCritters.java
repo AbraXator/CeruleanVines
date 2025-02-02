@@ -14,6 +14,8 @@ public class ModAdvancementCritters {
     public static final PlayerTrigger PLACED_DYESPRIA_PLANT = new PlayerTrigger();
     public static final PlayerTrigger BOBLING_ATTACK = new PlayerTrigger();
     public static final PlayerTrigger DYE_BOAT = new PlayerTrigger();
+    public static final PlayerTrigger USED_CURE = new PlayerTrigger();
+
 
     public static Criterion<?> getSnifferAdvancement() {
         return EARN_SNIFFER_ADVANCEMENT.createCriterion(new PlayerTrigger.TriggerInstance(Optional.empty()));
@@ -39,6 +41,10 @@ public class ModAdvancementCritters {
         return DYE_BOAT.createCriterion(new PlayerTrigger.TriggerInstance(Optional.empty()));
     }
 
+    public static Criterion<?> usedCure() {
+        return USED_CURE.createCriterion(new PlayerTrigger.TriggerInstance(Optional.empty()));
+    }
+
     public static void init() {
         CriteriaTriggers.register(MoreSnifferFlowers.sLoc("earn_sniffer_advancement"), EARN_SNIFFER_ADVANCEMENT);
         CriteriaTriggers.register(MoreSnifferFlowers.sLoc("used_dyespria"), USED_DYESPRIA);
@@ -46,6 +52,7 @@ public class ModAdvancementCritters {
         CriteriaTriggers.register(MoreSnifferFlowers.sLoc("placed_dyespria_plant"), PLACED_DYESPRIA_PLANT);
         CriteriaTriggers.register(MoreSnifferFlowers.sLoc("bobling_attack"), BOBLING_ATTACK);
         CriteriaTriggers.register(MoreSnifferFlowers.sLoc("dye_boat"), DYE_BOAT);
+        CriteriaTriggers.register(MoreSnifferFlowers.sLoc("used_cure"), USED_CURE);
     }
 }
 

@@ -15,6 +15,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
@@ -160,6 +161,10 @@ public class BoblingEntity extends PathfinderMob {
             var r = 2.5;
             var checkR = 1.5;
             Set<Vec3> set = new HashSet<>();
+
+            if (pDamageSource.getEntity() instanceof ServerPlayer serverPlayer) {
+                ModAdvancementCritters.BOBLING_ATTACK.trigger(serverPlayer);
+            }
 
             for (double theta = 0; theta <= Mth.TWO_PI * 3; theta += Mth.TWO_PI / random.nextIntBetweenInclusive(2, 5)) {
                 generateProjectile(set, r, theta + this.level().random.nextDouble(), checkR);
