@@ -20,7 +20,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModEntityTypes {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MoreSnifferFlowers.MOD_ID);
 
-    public static final DeferredHolder<EntityType<?>, EntityType<BoblingEntity>> BOBLING = buildNoEgg(MoreSnifferFlowers.loc("bobling"), makeBuilder(BoblingEntity::new, MobCategory.MISC, 0.375F, 0.8125F, 80, 3), false);
+    public static final DeferredHolder<EntityType<?>, EntityType<BoblingEntity>> BOBLING = buildNoEgg(MoreSnifferFlowers.loc("bobling"), makeBuilder(BoblingEntity::new, MobCategory.CREATURE, 0.375F, 0.8125F, 80, 3), false);
     public static final DeferredHolder<EntityType<?>, EntityType<DragonflyProjectile>> DRAGONFLY = buildNoEgg(MoreSnifferFlowers.loc("dragonfly"), makeBuilder(DragonflyProjectile::new, MobCategory.MISC, 0.21875F, 0.21875F, 80, 3), false);
     public static final DeferredHolder<EntityType<?>, EntityType<CorruptedProjectile>> CORRUPTED_SLIME_BALL = buildNoEgg(MoreSnifferFlowers.loc("corrupted_slime_ball"), makeBuilder(CorruptedProjectile::new, MobCategory.MISC, 0.25F, 0.25F, 80, 3), false);
     public static final DeferredHolder<EntityType<?>, EntityType<ModBoatEntity>> MOD_CORRUPTED_BOAT = buildNoEgg(MoreSnifferFlowers.loc("mod_corrupted_boat"), makeBuilder(ModBoatEntity::new, MobCategory.MISC, 1.375f, 0.5625f, 80, 3), false);

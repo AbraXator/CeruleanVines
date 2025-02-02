@@ -78,7 +78,7 @@ public class BonmeeliaBlock extends BushBlock implements ModCropBlock {
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
         if(pStack.is(Items.GLASS_BOTTLE) && canInsertBottle(pState)) {
             return addBottle(pLevel, pPos, pState, pStack);
-        } else if(pStack.is(Items.BONE_MEAL)) {
+        } else if(pStack.is(Items.BONE_MEAL) && pState.getValue(AGE) < 3)  {
             return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
         } 
             

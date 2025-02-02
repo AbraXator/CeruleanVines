@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -19,19 +18,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
-import static net.abraxator.moresnifferflowers.init.ModStateProperties.FLIPPED;
-
 public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCropBlock, ColorableVivicusBlock {
     public VivicusSproutingBlock(Properties p_54422_) {
         super(p_54422_);
-        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CORRUPTED));
+        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.VIVICUS_CURED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
         pBuilder.add(ModStateProperties.AGE_3);
-        pBuilder.add(ModStateProperties.VIVICUS_TYPE);
+        pBuilder.add(ModStateProperties.VIVICUS_CURED);
     }
 
     @Override
@@ -48,7 +45,7 @@ public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCrop
         makeGrowOnBonemeal(pLevel, pPos, pState);
         
         if(isMaxAge(pLevel.getBlockState(pPos))) {
-            BoblingEntity boblingEntity = new BoblingEntity(pLevel, pState.getValue(ModStateProperties.VIVICUS_TYPE));
+            BoblingEntity boblingEntity = new BoblingEntity(pLevel, pState.getValue(ModStateProperties.VIVICUS_CURED));
             boblingEntity.setPos(pPos.getCenter());
             pLevel.addFreshEntity(boblingEntity);
             pLevel.removeBlock(pPos, false);

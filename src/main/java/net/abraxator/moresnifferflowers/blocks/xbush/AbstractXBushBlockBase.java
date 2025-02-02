@@ -140,7 +140,8 @@ public abstract class AbstractXBushBlockBase extends ModEntityDoubleTallBlock im
     protected ItemInteractionResult useItemOn(
             ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult
     ) {
-        return pStack.is(Items.BONE_MEAL)
+        int k = Math.min(getAge(pState) + 1, getMaxAge());
+        return pStack.is(Items.BONE_MEAL) && this.canGrow(pLevel, pPos, pState, k)
                 ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION
                 : super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }

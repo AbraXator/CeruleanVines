@@ -30,10 +30,11 @@ public class MoreSnifferFlowers {
     public MoreSnifferFlowers(IEventBus modEventBus, Dist dist) {
         if(dist.isClient()) modEventBus.addListener(ClientEvents::clientSetup);
         modEventBus.addListener(this::commonSetup);
-        if(dist.isClient()) modEventBus.addListener((RegisterEvent e) -> ModAdvancementCritters.init());
+        modEventBus.addListener((RegisterEvent e) -> ModAdvancementCritters.init());
 
         ModItems.ITEMS.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
+        ModLoot.CONDITIONS.register(modEventBus);
         ModFeatures.FEATURES.register(modEventBus);
         ModCreativeTabs.TABS.register(modEventBus);
         ModMobEffects.EFFECTS.register(modEventBus);

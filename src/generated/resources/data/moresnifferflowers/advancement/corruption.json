@@ -14,7 +14,7 @@
   },
   "display": {
     "description": {
-      "fallback": "Corrupt blocks around you, to make them evil",
+      "fallback": "Corrupt blocks around you, making them evil",
       "translate": "advancements.more_sniffer_flowers.corruption.desc"
     },
     "icon": {

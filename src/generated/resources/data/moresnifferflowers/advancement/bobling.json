@@ -7,7 +7,7 @@
   },
   "display": {
     "description": {
-      "fallback": "Fight back the trees",
+      "fallback": "Fight back against the trees",
       "translate": "advancements.more_sniffer_flowers.bobling.desc"
     },
     "icon": {

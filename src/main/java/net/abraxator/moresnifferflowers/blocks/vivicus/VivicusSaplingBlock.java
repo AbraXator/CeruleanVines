@@ -1,7 +1,6 @@
 package net.abraxator.moresnifferflowers.blocks.vivicus;
 
 import net.abraxator.moresnifferflowers.blocks.ColorableVivicusBlock;
-import net.abraxator.moresnifferflowers.entities.BoblingEntity;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.init.ModTreeGrowers;
 import net.abraxator.moresnifferflowers.worldgen.configurations.tree.vivicus.VivicusTreeGrower;
@@ -22,7 +21,7 @@ public class VivicusSaplingBlock extends SaplingBlock implements ColorableVivicu
     
     public VivicusSaplingBlock(Properties p_55979_) {
         super(TreeGrower.OAK, p_55979_);
-        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE).setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CORRUPTED));
+        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE).setValue(ModStateProperties.VIVICUS_CURED, false));
     }
 
     @Override
@@ -40,7 +39,7 @@ public class VivicusSaplingBlock extends SaplingBlock implements ColorableVivicu
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
         pBuilder.add(ModStateProperties.COLOR);
-        pBuilder.add(ModStateProperties.VIVICUS_TYPE);
+        pBuilder.add(ModStateProperties.VIVICUS_CURED);
     }
 
     @Override
