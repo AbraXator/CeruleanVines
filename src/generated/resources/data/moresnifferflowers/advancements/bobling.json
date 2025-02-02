@@ -9,7 +9,7 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "fallback": "Fight back the tree madness",
+      "fallback": "Fight back the trees",
       "translate": "advancements.more_sniffer_flowers.bobling.desc"
     },
     "frame": "task",

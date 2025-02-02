@@ -21,7 +21,7 @@ public class VivicusSaplingBlock extends SaplingBlock implements ColorableVivicu
     
     public VivicusSaplingBlock(Properties p_55979_) {
         super(new OakTreeGrower(), p_55979_);
-        defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE).setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CORRUPTED);
+        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE).setValue(ModStateProperties.VIVICUS_TYPE, BoblingEntity.Type.CORRUPTED));
     }
 
     @Override

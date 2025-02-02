@@ -1,24 +1,9 @@
 {
   "parent": "moresnifferflowers:bobling",
   "criteria": {
-    "used_antidote": {
-      "conditions": {
-        "location": [
-          {
-            "condition": "minecraft:location_check",
-            "predicate": {}
-          },
-          {
-            "condition": "minecraft:match_tool",
-            "predicate": {
-              "items": [
-                "moresnifferflowers:vivicus_antidote"
-              ]
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:item_used_on_block"
+    "dye_boat": {
+      "conditions": {},
+      "trigger": "moresnifferflowers:used_cure"
     }
   },
   "display": {
@@ -40,7 +25,7 @@
   },
   "requirements": [
     [
-      "used_antidote"
+      "dye_boat"
     ]
   ],
   "sends_telemetry_event": true
