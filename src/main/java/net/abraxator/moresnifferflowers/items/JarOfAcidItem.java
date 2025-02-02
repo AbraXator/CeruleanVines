@@ -36,7 +36,9 @@ public class JarOfAcidItem extends Item {
         }
 
         pPlayer.awardStat(Stats.ITEM_USED.get(this));
-        itemstack.shrink(1);
+        if (!pPlayer.getAbilities().instabuild) {
+            itemstack.shrink(1);
+        }
         return InteractionResultHolder.sidedSuccess(itemstack, pLevel.isClientSide());
     }
 }

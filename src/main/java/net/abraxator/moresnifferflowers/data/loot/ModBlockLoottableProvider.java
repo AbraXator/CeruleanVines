@@ -126,8 +126,6 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(Items.NETHERITE_INGOT).setWeight(12))
                         .add(LootItem.lootTableItem(Items.DIAMOND_BLOCK).setWeight(12))));
 
-        dropSelf(ModBlocks.BOBLING_HEAD.get());
-
         dropWhenSilkTouch(ModBlocks.CRACKED_AMBER.get());
         dropWhenSilkTouch(ModBlocks.CHISELED_AMBER.get());
         dropWhenSilkTouch(ModBlocks.CHISELED_AMBER_SLAB.get());
@@ -196,7 +194,6 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
 
         dropSelf(ModBlocks.CROPRESSOR_OUT.get());
         dropSelf(ModBlocks.CROPRESSOR_CENTER.get());
-        dropSelf(ModBlocks.MORE_SNIFFER_FLOWER.get());
         dropSelf(ModBlocks.REBREWING_STAND_BOTTOM.get());
         add(ModBlocks.REBREWING_STAND_TOP.get(), noDrop());
         add(ModBlocks.DYESPRIA_PLANT.get(), LootTable.lootTable()

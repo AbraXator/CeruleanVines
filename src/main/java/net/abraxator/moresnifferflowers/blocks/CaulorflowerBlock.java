@@ -3,11 +3,13 @@ package net.abraxator.moresnifferflowers.blocks;
 import com.google.common.collect.Maps;
 import net.abraxator.moresnifferflowers.components.Colorable;
 import net.abraxator.moresnifferflowers.components.Dye;
+import net.abraxator.moresnifferflowers.init.ModAdvancementCritters;
 import net.abraxator.moresnifferflowers.init.ModItems;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -203,6 +205,8 @@ public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCr
     @Override
     public void colorBlock(Level level, BlockPos blockPos, BlockState blockState, Dye dye) {
         Colorable.super.colorBlock(level, blockPos, blockState.setValue(getColorAndEmptyProperties().getB(), false), dye);
+        if(level.getNearestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 6, false) instanceof ServerPlayer serverPlayer)
+            ModAdvancementCritters.USED_DYESPRIA.trigger(serverPlayer);
     }
 
     @Override

@@ -1,4 +1,4 @@
-// 1.20.1	2025-01-24T23:05:11.3491673	Loot Tables
+// 1.20.1	2025-02-02T12:50:17.2592949	Loot Tables
 d4911378e2a6a51e1f4b1222b049c50f33028309 data/moresnifferflowers/loot_tables/blocks/acidripia.json
 16882dced81963aacd1b4d32ed8e0ca33a618998 data/moresnifferflowers/loot_tables/blocks/acid_filled_cauldron.json
 e37d1e0a9608760103f1f41ea813a4050dadc2fc data/moresnifferflowers/loot_tables/blocks/amber_block.json
@@ -8,7 +8,6 @@ e228d8773fe3e31cd50ca3753c884d4ca5a57562 data/moresnifferflowers/loot_tables/blo
 0a550fa82741909fe9c73e6b11ff0134feaafaab data/moresnifferflowers/loot_tables/blocks/amber_mosaic_wall.json
 82709fac129d665d29913b9da4679bcd34ba753f data/moresnifferflowers/loot_tables/blocks/ambush_bottom.json
 39b9b49d7469774aff8d068125bbfeafe0c50423 data/moresnifferflowers/loot_tables/blocks/ambush_top.json
-68ec98b280e3788ac2d74e87d5a77d34c0c796dc data/moresnifferflowers/loot_tables/blocks/bobling_head.json
 baead50b069112a911e2dbab10b4573932d9295f data/moresnifferflowers/loot_tables/blocks/bobling_sack.json
 160d0a0b01cdc567c6eb394ea2df6fd440f99e17 data/moresnifferflowers/loot_tables/blocks/bondripia.json
 71d641c2be4ab828fa5b2e1f1ec9e344ab9eff96 data/moresnifferflowers/loot_tables/blocks/bonmeelia.json
@@ -61,7 +60,6 @@ de4ed107c58519a8e6dd800475565b5214826c9b data/moresnifferflowers/loot_tables/blo
 0c55a4c23f10c4042b10a2f7c87545840f30f8f5 data/moresnifferflowers/loot_tables/blocks/giant_potato.json
 8d08e4ba666cce76ccce5ea047a834a992e33b5a data/moresnifferflowers/loot_tables/blocks/giant_wheat.json
 c0285bf2c3012443b9dfd40dac1f7755e57631c2 data/moresnifferflowers/loot_tables/blocks/gloomberry_vine.json
-1bb94e133ad319060bba0747630d587c6ba7bd3f data/moresnifferflowers/loot_tables/blocks/more_sniffer_flower.json
 da92642078acdf6e1a56f9f083406fada7dd7e38 data/moresnifferflowers/loot_tables/blocks/potted_corrupted_sapling.json
 2c2c33d7d8d3705623529db47ce00dc9f019d2ab data/moresnifferflowers/loot_tables/blocks/potted_dyespria.json
 869ac87169cb031b68c352948b2195ae71d85f19 data/moresnifferflowers/loot_tables/blocks/potted_vivicus_sapling.json

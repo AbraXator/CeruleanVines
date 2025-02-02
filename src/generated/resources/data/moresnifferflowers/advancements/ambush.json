@@ -17,7 +17,7 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "fallback": "Break an amber block to get whats inside (the \"great\" part not quaranteed)",
+      "fallback": "Break an amber block to get whats inside (the \"great\" part not guaranteed)",
       "translate": "advancements.more_sniffer_flowers.ambush.desc"
     },
     "frame": "task",

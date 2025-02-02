@@ -3,10 +3,7 @@ package net.abraxator.moresnifferflowers.entities;
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAttackPlayerGoal;
 import net.abraxator.moresnifferflowers.entities.goals.BoblingAvoidPlayerGoal;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModEntitySerializers;
-import net.abraxator.moresnifferflowers.init.ModEntityTypes;
-import net.abraxator.moresnifferflowers.init.ModItems;
+import net.abraxator.moresnifferflowers.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
@@ -16,6 +13,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
@@ -157,6 +155,10 @@ public class BoblingEntity extends PathfinderMob {
             var r = 2.5;
             var checkR = 1.5;
             Set<Vec3> set = new HashSet<>();
+
+            if (pDamageSource.getEntity() instanceof ServerPlayer serverPlayer) {
+                ModAdvancementCritters.BOBLING_ATTACK.trigger(serverPlayer);
+            }
 
             for (double theta = 0; theta <= Mth.TWO_PI * 3; theta += Mth.TWO_PI / random.nextIntBetweenInclusive(2, 5)) {
                 generateProjectile(set, r, theta + this.level().random.nextDouble(), checkR);

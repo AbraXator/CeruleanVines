@@ -1,6 +1,7 @@
 package net.abraxator.moresnifferflowers.items;
 
 import net.abraxator.moresnifferflowers.entities.BoblingEntity;
+import net.abraxator.moresnifferflowers.init.ModAdvancementCritters;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -33,7 +34,7 @@ public class VivicusAntidoteItem extends Item {
             }
             
             if (player instanceof ServerPlayer serverPlayer) {
-                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, blockPos, pContext.getItemInHand());
+                ModAdvancementCritters.USED_CURE.trigger(serverPlayer);
             }
             
             return InteractionResult.sidedSuccess(level.isClientSide);
