@@ -83,8 +83,18 @@ public class RebrewingStandBlockBase extends ModEntityDoubleTallBlock {
     }
 
     @Override
+    public Block getCorruptedLowerBlock() {
+        return null;
+    }
+
+    @Override
     public Block getUpperBlock() {
         return ModBlocks.REBREWING_STAND_TOP.get();
+    }
+
+    @Override
+    public Block getCorruptedUpperBlock() {
+        return null;
     }
 
     @Override

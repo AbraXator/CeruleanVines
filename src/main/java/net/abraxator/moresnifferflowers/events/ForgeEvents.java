@@ -107,7 +107,6 @@ public class ForgeEvents {
 
                 event.getLevel().destroyBlock(blockPos, true);
             });
-
             event.getLevel().destroyBlock(entity.center, true);
         }
     }

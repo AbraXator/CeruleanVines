@@ -22,6 +22,10 @@ public abstract class AbstractXBushBlockUpper extends AbstractXBushBlockBase imp
 
     @Override
     public void onCorrupt(Level level, BlockPos pos, BlockState oldState, Block corruptedBlock) {
+        if (isLower(level.getBlockState(pos.below()))) {
+            getCorruptedBlock(getLowerBlock(), level).ifPresent(block ->
+                    level.setBlockAndUpdate(pos.below(), block.withPropertiesOf(level.getBlockState(pos.below()))));
+        }
         level.setBlockAndUpdate(pos, corruptedBlock.withPropertiesOf(oldState));
     }
 

@@ -1,5 +1,6 @@
 {
   "parent": "moresnifferflowers:block/colorable_wood/leaves",
+  "render_type": "cutout_mipped",
   "textures": {
     "all": "moresnifferflowers:block/vivicus_leaves"
   }

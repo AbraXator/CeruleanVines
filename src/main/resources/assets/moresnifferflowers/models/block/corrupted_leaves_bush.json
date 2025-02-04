@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"ambientocclusion": false,
-	"render_type": "cutout",
+	"render_type": "cutout_mipped",
 	"textures": {
 		"1": "moresnifferflowers:block/corrupted_leaves",
 		"particle": "moresnifferflowers:block/corrupted_leaves"

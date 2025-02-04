@@ -190,8 +190,10 @@ public abstract class AbstractXBushBlockBase extends ModEntityDoubleTallBlock im
         var lowerHalf = getLowerHalf(level, pos, oldState);
         lowerHalf.ifPresent(posAndState -> {
             level.setBlockAndUpdate(posAndState.blockPos(), corruptedBlock.withPropertiesOf(oldState));
-            /*getCorruptedBlock(getUpperBlock(), level.random).ifPresent(block ->
-                    level.setBlockAndUpdate(posAndState.blockPos().above(), block.withPropertiesOf(level.getBlockState(posAndState.blockPos().above()))));*/
+            if(getAge(lowerHalf.get().state()) > 3) {
+                getCorruptedBlock(getUpperBlock(), level).ifPresent(block ->
+                        level.setBlockAndUpdate(posAndState.blockPos().above(), block.withPropertiesOf(level.getBlockState(posAndState.blockPos().above()))));
+            }
         });
     }
 
