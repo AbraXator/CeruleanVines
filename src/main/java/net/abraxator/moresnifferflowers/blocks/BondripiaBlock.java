@@ -134,6 +134,14 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         onCorruptByEntity(entity, pos, state, this, level);
+        Direction.Plane.HORIZONTAL.forEach(direction -> {
+            BlockPos blockPos = pos.relative(direction);
+
+            getCorruptedBlock(level.getBlockState(blockPos).getBlock(), level).ifPresent(block ->
+                    level.setBlockAndUpdate(pos, block.withPropertiesOf(level.getBlockState(pos))));
+
+
+        });
     }
     
     public void grow(Level level, BlockPos blockPos) {
@@ -158,13 +166,18 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     public BlockState updateShape(BlockState p_154713_, Direction p_154714_, BlockState p_154715_, LevelAccessor p_154716_, BlockPos pCurrentPos, BlockPos p_154718_) {
         BlockState blockState = super.updateShape(p_154713_, p_154714_, p_154715_, p_154716_, pCurrentPos, p_154718_);
         if(blockState.is(Blocks.AIR)) {
-            Direction.Plane.HORIZONTAL.forEach(direction -> {
-                BlockPos blockPos = pCurrentPos.relative(direction);
+            if (!Block.canSupportCenter(p_154716_, p_154718_, p_154714_)) {
+                Direction.Plane.HORIZONTAL.forEach(direction -> {
+                    BlockPos blockPos = pCurrentPos.relative(direction);
 
-                p_154716_.destroyBlock(blockPos, true);
-            });
+                    p_154716_.destroyBlock(blockPos, true);
+
+                });
+            }
         }
-        
+
+        if(Block.canSupportCenter(p_154716_, p_154718_, p_154714_))
+            return p_154713_;
         return super.updateShape(p_154713_, p_154714_, p_154715_, p_154716_, pCurrentPos, p_154718_);
     }
     

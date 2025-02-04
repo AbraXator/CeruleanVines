@@ -6,7 +6,11 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface IModEntityDoubleTallBlock {
     Block getLowerBlock();
 
+    Block getCorruptedLowerBlock();
+
     Block getUpperBlock();
+
+    Block getCorruptedUpperBlock();
 
     default boolean isLower(BlockState blockState) {
         return !isUpper(blockState);
@@ -17,6 +21,8 @@ public interface IModEntityDoubleTallBlock {
     }
     
     default boolean isStateThis(BlockState blockState) {
+        if(getCorruptedLowerBlock() != null && getCorruptedUpperBlock() != null)
+            return blockState.is(getLowerBlock()) || blockState.is(getUpperBlock()) || blockState.is(getCorruptedLowerBlock()) || blockState.is(getCorruptedLowerBlock());
         return blockState.is(getLowerBlock()) || blockState.is(getUpperBlock());
     }
     

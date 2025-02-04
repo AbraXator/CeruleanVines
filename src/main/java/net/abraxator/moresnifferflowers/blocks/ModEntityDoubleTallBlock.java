@@ -1,5 +1,6 @@
 package net.abraxator.moresnifferflowers.blocks;
 
+import net.abraxator.moresnifferflowers.recipes.CorruptionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -62,6 +63,7 @@ public abstract class ModEntityDoubleTallBlock extends Block implements IModEnti
         if (isLower(pState)) {
             return super.canSurvive(pState, pLevel, pPos);
         } else {
+
             BlockState blockstate = pLevel.getBlockState(pPos.below());
             if (!isStateThis(pState)) return super.canSurvive(pState, pLevel, pPos); //Forge: This function is called during world gen and placement, before this block is set, so if we are not 'here' then assume it's the pre-check.
             return isStateThis(blockstate) && isLower(blockstate);

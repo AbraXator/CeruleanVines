@@ -31,7 +31,17 @@ public class AmbushBlockLower extends AbstractXBushBlockBase {
     }
 
     @Override
+    public Block getCorruptedLowerBlock() {
+        return ModBlocks.GARBUSH_BOTTOM.get();
+    }
+
+    @Override
     public Block getUpperBlock() {
         return ModBlocks.AMBUSH_TOP.get();
+    }
+
+    @Override
+    public Block getCorruptedUpperBlock() {
+        return ModBlocks.GARBUSH_TOP.get();
     }
 }
