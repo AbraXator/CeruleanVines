@@ -12,7 +12,7 @@ public class BondripiaBlockEntity extends ModBlockEntity {
     
     public BondripiaBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.BONDRIPIA.get(), pPos, pBlockState);
-        this.center = pPos;
+        this.center = this.getBlockPos();
     }
 
     @Override
