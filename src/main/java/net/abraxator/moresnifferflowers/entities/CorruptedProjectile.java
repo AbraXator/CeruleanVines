@@ -128,7 +128,7 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
                     }
 
             } else {
-                if(CorruptionRecipe.canBeCorrupted(stateRelative.getBlock(), this.level())){
+                if(CorruptionRecipe.canBeCorrupted(stateRelative.getBlock(), this.level()) && !stateRelative.is(ModBlocks.BONDRIPIA.get())){
                     transformBlock(this.level(), posRelative);
                 }
             }
