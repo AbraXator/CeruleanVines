@@ -87,7 +87,7 @@ public class AciddripiaBlock extends BondripiaBlock {
         var y = random.nextInt(10);
         
         if(level.isClientSide) {
-            level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0xaeff5c).toVector3f(), 1), vec3.x, vec3.y + y, vec3.z, 0.0D, 0.0D, 0.0D);
+            level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0xaeff5c).toVector3f(), 1), vec3.x, vec3.y - y, vec3.z, 0.0D, 0.0D, 0.0D);
         }
     }
 

@@ -179,12 +179,12 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
         if(level.getBlockEntity(blockPos) instanceof BondripiaBlockEntity entity) {
             var list = Direction.Plane.HORIZONTAL.stream().filter(direction -> super.canSurvive(level.getBlockState(entity.center.relative(direction)), level, entity.center.relative(direction))).toList();
 
-           // System.out.println("postcheck " + Block.canSupportCenter(level, blockPos.above(), Direction.DOWN) + !level.isWaterAt(blockPos) + (list.size() == 4) + " CC needed = "+ (corruptionCheck(entity, level) && !(list.size() == 4)));
-            return Block.canSupportCenter(level, blockPos.above(), Direction.DOWN) && !level.isWaterAt(blockPos) && list.size() == 4 || corruptionCheck(entity, level);
+            // System.out.println("postcheck " + Block.canSupportCenter(level, blockPos.above(), Direction.DOWN) + !level.isWaterAt(blockPos) + (list.size() == 4) + " CC needed = "+ (corruptionCheck(entity, level) && !(list.size() == 4)));
+            return Block.canSupportCenter(level, blockPos.above(), Direction.DOWN) && !level.isWaterAt(blockPos) && (list.size() == 4 || corruptionCheck(entity, level));
 
         }
         var list = Direction.Plane.HORIZONTAL.stream().filter(direction -> super.canSurvive(level.getBlockState(blockPos.relative(direction)), level, blockPos.relative(direction))).toList();
-      //  System.out.println("precheck " + Block.canSupportCenter(level, blockPos.above(), Direction.DOWN) + !level.isWaterAt(blockPos) + (list.size() == 4) + getPositionsForPlant(level, blockPos).isPresent());
+        // System.out.println("precheck " + Block.canSupportCenter(level, blockPos.above(), Direction.DOWN) + !level.isWaterAt(blockPos) + (list.size() == 4) + getPositionsForPlant(level, blockPos).isPresent());
         return Block.canSupportCenter(level, blockPos.above(), Direction.DOWN) && !level.isWaterAt(blockPos) && list.size() == 4 && getPositionsForPlant(level, blockPos).isPresent();
     }
 
@@ -204,7 +204,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     public BlockState updateShape(BlockState stateOriginal, Direction dir, BlockState stateNew, LevelAccessor level, BlockPos pCurrentPos, BlockPos pNewPos) {
         if(level.getBlockEntity(pCurrentPos) instanceof BondripiaBlockEntity entity) {
 
-            if (!canSurvive(stateOriginal, level, pCurrentPos)){
+            if (!this.canSurvive(stateOriginal, level, pCurrentPos)){
                 Direction.Plane.HORIZONTAL.forEach(direction2 -> {
                     BlockPos blockPos2 = entity.center.relative(direction2);
 

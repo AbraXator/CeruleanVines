@@ -53,6 +53,7 @@ println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty '
             }
             server {
                 server()
+                programArgument('--nogui')
             }
         }
         mods {

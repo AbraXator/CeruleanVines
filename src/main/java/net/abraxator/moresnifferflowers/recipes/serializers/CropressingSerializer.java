@@ -26,13 +26,17 @@ public class CropressingSerializer implements RecipeSerializer<CropressingRecipe
 
     @Override
     public @Nullable CropressingRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
-        return new CropressingRecipe(pRecipeId, Ingredient.fromNetwork(pBuffer), pBuffer.readVarInt(), pBuffer.readItem());
+        var ingredient = Ingredient.fromNetwork(pBuffer);
+        var count =  pBuffer.readInt();
+        var item = pBuffer.readItem();
+        
+        return new CropressingRecipe(pRecipeId, ingredient, count, item);
     }
 
     @Override
     public void toNetwork(FriendlyByteBuf pBuffer, CropressingRecipe pRecipe) {
         pRecipe.ingredient().toNetwork(pBuffer);
-        pBuffer.writeVarInt(pRecipe.count());
+        pBuffer.writeInt(pRecipe.count());
         pBuffer.writeItem(pRecipe.result());
     }
 }

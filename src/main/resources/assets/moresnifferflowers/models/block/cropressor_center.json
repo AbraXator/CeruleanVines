@@ -5,7 +5,7 @@
 	"textures": {
 		"1": "moresnifferflowers:block/cropressor_pistons",
 		"2": "moresnifferflowers:block/cropressor",
-		"particle": "block/anvil"
+		"particle": "moresnifferflowers:block/cropressor"
 	},
 	"elements": [
 		{

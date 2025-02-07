@@ -37,8 +37,9 @@ public class BondripiaModel {
 
 		PartDefinition cube_r6 = root.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(0, 66).addBox(-22.4922F, 4.7698F, -7.4645F, 14.0F, 0.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -6.3F, -15.0F, -0.2921F, -0.7401F, -2.7222F));
 
-		PartDefinition cube_r7 = root.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(51, 34).addBox(-10.0F, 1.725F, -11.0F, 20.0F, 2.0F, 20.0F, new CubeDeformation(0.0F))
-		.texOffs(-44, 99).addBox(-22.0F, 3.7F, -23.0F, 44.0F, 0.0F, 44.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -6.3F, -15.0F, 0.0F, 0.0F, -3.1416F));
+		PartDefinition cube_r7 = root.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(51, 34).addBox(-10.0F, 1.725F, -11.0F, 20.0F, 2.0F, 20.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -6.3F, -15.0F, 0.0F, 0.0F, -3.1416F));
+
+		PartDefinition cube_r8 = root.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(-44, 99).addBox(-22.0F, 0.0F, -22.0F, 44.0F, 0.0F, 44.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -10.0F, -16.0F, 0.0F, 0.0F, 0.0040F));
 
 		return LayerDefinition.create(meshdefinition, 256, 256);
 	}

@@ -4,6 +4,7 @@ import net.abraxator.moresnifferflowers.blockentities.GiantCropBlockEntity;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -25,11 +26,12 @@ public class GiantCropItem extends BlockItem {
     @Override
     protected boolean placeBlock(BlockPlaceContext pContext, BlockState pState) {
         var level = pContext.getLevel();
-        var aabb = AABB.ofSize(pContext.getClickedPos().above(1).getCenter(), 2, 2, 2);
+        var clickPos = pContext.getClickedPos().relative(pContext.getClickedFace(), 1);
+        var aabb = AABB.ofSize(clickPos.getCenter(), 2, 2, 2);
         BlockPos.betweenClosedStream(aabb).forEach(pos -> {
-            level.setBlockAndUpdate(pos, this.getBlock().defaultBlockState().setValue(ModStateProperties.CENTER, pos.equals(pContext.getClickedPos().above())));
+            level.setBlockAndUpdate(pos, this.getBlock().defaultBlockState().setValue(ModStateProperties.CENTER, pos.equals(clickPos)));
             if (level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
-                entity.center = pContext.getClickedPos().above();
+                entity.center = clickPos;
             }
         });
 
@@ -40,7 +42,7 @@ public class GiantCropItem extends BlockItem {
     protected boolean canPlace(BlockPlaceContext pContext, BlockState pState) {
         var pos = pContext.getClickedPos();
         var level = pContext.getLevel();
-        var aabb = AABB.ofSize(pContext.getClickedPos().getCenter(), 2, 0, 2).setMaxY(3);
+        var aabb = AABB.ofSize(pContext.getClickedPos().relative(pContext.getClickedFace(), 1).getCenter(), 2, 2, 2);
         var ret = BlockPos.betweenClosedStream(aabb)
                 .allMatch(blockPos -> level.getBlockState(blockPos).canBeReplaced());
 

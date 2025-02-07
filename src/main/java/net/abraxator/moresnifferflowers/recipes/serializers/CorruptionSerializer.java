@@ -47,8 +47,9 @@ public class CorruptionSerializer implements RecipeSerializer<CorruptionRecipe> 
     public @Nullable CorruptionRecipe fromNetwork(ResourceLocation resourceLocation, FriendlyByteBuf buf) {
         List<CorruptionRecipe.Entry> list = new ArrayList<>();
         String source = buf.readUtf();
-        
-        for (int i = 0; i < buf.readInt(); i++) {
+        int count = buf.readInt();
+
+        for (int i = 0; i < count; i++) {
             CorruptionRecipe.Entry entry = new CorruptionRecipe.Entry(buf.readRegistryId(), buf.readInt());
             list.add(entry);
         }

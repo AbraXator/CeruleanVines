@@ -4,7 +4,7 @@
 	"texture_size": [128, 128],
 	"textures": {
 		"2": "moresnifferflowers:block/cropressor",
-		"particle": "block/anvil"
+		"particle": "moresnifferflowers:block/cropressor"
 	},
 	"elements": [
 		{

@@ -121,7 +121,6 @@ public class CropressorBlockEntity extends ModBlockEntity {
         pTag.putIntArray("crop_count", cropCount);
         pTag.put("content", currentCrop.save(new CompoundTag()));
         pTag.putInt("progress", progress);
-        pTag.put("result", currentCrop.save(new CompoundTag()));
     }
 
     @Override
@@ -140,7 +139,7 @@ public class CropressorBlockEntity extends ModBlockEntity {
     @Override
     public CompoundTag getUpdateTag() {
         CompoundTag compoundtag = new CompoundTag();
-        compoundtag.put("result", result.save(compoundtag));
+        compoundtag.put("result", result.save(new CompoundTag()));
         compoundtag.putInt("progress", progress);
         return compoundtag;
     }

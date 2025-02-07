@@ -113,4 +113,8 @@ public class CorruptedSlimeLayerBlock extends SnowLayerBlock {
             }
         }
     }
+
+    public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
+        return (adjacentBlockState.is(this) && (adjacentBlockState.getValue(SnowLayerBlock.LAYERS)>=(state.getValue(SnowLayerBlock.LAYERS)) || side.getAxis().equals(Direction.Axis.Y))) || super.skipRendering(state, adjacentBlockState, side);
+    }
 }
