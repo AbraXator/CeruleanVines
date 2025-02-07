@@ -76,8 +76,8 @@ public class ModBlocks {
     
     public static final RegistryObject<Block> BONMEELIA = registerBlockNoItem("bonmeelia", () ->  new BonmeeliaBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT).strength(0.2F).lightLevel(value -> 3).noOcclusion(), false));
     public static final RegistryObject<Block> BONWILTIA = registerBlockNoItem("bonwiltia", () ->  new BonmeeliaBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT).strength(0.2F).lightLevel(value -> 3).noOcclusion(), true));
-    public static final RegistryObject<Block> BONDRIPIA = registerBlockNoItem("bondripia", () ->  new BondripiaBlock(BlockBehaviour.Properties.copy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks()));
-    public static final RegistryObject<Block> ACIDRIPIA = registerBlockNoItem("acidripia", () ->  new AciddripiaBlock(BlockBehaviour.Properties.copy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks()));
+    public static final RegistryObject<Block> BONDRIPIA = registerBlockNoItem("bondripia", () ->  new BondripiaBlock(BlockBehaviour.Properties.copy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks().pushReaction(PushReaction.BLOCK)));
+    public static final RegistryObject<Block> ACIDRIPIA = registerBlockNoItem("acidripia", () ->  new AciddripiaBlock(BlockBehaviour.Properties.copy(Blocks.SPORE_BLOSSOM).strength(0.2F).lightLevel(value -> 3).noOcclusion().randomTicks().pushReaction(PushReaction.BLOCK)));
     public static final RegistryObject<Block> BONMEEL_FILLED_CAULDRON = registerBlockNoItem("bonmeel_filled_cauldron", () ->  new LayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON), precipitation -> precipitation == Biome.Precipitation.NONE, ModCauldronInteractions.BONMEEL));
     public static final RegistryObject<Block> ACID_FILLED_CAULDRON = registerBlockNoItem("acid_filled_cauldron", () ->  new LayeredCauldronBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON), precipitation -> precipitation == Biome.Precipitation.NONE, ModCauldronInteractions.ACID));
     
