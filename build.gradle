@@ -17,7 +17,7 @@ repositories {
 }
 
 group = 'net.abraxator.moresnifferflowers'
-archivesBaseName = 'MoreSnifferFlowers-'+mc_version+'-Forge'
+archivesBaseName = 'MoreSnifferFlowers-'+minecraft_version+'-Forge'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -68,8 +68,8 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     //jei
-    compileOnlyApi("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
-    modRuntimeOnly("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+    compileOnlyApi("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
     
     //mixin
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
@@ -94,7 +94,8 @@ final manifestAttributes = [
         'Specification-Version' : '1',
         'Implementation-Title'  : project.name,
         'Implementation-Version': project.jar.archiveVersion,
-        'Implementation-Vendor' : 'AbraXator'
+        'Implementation-Vendor' : 'AbraXator',
+        "MixinConfigs": "more_sniffer_flowers.mixins.json"
 ]
 
 jar {

@@ -130,7 +130,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     
     public void fillCauldron(Level level, BlockPos blockPos, BlockState blockState) {
         BlockState blockstate = blockState.is(ModBlocks.ACIDRIPIA.get()) ? ModBlocks.ACID_FILLED_CAULDRON.get().defaultBlockState() : ModBlocks.BONMEEL_FILLED_CAULDRON.get().defaultBlockState();
-        int fluidLevel = blockState.getOptionalValue(LayeredCauldronBlock.LEVEL).orElse(0);
+        int fluidLevel = level.getBlockState(blockPos).getOptionalValue(LayeredCauldronBlock.LEVEL).orElse(0);
         if(fluidLevel < 3) {
             level.setBlockAndUpdate(blockPos, blockstate.setValue(LayeredCauldronBlock.LEVEL, fluidLevel + 1));
             level.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(blockstate));
@@ -154,16 +154,21 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
                 }
         }
     }
-    
+
     public void grow(Level level, BlockPos blockPos) {
         if(level.getBlockEntity(blockPos) instanceof BondripiaBlockEntity entity) {
-            makeGrowOnBonemeal(level, entity.center, level.getBlockState(entity.center));
+            if(level.getBlockState(entity.center).is(this))
+                makeGrowOnBonemeal(level, entity.center, level.getBlockState(entity.center));
+            else level.destroyBlock(blockPos, false);
+
             Direction.Plane.HORIZONTAL.forEach(direction -> {
-                if(level.getBlockState(entity.center.relative(direction)).is(level.getBlockState(entity.center).getBlock())) {
+                if(level.getBlockState(entity.center.relative(direction)).is(this)) {
                     makeGrowOnBonemeal(level, entity.center.relative(direction), level.getBlockState(entity.center.relative(direction)));
                 }else {
                     System.out.println("Acidripia or Bondripia goofed up, centre = " + entity.center.toString());
                     System.out.println("If this happens often, you might wanna report it to the More Sniffer Flowers devs");
+                    level.destroyBlock(entity.center.relative(direction), false);
+                    if (direction.equals(Direction.NORTH)) level.destroyBlock(entity.center, false);
                 }
 
             });
