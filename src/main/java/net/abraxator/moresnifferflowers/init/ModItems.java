@@ -42,7 +42,7 @@ public class ModItems {
         @Override
         public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
             super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-            pTooltip.add(Component.translatableWithFallback("dyespria_seeds.tooltip", "Use shears to hide the dye item").withStyle(ChatFormatting.GOLD));
+            pTooltip.add(Component.translatableWithFallback("tooltip.dyespria_seeds", "Shear to hide dye").withStyle(ChatFormatting.GOLD));
         }
     });
 

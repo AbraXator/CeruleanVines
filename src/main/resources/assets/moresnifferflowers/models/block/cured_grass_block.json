@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "moresnifferflowers:block/cured_grass_block_top",
+        "down": "minecraft:block/coarse_dirt",
+        "up": "moresnifferflowers:block/cured_grass_block_top",
+        "north": "moresnifferflowers:block/cured_grass_block_side",
+        "east": "moresnifferflowers:block/cured_grass_block_side",
+        "south": "moresnifferflowers:block/cured_grass_block_side",
+        "west": "moresnifferflowers:block/cured_grass_block_side"
+    }
+}

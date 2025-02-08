@@ -1,4 +1,4 @@
-// 1.20.1	2025-02-02T20:16:59.7918994	Loot Tables
+// 1.20.1	2025-02-08T14:16:29.7766556	Loot Tables
 3d52630c5d3ea1bc964bfbca9110a18bb946ee46 data/moresnifferflowers/loot_tables/blocks/acidripia.json
 16882dced81963aacd1b4d32ed8e0ca33a618998 data/moresnifferflowers/loot_tables/blocks/acid_filled_cauldron.json
 e37d1e0a9608760103f1f41ea813a4050dadc2fc data/moresnifferflowers/loot_tables/blocks/amber_block.json
@@ -43,6 +43,7 @@ a6ae2b8cc7c3c348e26415e885043e43e1ffacd7 data/moresnifferflowers/loot_tables/blo
 591a02acb5aaa7edcf8a8ad3bdf31b493a3872e2 data/moresnifferflowers/loot_tables/blocks/cracked_garnet.json
 37af3f3dac2c78281633f683655a68bb8c14da21 data/moresnifferflowers/loot_tables/blocks/cropressor_center.json
 c9d1c42f59fe168d69df20f9bd8e887032077322 data/moresnifferflowers/loot_tables/blocks/cropressor_out.json
+47a337d72bad22765f80600196daff766fc4061d data/moresnifferflowers/loot_tables/blocks/cured_grass_block.json
 b3b03eab942b447df7135a1e23d041eb960820c6 data/moresnifferflowers/loot_tables/blocks/dawnberry_vine.json
 4fab1633bd34c1adce3568e10424762a5aa1a07e data/moresnifferflowers/loot_tables/blocks/decayed_log.json
 881f7403f0c758a3c766b91a22029a02c66e58ac data/moresnifferflowers/loot_tables/blocks/dyescrapia_plant.json

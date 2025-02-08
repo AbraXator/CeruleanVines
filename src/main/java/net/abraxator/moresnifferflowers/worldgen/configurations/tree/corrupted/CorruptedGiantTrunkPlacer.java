@@ -3,6 +3,7 @@ package net.abraxator.moresnifferflowers.worldgen.configurations.tree.corrupted;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.abraxator.moresnifferflowers.init.ModBlocks;
 import net.abraxator.moresnifferflowers.worldgen.configurations.ModTrunkPlacerTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,6 +53,7 @@ public class CorruptedGiantTrunkPlacer extends TrunkPlacer {
             if (i == 0) {
                 tempTrunk.set(mainTrunk);
                 this.placeLog(pLevel, pBlockSetter, pRandom, tempTrunk, pConfig);
+               // pBlockSetter.accept(tempTrunk.above(), ModBlocks.AMBER_BLOCK.get().defaultBlockState());
                 this.placeLog(pLevel, pBlockSetter, pRandom, tempTrunk.move(Direction.NORTH), pConfig);
                 this.placeLog(pLevel, pBlockSetter, pRandom, tempTrunk.move(Direction.EAST), pConfig);
                 this.placeLog(pLevel, pBlockSetter, pRandom, tempTrunk.move(Direction.SOUTH), pConfig);

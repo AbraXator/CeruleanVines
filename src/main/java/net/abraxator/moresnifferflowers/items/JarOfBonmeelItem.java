@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class JarOfBonmeelItem extends Item {
@@ -36,7 +37,8 @@ public class JarOfBonmeelItem extends Item {
     
         if(blockState.is(ModTags.ModBlockTags.BONMEELABLE)) {
             Bonmeelable bonmeelable = ((Bonmeelable) Bonmeelable.MAP.get(blockState.getBlock()));
-            bonmeelable.performBonmeel(blockPos, blockState, level, player);
+            if(bonmeelable.canBonmeel(blockPos,blockState,level))
+                bonmeelable.performBonmeel(blockPos, blockState, level, player);
         }
 
         return InteractionResult.PASS;
@@ -45,6 +47,12 @@ public class JarOfBonmeelItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Component.translatableWithFallback("tooltip.jar_of_bonmeel.usage", "Can be applied to a 3x3 grid of the following crops: carrot, potato, wheat, beetroot and nether wart").withStyle(ChatFormatting.GOLD));
+        Component component = Component.translatableWithFallback("tooltip.jar_of_bonmeel.usage", "Can be applied to a 3x3 grid of the following crops: carrot, potato, wheat, beetroot and nether wart").withStyle(ChatFormatting.GOLD);
+        var usageComponents = Arrays.stream(component.getString().split("\n", -1))
+                .filter(s -> !s.isEmpty())
+                .map(String::trim);
+
+        usageComponents.forEach(s -> pTooltipComponents.add(Component.literal(s).withStyle(ChatFormatting.GOLD)));
+
     }
 }

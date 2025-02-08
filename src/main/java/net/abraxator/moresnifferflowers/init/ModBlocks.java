@@ -2,10 +2,7 @@ package net.abraxator.moresnifferflowers.init;
 
 import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
 import net.abraxator.moresnifferflowers.blocks.*;
-import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedGrassBlock;
-import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedLeavesBlock;
-import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedSlimeLayerBlock;
-import net.abraxator.moresnifferflowers.blocks.corrupted.CorruptedSludgeBlock;
+import net.abraxator.moresnifferflowers.blocks.corrupted.*;
 import net.abraxator.moresnifferflowers.blocks.xbush.AmbushBlockLower;
 import net.abraxator.moresnifferflowers.blocks.xbush.AmbushBlockUpper;
 import net.abraxator.moresnifferflowers.blocks.cropressor.CropressorBlockBase;
@@ -115,6 +112,7 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> DECAYED_LOG = registerBlockWithItem("decayed_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
     public static final RegistryObject<Block> CORRUPTED_GRASS_BLOCK = registerBlockWithItem("corrupted_grass_block", () -> new CorruptedGrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(0.6F).sound(SoundType.WET_GRASS)));
+    public static final RegistryObject<Block> CURED_GRASS_BLOCK = registerBlockWithItem("cured_grass_block", () -> new CuredGrassBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(0.6F).sound(SoundType.WET_GRASS)));
 
     public static final RegistryObject<Block> VIVICUS_LOG = registerBlockWithItem("vivicus_log", () -> new VivicusRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_LOG)));
     public static final RegistryObject<Block> VIVICUS_WOOD = registerBlockWithItem("vivicus_wood", () -> new VivicusRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_WOOD)));
