@@ -97,7 +97,7 @@ public class ForgeEvents {
 
         if(event.getLevel().getBlockEntity(event.getPos()) instanceof GiantCropBlockEntity entity) {
             BlockPos.withinManhattanStream(entity.center, 1, 1, 1).forEach(blockPos -> {
-                event.getLevel().destroyBlock(blockPos, true);
+               if (event.getLevel().getBlockState(blockPos).is(ModTags.ModBlockTags.GIANT_CROPS)) event.getLevel().destroyBlock(blockPos, true);
             });
         }
         

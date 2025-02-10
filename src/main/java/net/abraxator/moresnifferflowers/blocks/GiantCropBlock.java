@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.datafix.fixes.AddFlagIfNotPresentFix;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -16,11 +17,17 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.piston.PistonBaseBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.ScheduledTick;
 import org.jetbrains.annotations.Nullable;
 import oshi.util.tuples.Pair;
@@ -35,6 +42,8 @@ public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable
         super(pProperties);
         registerDefaultState(defaultBlockState().setValue(ModStateProperties.CENTER, false));
     }
+    private static final VoxelShape SHAPE = Block.box(0, 0,  0, 16, 16, 16);
+
 
     @Override
     public float getShadeBrightness(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
@@ -144,4 +153,65 @@ public class GiantCropBlock extends Block implements ModEntityBlock, Bonmeelable
                 blockPos.getZ() + 1
         );
     }
+
+    public static BlockBehaviour.StatePredicate statePredicate = (p_152641_, p_152642_, p_152643_) -> p_152641_.getValue(ModStateProperties.CENTER);
+
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+        if(getter.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
+            var x = entity.center.getX() - pos.getX();
+            var y = entity.center.getY() - pos.getY() -1;
+            var z = entity.center.getZ() - pos.getZ();
+
+            if (x == 0 && z == 0){
+                return SHAPE;
+            } else {
+                if (this.equals(ModBlocks.GIANT_POTATO.get())) return makeShapePotato().move(x, y, z).optimize();
+                if (this.equals(ModBlocks.GIANT_CARROT.get())) return makeShapeCarrot().move(x, y, z).optimize();
+                if (this.equals(ModBlocks.GIANT_BEETROOT.get())) return makeShapeBeet().move(x, y, z).optimize();
+                if (this.equals(ModBlocks.GIANT_NETHERWART.get())) return makeShapeWart().move(x, y, z).optimize();
+                if (this.equals(ModBlocks.GIANT_WHEAT.get())) return makeShapeWheat().move(x, y, z).optimize();
+            }
+
+        }
+        return SHAPE;
+    }
+
+    public VoxelShape makeShapePotato(){
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(-0.4375, -0.0625, -0.4375, 1.4375, 2.125, 1.4375), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(-0.3125, 2.125, -0.3125, 1.3125, 2.375, 1.3125), BooleanOp.OR);
+
+        return shape;
+    }
+
+    public VoxelShape makeShapeWheat(){
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(-0.5, -0.0625, -0.5, 1.5625, 3.125, 1.5625), BooleanOp.OR);
+
+        return shape;
+    }
+
+    public VoxelShape makeShapeCarrot(){
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(-0.6875, -0.0625, -0.6875, 1.6875, 0.4375, 1.6875), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(-0.4375, 0.375, -0.4375, 1.4375, 1.875, 1.4375), BooleanOp.OR);
+
+        return shape;
+    }
+
+    public VoxelShape makeShapeWart(){
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(-0.5625, 1.25, -0.5625, 1.5625, 3, 1.5625), BooleanOp.OR);
+        shape = Shapes.join(shape, Shapes.box(-0.125, 0, -0.125, 1.125, 1.25, 1.125), BooleanOp.OR);
+
+        return shape;
+    }
+
+    public VoxelShape makeShapeBeet(){
+        VoxelShape shape = Shapes.empty();
+        shape = Shapes.join(shape, Shapes.box(-0.375, -0.0625, -0.375, 1.375, 1.75, 1.375), BooleanOp.OR);
+
+        return shape;
+    }
+
 }

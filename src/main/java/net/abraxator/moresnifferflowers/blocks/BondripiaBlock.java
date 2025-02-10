@@ -3,6 +3,7 @@ package net.abraxator.moresnifferflowers.blocks;
 import net.abraxator.moresnifferflowers.blockentities.BondripiaBlockEntity;
 import net.abraxator.moresnifferflowers.entities.CorruptedProjectile;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.abraxator.moresnifferflowers.init.ModParticles;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.abraxator.moresnifferflowers.init.ModTags;
 import net.abraxator.moresnifferflowers.recipes.CorruptionRecipe;
@@ -10,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ParticleUtils;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -81,13 +84,29 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        if(state.getValue(ModStateProperties.CENTER) && random.nextDouble() <= 0.3D && isMaxAge(state)) {
-            List<BlockPos> list = new java.util.ArrayList<>(BlockPos.betweenClosedStream(pos.north().east(), pos.south().west()).map(BlockPos::immutable).toList());
-            Collections.shuffle(list);
-            list = list.subList(0, random.nextInt(6));
-            list.forEach(blockPos -> {
+        if(state.getValue(ModStateProperties.CENTER) && isMaxAge(state) && level.getBlockEntity(pos) instanceof BondripiaBlockEntity entity && random.nextFloat() < 0.4) {
+            BlockPos.withinManhattanStream(entity.center, 1, 0, 1).forEach(blockPos -> {
+
                 var vec3 = blockPos.getCenter();
-                level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0xAA51B2).toVector3f(), 1.0F), vec3.x, vec3.y - random.nextIntBetweenInclusive(0, 5), vec3.z, 0, -1.0F, 0);
+                var difference = blockPos.subtract(entity.center);
+                boolean isCorner = (Math.abs(difference.getX()) + Math.abs(difference.getZ())) == 2;
+                boolean isMid = blockPos.equals(entity.center);
+                BlockPos pos2 = blockPos.below(random.nextInt(8));
+
+                if (random.nextFloat() < 0.5) {
+                    if (isMid) {
+                        level.addParticle(ModParticles.BONDRIPIA_DRIP.get(), vec3.x + random.nextIntBetweenInclusive(-1, 1) * 0.15, vec3.y - 0.25, vec3.z + random.nextIntBetweenInclusive(-1, 1) * 0.15, 0, 1, 0);
+
+                    } else if (isCorner) {
+                        level.addParticle(ModParticles.BONDRIPIA_FALL.get(), vec3.x - difference.getX() * 0.05, vec3.y, vec3.z - difference.getZ() * 0.05, 0, 1, 0);
+
+                    } else {
+                        level.addParticle(ModParticles.BONDRIPIA_DRIP.get(), vec3.x - difference.getX() * 0.1, vec3.y, vec3.z - difference.getZ() * 0.1, 0, 1, 0);
+                    }
+                }
+                if (level.getBlockState(pos2).isSolid() && level.getBlockState(pos2.below()).isAir()){
+                    ParticleUtils.spawnParticleBelow(level, pos2, random, ModParticles.BONDRIPIA_DRIP.get());
+                }
             });
         }
     }
@@ -104,7 +123,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
                 for (int i = 0; i < 10; i++) {
                     if (isBondripable(pLevel, currentPos)) {
                         BlockState blockState = pLevel.getBlockState(currentPos);
-                        
+
                         if (blockState.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, currentPos, blockState, false)) {
                             bonemealable.performBonemeal(pLevel, pRandom, currentPos, blockState);
                             break;
@@ -117,6 +136,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
                                 break;
                             }
                         }
+
 
                     } else if (pLevel.getBlockState(currentPos).getBlock() instanceof AbstractCauldronBlock block) {
                         fillCauldron(pLevel, currentPos, pLevel.getBlockState(currentPos));
@@ -250,8 +270,14 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     }
 
     @Override
-    public VoxelShape getShape(BlockState p_154699_, BlockGetter p_154700_, BlockPos p_154701_, CollisionContext p_154702_) {
-        if(p_154699_.getValue(ModStateProperties.CENTER)) return SHAPE_CENTER;
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+        if(getter.getBlockEntity(pos) instanceof BondripiaBlockEntity entity) {
+            if(state.getValue(ModStateProperties.CENTER)) return SHAPE_CENTER;
+            var offset = pos.subtract(entity.center);
+            return Block.box(Math.min(2.0 - offset.getX()*2, 2), 13.0, Math.min(2.0 - offset.getZ()*2, 2), Math.max(14.0 - offset.getX()*2, 14), 16.0, Math.max(14.0 - offset.getZ()*2, 14));
+        }
+
         return SHAPE;
+
     }
 }

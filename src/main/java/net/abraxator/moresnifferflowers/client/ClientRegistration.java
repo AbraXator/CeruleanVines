@@ -9,10 +9,7 @@ import net.abraxator.moresnifferflowers.client.model.block.GiantCropModels;
 import net.abraxator.moresnifferflowers.client.model.entity.BoblingModel;
 import net.abraxator.moresnifferflowers.client.model.entity.CorruptedProjectileModel;
 import net.abraxator.moresnifferflowers.client.model.entity.DragonflyModel;
-import net.abraxator.moresnifferflowers.client.particle.AmbushParticle;
-import net.abraxator.moresnifferflowers.client.particle.CarrotParticle;
-import net.abraxator.moresnifferflowers.client.particle.FlyParticle;
-import net.abraxator.moresnifferflowers.client.particle.GiantCropParticle;
+import net.abraxator.moresnifferflowers.client.particle.*;
 import net.abraxator.moresnifferflowers.client.renderer.block.*;
 import net.abraxator.moresnifferflowers.client.renderer.entity.BoblingRenderer;
 import net.abraxator.moresnifferflowers.client.renderer.entity.CorruptedProjectileRenderer;
@@ -34,7 +31,6 @@ import net.minecraft.server.packs.repository.PackSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -107,6 +103,17 @@ public class ClientRegistration {
         event.registerSpriteSet(ModParticles.AMBUSH.get(), AmbushParticle.Provider::new);
         event.registerSpriteSet(ModParticles.GARBUSH.get(), AmbushParticle.Provider::new);
         event.registerSpriteSet(ModParticles.GIANT_CROP.get(), GiantCropParticle.Provider::new);
+
+        event.registerSpriteSet(ModParticles.BONDRIPIA_DRIP.get(), BondripiaParticle.BondripiaDripProvider::new);
+        event.registerSpriteSet(ModParticles.BONDRIPIA_FALL.get(), BondripiaParticle.BondripiaFallProvider::new);
+        event.registerSpriteSet(ModParticles.BONDRIPIA_LAND.get(), BondripiaParticle.BondripiaLandProvider::new);
+
+        event.registerSpriteSet(ModParticles.ACIDRIPIA_DRIP.get(), BondripiaParticle.AcidripiaDripProvider::new);
+        event.registerSpriteSet(ModParticles.ACIDRIPIA_FALL.get(), BondripiaParticle.AcidripiaFallProvider::new);
+        event.registerSpriteSet(ModParticles.ACIDRIPIA_LAND.get(), BondripiaParticle.AcidripiaLandProvider::new);
+
+
+
     }
     
     @SubscribeEvent

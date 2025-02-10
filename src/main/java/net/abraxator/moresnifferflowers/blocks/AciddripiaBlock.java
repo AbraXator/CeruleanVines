@@ -2,6 +2,7 @@ package net.abraxator.moresnifferflowers.blocks;
 
 import net.abraxator.moresnifferflowers.blockentities.BondripiaBlockEntity;
 import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.abraxator.moresnifferflowers.init.ModParticles;
 import net.abraxator.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -9,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.ParticleUtils;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -62,6 +64,8 @@ public class AciddripiaBlock extends BondripiaBlock {
                             pLevel.setBlock(blockPos, Blocks.AIR.defaultBlockState(), 2);
                         } else if (pLevel.getBlockState(blockPos).getBlock() instanceof AbstractCauldronBlock) {
                             fillCauldron(pLevel, blockPos, this.defaultBlockState());
+                        } else if (state.is(BlockTags.DIRT) && !state.is(Blocks.DIRT)) {
+                            pLevel.setBlock(blockPos, Blocks.DIRT.defaultBlockState(), 2);
                         }
 
                         blockPos = blockPos.below();
@@ -81,13 +85,30 @@ public class AciddripiaBlock extends BondripiaBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-        List<BlockPos> list = new ArrayList<>(Direction.Plane.HORIZONTAL.stream().map(pos::relative).toList());
-        list.add(pos);
-        var vec3 = Util.getRandom(list, random).getCenter();
-        var y = random.nextInt(10);
-        
-        if(level.isClientSide) {
-            level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0xaeff5c).toVector3f(), 1), vec3.x, vec3.y - y, vec3.z, 0.0D, 0.0D, 0.0D);
+        if(state.getValue(ModStateProperties.CENTER) && isMaxAge(state) && level.getBlockEntity(pos) instanceof BondripiaBlockEntity entity && random.nextFloat() < 0.4) {
+            BlockPos.withinManhattanStream(entity.center, 1, 0, 1).forEach(blockPos -> {
+
+                var vec3 = blockPos.getCenter();
+                var difference = blockPos.subtract(entity.center);
+                boolean isCorner = (Math.abs(difference.getX()) + Math.abs(difference.getZ())) == 2;
+                boolean isMid = blockPos.equals(entity.center);
+                BlockPos pos2 = blockPos.below(random.nextInt(8));
+
+                if (random.nextFloat() < 0.2) {
+                    if (isMid) {
+                        level.addParticle(ModParticles.ACIDRIPIA_DRIP.get(), vec3.x + random.nextIntBetweenInclusive(-1, 1) * 0.15, vec3.y - 0.25, vec3.z + random.nextIntBetweenInclusive(-1, 1) * 0.15, 0, 1, 0);
+
+                    } else if (isCorner) {
+                        level.addParticle(ModParticles.ACIDRIPIA_FALL.get(), vec3.x - difference.getX() * 0.05, vec3.y, vec3.z - difference.getZ() * 0.05, 0, 1, 0);
+
+                    } else {
+                        level.addParticle(ModParticles.ACIDRIPIA_DRIP.get(), vec3.x - difference.getX() * 0.1, vec3.y, vec3.z - difference.getZ() * 0.1, 0, 1, 0);
+                    }
+                }
+                if (level.getBlockState(pos2).isSolid() && level.getBlockState(pos2.below()).isAir()){
+                    ParticleUtils.spawnParticleBelow(level, pos2, random, ModParticles.ACIDRIPIA_DRIP.get());
+                }
+            });
         }
     }
 
